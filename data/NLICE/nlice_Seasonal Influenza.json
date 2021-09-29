@@ -1,0 +1,963 @@
+{
+    "name": "Seasonal Influenza",
+    "states": {
+        "Initial": {
+            "type": "Initial",
+            "direct_transition": "Check_History_Age_Attribute"
+        },
+        "No_Infection": {
+            "type": "Simple",
+            "direct_transition": "TerminalState"
+        },
+        "Check_History_Age_Attribute": {
+            "type": "Guard",
+            "allow": {
+                "condition_type": "Attribute",
+                "attribute": "age_time_to_the_end",
+                "operator": "<=",
+                "value": 0
+            },
+            "direct_transition": "Begin_Module_Transition"
+        },
+        "Begin_Module_Transition": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "M"
+                    },
+                    "transition": "Male"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "F"
+                    },
+                    "transition": "Female"
+                }
+            ]
+        },
+        "Male": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.52,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.48,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Men have an approx lifetime risk of Seasonal Influenza of 52.0%."
+            ]
+        },
+        "Female": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.48,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.52,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Women have an approx lifetime risk of Seasonal Influenza of 48.0%."
+            ]
+        },
+        "Check_Race": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-black"
+                    },
+                    "transition": "Race_race-ethnicity-black"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-hispanic"
+                    },
+                    "transition": "Race_race-ethnicity-hispanic"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-white"
+                    },
+                    "transition": "Race_race-ethnicity-white"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Native"
+                    },
+                    "transition": "Race_Native"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Asian"
+                    },
+                    "transition": "Race_Asian"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Other"
+                    },
+                    "transition": "Race_Other"
+                }
+            ]
+        },
+        "Race_race-ethnicity-black": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-hispanic": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-white": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Native": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Asian": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Other": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Potential_Infection": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 0
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    "transition": "Ages_0_1"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 2
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 5
+                            }
+                        ]
+                    },
+                    "transition": "Ages_2_5"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 6
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 9
+                            }
+                        ]
+                    },
+                    "transition": "Ages_6_9"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 10
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 17
+                            }
+                        ]
+                    },
+                    "transition": "Ages_10_17"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 18
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 34
+                            }
+                        ]
+                    },
+                    "transition": "Ages_18_34"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 35
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 59
+                            }
+                        ]
+                    },
+                    "transition": "Ages_35_59"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Age",
+                        "operator": ">=",
+                        "unit": "years",
+                        "quantity": 60
+                    },
+                    "transition": "Age_60_More"
+                }
+            ]
+        },
+        "Ages_0_1": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.019
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.981
+                }
+            ]
+        },
+        "Ages_2_5": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.078
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.922
+                }
+            ]
+        },
+        "Ages_6_9": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.054000000000000006
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.946
+                }
+            ]
+        },
+        "Ages_10_17": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.092
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.908
+                }
+            ]
+        },
+        "Ages_18_34": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.259
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.741
+                }
+            ]
+        },
+        "Ages_35_59": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.40299999999999997
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.597
+                }
+            ]
+        },
+        "Age_60_More": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.095
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.905
+                }
+            ]
+        },
+        "Doctor_Visit": {
+            "type": "Encounter",
+            "encounter_class": "ambulatory",
+            "reason": "Seasonal Influenza_Infection",
+            "codes": [
+                {
+                    "system": "SNOMED-CT",
+                    "code": "185345009",
+                    "display": "Encounter for symptom"
+                }
+            ],
+            "direct_transition": "Seasonal_Influenza_Infection"
+        },
+        "Init_Symptom_Counter": {
+            "type": "SetAttribute",
+            "attribute": "count_symptom_Seasonal Influenza",
+            "value": 0,
+            "direct_transition": "Simple_Transition_10"
+        },
+        "Seasonal_Influenza_Infection": {
+            "type": "ConditionOnset",
+            "codes": [
+                {
+                    "system": "sha224",
+                    "code": "8649d0fc77585295f53e74bfd7bda9fc27804d4ac9b0cea54e06d833",
+                    "display": "Seasonal Influenza"
+                }
+            ],
+            "target_encounter": "Doctor_Visit",
+            "remarks": [
+                null,
+                null
+            ],
+            "direct_transition": "Init_Symptom_Counter"
+        },
+        "Inc_Symptom_10": {
+            "type": "Counter",
+            "attribute": "count_symptom_Seasonal Influenza",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_4"
+        },
+        "Simple_Transition_10": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.001,
+                    "transition": "Symptom_10"
+                },
+                {
+                    "distribution": 0.999,
+                    "transition": "Simple_Transition_4"
+                }
+            ]
+        },
+        "Symptom_10": {
+            "type": "Symptom",
+            "symptom": "Discoloration",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "8649d0fc77585295f53e74bfd7bda9fc27804d4ac9b0cea54e06d833",
+                    "display": "Seasonal Influenza"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "9dc9936f40245bb429b1e36607ae9093093ca8c3f74f43503a791875",
+                "display": "Discoloration"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Discoloration",
+                "display": "Discoloration (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_10",
+            "nature": {
+                "Blue_(Cyanosis)": 100
+            }
+        },
+        "Inc_Symptom_4": {
+            "type": "Counter",
+            "attribute": "count_symptom_Seasonal Influenza",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_7"
+        },
+        "Simple_Transition_4": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.0013,
+                    "transition": "Symptom_4"
+                },
+                {
+                    "distribution": 0.9987,
+                    "transition": "Simple_Transition_7"
+                }
+            ]
+        },
+        "Symptom_4": {
+            "type": "Symptom",
+            "symptom": "Pain",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "8649d0fc77585295f53e74bfd7bda9fc27804d4ac9b0cea54e06d833",
+                    "display": "Seasonal Influenza"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "b53997e3394341bf572e719d81807dccb1f18f2e0a7ba143787f64e0",
+                "display": "Pain"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Pain",
+                "display": "Pain (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_4",
+            "location_main": "Chest"
+        },
+        "Inc_Symptom_7": {
+            "type": "Counter",
+            "attribute": "count_symptom_Seasonal Influenza",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_2"
+        },
+        "Simple_Transition_7": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.05,
+                    "transition": "Symptom_7"
+                },
+                {
+                    "distribution": 0.95,
+                    "transition": "Simple_Transition_2"
+                }
+            ]
+        },
+        "Symptom_7": {
+            "type": "Symptom",
+            "symptom": "Vomiting",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "8649d0fc77585295f53e74bfd7bda9fc27804d4ac9b0cea54e06d833",
+                    "display": "Seasonal Influenza"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "b06b5017765be3c38635646c097b44bec54bd51e74f27a5da7e12d6e",
+                "display": "Vomiting"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Vomiting",
+                "display": "Vomiting (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_7"
+        },
+        "Inc_Symptom_2": {
+            "type": "Counter",
+            "attribute": "count_symptom_Seasonal Influenza",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_6"
+        },
+        "Simple_Transition_2": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.067,
+                    "transition": "Symptom_2"
+                },
+                {
+                    "distribution": 0.933,
+                    "transition": "Simple_Transition_6"
+                }
+            ]
+        },
+        "Symptom_2": {
+            "type": "Symptom",
+            "symptom": "Altered_breathing",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "8649d0fc77585295f53e74bfd7bda9fc27804d4ac9b0cea54e06d833",
+                    "display": "Seasonal Influenza"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "4adee241f83fe4d9f59f73fa0eed67e8d37b09cacdfd5f11f0dccb33",
+                "display": "Altered_breathing"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Altered_breathing",
+                "display": "Altered_breathing (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_2",
+            "nature": {
+                "Dyspnea": 100
+            }
+        },
+        "Inc_Symptom_6": {
+            "type": "Counter",
+            "attribute": "count_symptom_Seasonal Influenza",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_3"
+        },
+        "Simple_Transition_6": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.13,
+                    "transition": "Symptom_6"
+                },
+                {
+                    "distribution": 0.87,
+                    "transition": "Simple_Transition_3"
+                }
+            ]
+        },
+        "Symptom_6": {
+            "type": "Symptom",
+            "symptom": "Nausea_",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "8649d0fc77585295f53e74bfd7bda9fc27804d4ac9b0cea54e06d833",
+                    "display": "Seasonal Influenza"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "40fb65e615be40f097d488395742bece965ee5e549cb9c55196237ed",
+                "display": "Nausea_"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Nausea_",
+                "display": "Nausea_ (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_6"
+        },
+        "Inc_Symptom_3": {
+            "type": "Counter",
+            "attribute": "count_symptom_Seasonal Influenza",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_5"
+        },
+        "Simple_Transition_3": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.24,
+                    "transition": "Symptom_3"
+                },
+                {
+                    "distribution": 0.76,
+                    "transition": "Simple_Transition_5"
+                }
+            ]
+        },
+        "Symptom_3": {
+            "type": "Symptom",
+            "symptom": "Fatigue",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "8649d0fc77585295f53e74bfd7bda9fc27804d4ac9b0cea54e06d833",
+                    "display": "Seasonal Influenza"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "2fcd1411fe5c281066f8fb8288ec437e3e77cac98170de6c40edfb05",
+                "display": "Fatigue"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Fatigue",
+                "display": "Fatigue (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_3"
+        },
+        "Inc_Symptom_5": {
+            "type": "Counter",
+            "attribute": "count_symptom_Seasonal Influenza",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_8"
+        },
+        "Simple_Transition_5": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.538,
+                    "transition": "Symptom_5"
+                },
+                {
+                    "distribution": 0.46199999999999997,
+                    "transition": "Simple_Transition_8"
+                }
+            ]
+        },
+        "Symptom_5": {
+            "type": "Symptom",
+            "symptom": "Soreness",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "8649d0fc77585295f53e74bfd7bda9fc27804d4ac9b0cea54e06d833",
+                    "display": "Seasonal Influenza"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "a5eed00d05f196e95847e1f414514088c01bec75c870a867d62c8093",
+                "display": "Soreness"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Soreness",
+                "display": "Soreness (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_5",
+            "location_main": "Throat"
+        },
+        "Inc_Symptom_8": {
+            "type": "Counter",
+            "attribute": "count_symptom_Seasonal Influenza",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_1"
+        },
+        "Simple_Transition_8": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.538,
+                    "transition": "Symptom_8"
+                },
+                {
+                    "distribution": 0.46199999999999997,
+                    "transition": "Simple_Transition_1"
+                }
+            ]
+        },
+        "Symptom_8": {
+            "type": "Symptom",
+            "symptom": "Congestion",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "8649d0fc77585295f53e74bfd7bda9fc27804d4ac9b0cea54e06d833",
+                    "display": "Seasonal Influenza"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "2fc3c70f7952803a49e9279f92678e8b061456452fab6b97981d49ba",
+                "display": "Congestion"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Congestion",
+                "display": "Congestion (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_8",
+            "location_main": "Nose"
+        },
+        "Inc_Symptom_1": {
+            "type": "Counter",
+            "attribute": "count_symptom_Seasonal Influenza",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_9"
+        },
+        "Simple_Transition_1": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.88,
+                    "transition": "Symptom_1"
+                },
+                {
+                    "distribution": 0.12,
+                    "transition": "Simple_Transition_9"
+                }
+            ]
+        },
+        "Symptom_1": {
+            "type": "Symptom",
+            "symptom": "Cough",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "8649d0fc77585295f53e74bfd7bda9fc27804d4ac9b0cea54e06d833",
+                    "display": "Seasonal Influenza"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "309a5349d71e883fa7fa92df41e8a25d21a4f2eb53d8eaf2c0e8dc53",
+                "display": "Cough"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Cough",
+                "display": "Cough (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_1",
+            "nature": {
+                "Mucus": 100
+            }
+        },
+        "Inc_Symptom_9": {
+            "type": "Counter",
+            "attribute": "count_symptom_Seasonal Influenza",
+            "action": "increment",
+            "direct_transition": "End_Doctor_Visit"
+        },
+        "Check_Symptom_9": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "count_symptom_Seasonal Influenza",
+                        "operator": "<",
+                        "value": 1
+                    },
+                    "transition": "Symptom_9"
+                },
+                {
+                    "transition": "End_Doctor_Visit"
+                }
+            ]
+        },
+        "Simple_Transition_9": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.8809999999999999,
+                    "transition": "Symptom_9"
+                },
+                {
+                    "distribution": 0.1190000000000001,
+                    "transition": "Check_Symptom_9"
+                }
+            ]
+        },
+        "Symptom_9": {
+            "type": "Symptom",
+            "symptom": "Fever",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "8649d0fc77585295f53e74bfd7bda9fc27804d4ac9b0cea54e06d833",
+                    "display": "Seasonal Influenza"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "33202f1868c1e81499c012c676d1dbf167ded283c3a2dc9c34916408",
+                "display": "Fever"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Fever",
+                "display": "Fever (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_9",
+            "vas": {
+                "Moderate_to_severe": 100.0
+            }
+        },
+        "End_Doctor_Visit": {
+            "type": "EncounterEnd",
+            "direct_transition": "ConditionEnds"
+        },
+        "ConditionEnds": {
+            "type": "ConditionEnd",
+            "direct_transition": "TerminalState",
+            "condition_onset": "Seasonal_Influenza_Infection"
+        },
+        "TerminalState": {
+            "type": "Terminal"
+        }
+    }
+}

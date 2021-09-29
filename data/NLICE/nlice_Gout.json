@@ -1,0 +1,848 @@
+{
+    "name": "Gout",
+    "states": {
+        "Initial": {
+            "type": "Initial",
+            "direct_transition": "Check_History_Age_Attribute"
+        },
+        "No_Infection": {
+            "type": "Simple",
+            "direct_transition": "TerminalState"
+        },
+        "Check_History_Age_Attribute": {
+            "type": "Guard",
+            "allow": {
+                "condition_type": "Attribute",
+                "attribute": "age_time_to_the_end",
+                "operator": "<=",
+                "value": 0
+            },
+            "direct_transition": "Begin_Module_Transition"
+        },
+        "Begin_Module_Transition": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "M"
+                    },
+                    "transition": "Male"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "F"
+                    },
+                    "transition": "Female"
+                }
+            ]
+        },
+        "Male": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.86,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.14,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Men have an approx lifetime risk of Gout of 86.0%."
+            ]
+        },
+        "Female": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.24,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.76,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Women have an approx lifetime risk of Gout of 24.0%."
+            ]
+        },
+        "Check_Race": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-black"
+                    },
+                    "transition": "Race_race-ethnicity-black"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-hispanic"
+                    },
+                    "transition": "Race_race-ethnicity-hispanic"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-white"
+                    },
+                    "transition": "Race_race-ethnicity-white"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Native"
+                    },
+                    "transition": "Race_Native"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Asian"
+                    },
+                    "transition": "Race_Asian"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Other"
+                    },
+                    "transition": "Race_Other"
+                }
+            ]
+        },
+        "Race_race-ethnicity-black": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-hispanic": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-white": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Native": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Asian": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Other": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Potential_Infection": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 0
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 45
+                            }
+                        ]
+                    },
+                    "transition": "Ages_0_45"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 45
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 75
+                            }
+                        ]
+                    },
+                    "transition": "Ages_45_75"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Age",
+                        "operator": ">=",
+                        "unit": "years",
+                        "quantity": 75
+                    },
+                    "transition": "Age_75_More"
+                }
+            ]
+        },
+        "Ages_0_45": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.16399999999999998
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.8360000000000001
+                }
+            ]
+        },
+        "Ages_45_75": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.682
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.31799999999999995
+                }
+            ]
+        },
+        "Age_75_More": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.16399999999999998
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.8360000000000001
+                }
+            ]
+        },
+        "Doctor_Visit": {
+            "type": "Encounter",
+            "encounter_class": "ambulatory",
+            "reason": "Gout_Infection",
+            "codes": [
+                {
+                    "system": "SNOMED-CT",
+                    "code": "185345009",
+                    "display": "Encounter for symptom"
+                }
+            ],
+            "direct_transition": "Gout_Infection"
+        },
+        "Init_Symptom_Counter": {
+            "type": "SetAttribute",
+            "attribute": "count_symptom_Gout",
+            "value": 0,
+            "direct_transition": "Simple_Transition_2"
+        },
+        "Gout_Infection": {
+            "type": "ConditionOnset",
+            "codes": [
+                {
+                    "system": "sha224",
+                    "code": "141c2241a8c93700d9ec29fd2895bfd6c0c4939b375c0af881a13f58",
+                    "display": "Gout"
+                }
+            ],
+            "target_encounter": "Doctor_Visit",
+            "remarks": [
+                null,
+                null
+            ],
+            "direct_transition": "Init_Symptom_Counter"
+        },
+        "Inc_Symptom_2": {
+            "type": "Counter",
+            "attribute": "count_symptom_Gout",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_3"
+        },
+        "Simple_Transition_2": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.25,
+                    "transition": "Symptom_2"
+                },
+                {
+                    "distribution": 0.75,
+                    "transition": "Simple_Transition_3"
+                }
+            ]
+        },
+        "Symptom_2": {
+            "type": "Symptom",
+            "symptom": "Slow_healing",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "141c2241a8c93700d9ec29fd2895bfd6c0c4939b375c0af881a13f58",
+                    "display": "Gout"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "988f8d29427c7b28d43af17277b498b3f3882943ed84fe441882884f",
+                "display": "Slow_healing"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Slow_healing",
+                "display": "Slow_healing (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_2",
+            "location_main": "Joints"
+        },
+        "Inc_Symptom_3": {
+            "type": "Counter",
+            "attribute": "count_symptom_Gout",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_6"
+        },
+        "Simple_Transition_3": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.87,
+                    "transition": "Symptom_3"
+                },
+                {
+                    "distribution": 0.13,
+                    "transition": "Simple_Transition_6"
+                }
+            ]
+        },
+        "Symptom_3": {
+            "type": "Symptom",
+            "symptom": "Eruption",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "141c2241a8c93700d9ec29fd2895bfd6c0c4939b375c0af881a13f58",
+                    "display": "Gout"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "9c05deea152bde37538960256281882c3db91355046ae3f663b022f3",
+                "display": "Eruption"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Eruption",
+                "display": "Eruption (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_3",
+            "nature": {
+                "Erythematous": 100
+            },
+            "location_main": "Joints",
+            "frequency": {
+                "Periodic": 100.0
+            }
+        },
+        "Inc_Symptom_6": {
+            "type": "Counter",
+            "attribute": "count_symptom_Gout",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_9"
+        },
+        "Simple_Transition_6": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.9,
+                    "transition": "Symptom_6"
+                },
+                {
+                    "distribution": 0.09999999999999998,
+                    "transition": "Simple_Transition_9"
+                }
+            ]
+        },
+        "Symptom_6": {
+            "type": "Symptom",
+            "symptom": "Altered_sleep",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "141c2241a8c93700d9ec29fd2895bfd6c0c4939b375c0af881a13f58",
+                    "display": "Gout"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "de01088e72600ab921630c4c27f6deedf73b22577f19a58744a2fa39",
+                "display": "Altered_sleep"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Altered_sleep",
+                "display": "Altered_sleep (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_6",
+            "nature": {
+                "Decreased_(Insomnia)": 100
+            },
+            "frequency": {
+                "Periodic": 100.0
+            }
+        },
+        "Inc_Symptom_9": {
+            "type": "Counter",
+            "attribute": "count_symptom_Gout",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_4"
+        },
+        "Simple_Transition_9": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.9,
+                    "transition": "Symptom_9"
+                },
+                {
+                    "distribution": 0.09999999999999998,
+                    "transition": "Simple_Transition_4"
+                }
+            ]
+        },
+        "Symptom_9": {
+            "type": "Symptom",
+            "symptom": "Throbbing",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "141c2241a8c93700d9ec29fd2895bfd6c0c4939b375c0af881a13f58",
+                    "display": "Gout"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "b0d7c8519ee42fe2f23d5c1c0d884f930f9924fd4ac3042e73cf60e1",
+                "display": "Throbbing"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Throbbing",
+                "display": "Throbbing (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_9",
+            "location_main": "Joints",
+            "frequency": {
+                "Periodic": 100.0
+            }
+        },
+        "Inc_Symptom_4": {
+            "type": "Counter",
+            "attribute": "count_symptom_Gout",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_8"
+        },
+        "Simple_Transition_4": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.92,
+                    "transition": "Symptom_4"
+                },
+                {
+                    "distribution": 0.07999999999999996,
+                    "transition": "Simple_Transition_8"
+                }
+            ]
+        },
+        "Symptom_4": {
+            "type": "Symptom",
+            "symptom": "Tenderness",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "141c2241a8c93700d9ec29fd2895bfd6c0c4939b375c0af881a13f58",
+                    "display": "Gout"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "ffab9f7a7b87b44e9c29b75ada73082df2f31c7595d03500e315c46a",
+                "display": "Tenderness"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Tenderness",
+                "display": "Tenderness (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_4",
+            "location": {
+                "any_MTP1": 33.0,
+                "big_toe_IP": 4.0,
+                "lesser_toes": 12.0,
+                "midfoot": 8.0,
+                "ankle": 30.0,
+                "knee_joint": 42.0,
+                "hip": 1.0,
+                "shoulder": 3.0,
+                "elbow": 11.0,
+                "wrist": 15.0,
+                "hand": 20.0,
+                "CMC": 1.0
+            },
+            "location_main": "Joints",
+            "frequency": {
+                "Periodic": 100.0
+            }
+        },
+        "Inc_Symptom_8": {
+            "type": "Counter",
+            "attribute": "count_symptom_Gout",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_5"
+        },
+        "Simple_Transition_8": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.95,
+                    "transition": "Symptom_8"
+                },
+                {
+                    "distribution": 0.050000000000000044,
+                    "transition": "Simple_Transition_5"
+                }
+            ]
+        },
+        "Symptom_8": {
+            "type": "Symptom",
+            "symptom": "Fever",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "141c2241a8c93700d9ec29fd2895bfd6c0c4939b375c0af881a13f58",
+                    "display": "Gout"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "33202f1868c1e81499c012c676d1dbf167ded283c3a2dc9c34916408",
+                "display": "Fever"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Fever",
+                "display": "Fever (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_8",
+            "nature": {
+                "Local": 100
+            },
+            "location_main": "Joints",
+            "frequency": {
+                "Periodic": 100.0
+            }
+        },
+        "Inc_Symptom_5": {
+            "type": "Counter",
+            "attribute": "count_symptom_Gout",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_7"
+        },
+        "Simple_Transition_5": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.97,
+                    "transition": "Symptom_5"
+                },
+                {
+                    "distribution": 0.030000000000000027,
+                    "transition": "Simple_Transition_7"
+                }
+            ]
+        },
+        "Symptom_5": {
+            "type": "Symptom",
+            "symptom": "Swelling",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "141c2241a8c93700d9ec29fd2895bfd6c0c4939b375c0af881a13f58",
+                    "display": "Gout"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "113c720a638eb0c292bb643f9369c66d2bbbd7dd453f774c3fbe8f0d",
+                "display": "Swelling"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Swelling",
+                "display": "Swelling (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_5",
+            "location": {
+                "any_MTP1": 30.0,
+                "big_toe_IP": 3.0,
+                "lesser_toes": 40.0,
+                "midfoot": 7.0,
+                "ankle": 31.0,
+                "knee_joint": 43.0,
+                "hip": 1.0,
+                "shoulder": 3.0,
+                "elbow": 11.0,
+                "wrist": 14.0,
+                "hand": 20.0,
+                "CMC": 1.0
+            },
+            "location_main": "Joints",
+            "frequency": {
+                "Periodic": 100.0
+            }
+        },
+        "Inc_Symptom_7": {
+            "type": "Counter",
+            "attribute": "count_symptom_Gout",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_1"
+        },
+        "Simple_Transition_7": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.97,
+                    "transition": "Symptom_7"
+                },
+                {
+                    "distribution": 0.030000000000000027,
+                    "transition": "Simple_Transition_1"
+                }
+            ]
+        },
+        "Symptom_7": {
+            "type": "Symptom",
+            "symptom": "Difficulty_walking",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "141c2241a8c93700d9ec29fd2895bfd6c0c4939b375c0af881a13f58",
+                    "display": "Gout"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "fdb9aa9183fa07ae54ceba4674155d67009f062cebb3c0a7a84fb8fc",
+                "display": "Difficulty_walking"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Difficulty_walking",
+                "display": "Difficulty_walking (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_7",
+            "frequency": {
+                "Periodic": 100.0
+            }
+        },
+        "Inc_Symptom_1": {
+            "type": "Counter",
+            "attribute": "count_symptom_Gout",
+            "action": "increment",
+            "direct_transition": "End_Doctor_Visit"
+        },
+        "Check_Symptom_1": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "count_symptom_Gout",
+                        "operator": "<",
+                        "value": 1
+                    },
+                    "transition": "Symptom_1"
+                },
+                {
+                    "transition": "End_Doctor_Visit"
+                }
+            ]
+        },
+        "Simple_Transition_1": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 1.0,
+                    "transition": "Symptom_1"
+                },
+                {
+                    "distribution": 0.0,
+                    "transition": "Check_Symptom_1"
+                }
+            ]
+        },
+        "Symptom_1": {
+            "type": "Symptom",
+            "symptom": "Pain",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "141c2241a8c93700d9ec29fd2895bfd6c0c4939b375c0af881a13f58",
+                    "display": "Gout"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "b53997e3394341bf572e719d81807dccb1f18f2e0a7ba143787f64e0",
+                "display": "Pain"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Pain",
+                "display": "Pain (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_1",
+            "vas": {
+                "Mild": 21.0,
+                "Intense": 79.0
+            },
+            "duration": {
+                "0_-_24_hours": 7.0,
+                "1_-_7_days": 56.0,
+                "8_-_14_days": 19.0,
+                ">14_days": 11.0,
+                "Indefinite": 7.0
+            },
+            "frequency": {
+                "Periodic": 100.0
+            }
+        },
+        "End_Doctor_Visit": {
+            "type": "EncounterEnd",
+            "direct_transition": "ConditionEnds"
+        },
+        "ConditionEnds": {
+            "type": "ConditionEnd",
+            "direct_transition": "TerminalState",
+            "condition_onset": "Gout_Infection"
+        },
+        "TerminalState": {
+            "type": "Terminal"
+        }
+    }
+}

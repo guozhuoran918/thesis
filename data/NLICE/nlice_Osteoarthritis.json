@@ -1,0 +1,1225 @@
+{
+    "name": "Osteoarthritis",
+    "states": {
+        "Initial": {
+            "type": "Initial",
+            "direct_transition": "Check_History_Age_Attribute"
+        },
+        "No_Infection": {
+            "type": "Simple",
+            "direct_transition": "TerminalState"
+        },
+        "Check_History_Age_Attribute": {
+            "type": "Guard",
+            "allow": {
+                "condition_type": "Attribute",
+                "attribute": "age_time_to_the_end",
+                "operator": "<=",
+                "value": 0
+            },
+            "direct_transition": "Begin_Module_Transition"
+        },
+        "Begin_Module_Transition": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "M"
+                    },
+                    "transition": "Male"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "F"
+                    },
+                    "transition": "Female"
+                }
+            ]
+        },
+        "Male": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.5,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.5,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Men have an approx lifetime risk of Osteoarthritis of 50.0%."
+            ]
+        },
+        "Female": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.5,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.5,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Women have an approx lifetime risk of Osteoarthritis of 50.0%."
+            ]
+        },
+        "Check_Race": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-black"
+                    },
+                    "transition": "Race_race-ethnicity-black"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-hispanic"
+                    },
+                    "transition": "Race_race-ethnicity-hispanic"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-white"
+                    },
+                    "transition": "Race_race-ethnicity-white"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Native"
+                    },
+                    "transition": "Race_Native"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Asian"
+                    },
+                    "transition": "Race_Asian"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Other"
+                    },
+                    "transition": "Race_Other"
+                }
+            ]
+        },
+        "Race_race-ethnicity-black": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-hispanic": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-white": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Native": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Asian": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Other": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Potential_Infection": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Age",
+                        "operator": "<",
+                        "unit": "years",
+                        "quantity": 1
+                    },
+                    "transition": "Age_Less_1"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 1
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 4
+                            }
+                        ]
+                    },
+                    "transition": "Ages_1_4"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 5
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 14
+                            }
+                        ]
+                    },
+                    "transition": "Ages_5_14"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 15
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 29
+                            }
+                        ]
+                    },
+                    "transition": "Ages_15_29"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 30
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 44
+                            }
+                        ]
+                    },
+                    "transition": "Ages_30_44"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 45
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 59
+                            }
+                        ]
+                    },
+                    "transition": "Ages_45_59"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 60
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 74
+                            }
+                        ]
+                    },
+                    "transition": "Ages_60_74"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Age",
+                        "operator": ">=",
+                        "unit": "years",
+                        "quantity": 75
+                    },
+                    "transition": "Age_75_More"
+                }
+            ]
+        },
+        "Age_Less_1": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.00125
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.99875
+                }
+            ]
+        },
+        "Ages_1_4": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.00125
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.99875
+                }
+            ]
+        },
+        "Ages_5_14": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.00125
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.99875
+                }
+            ]
+        },
+        "Ages_15_29": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.00125
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.99875
+                }
+            ]
+        },
+        "Ages_30_44": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.00125
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.99875
+                }
+            ]
+        },
+        "Ages_45_59": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.00125
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.99875
+                }
+            ]
+        },
+        "Ages_60_74": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.00125
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.99875
+                }
+            ]
+        },
+        "Age_75_More": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.00125
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.99875
+                }
+            ]
+        },
+        "Doctor_Visit": {
+            "type": "Encounter",
+            "encounter_class": "ambulatory",
+            "reason": "Osteoarthritis_Infection",
+            "codes": [
+                {
+                    "system": "SNOMED-CT",
+                    "code": "185345009",
+                    "display": "Encounter for symptom"
+                }
+            ],
+            "direct_transition": "Osteoarthritis_Infection"
+        },
+        "Init_Symptom_Counter": {
+            "type": "SetAttribute",
+            "attribute": "count_symptom_Osteoarthritis",
+            "value": 0,
+            "direct_transition": "Simple_Transition_13"
+        },
+        "Osteoarthritis_Infection": {
+            "type": "ConditionOnset",
+            "codes": [
+                {
+                    "system": "sha224",
+                    "code": "aa58bd6f9b5594426e29238f670d2c37645a62c4af2a95d2cf8eab97",
+                    "display": "Osteoarthritis"
+                }
+            ],
+            "target_encounter": "Doctor_Visit",
+            "remarks": [
+                null,
+                null
+            ],
+            "direct_transition": "Init_Symptom_Counter"
+        },
+        "Inc_Symptom_13": {
+            "type": "Counter",
+            "attribute": "count_symptom_Osteoarthritis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_14"
+        },
+        "Simple_Transition_13": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.033,
+                    "transition": "Symptom_13"
+                },
+                {
+                    "distribution": 0.967,
+                    "transition": "Simple_Transition_14"
+                }
+            ]
+        },
+        "Symptom_13": {
+            "type": "Symptom",
+            "symptom": "Cramping",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "aa58bd6f9b5594426e29238f670d2c37645a62c4af2a95d2cf8eab97",
+                    "display": "Osteoarthritis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "6fedc9a1c9161ee16e0cce417123ad558280b7a70d3993e3bc5d04c3",
+                "display": "Cramping"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Cramping",
+                "display": "Cramping (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_13"
+        },
+        "Inc_Symptom_14": {
+            "type": "Counter",
+            "attribute": "count_symptom_Osteoarthritis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_11"
+        },
+        "Simple_Transition_14": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.033,
+                    "transition": "Symptom_14"
+                },
+                {
+                    "distribution": 0.967,
+                    "transition": "Simple_Transition_11"
+                }
+            ]
+        },
+        "Symptom_14": {
+            "type": "Symptom",
+            "symptom": "Click/cracking",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "aa58bd6f9b5594426e29238f670d2c37645a62c4af2a95d2cf8eab97",
+                    "display": "Osteoarthritis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "cc5b36377dc736170f664a74af6701729461190dd6689e7ef5301951",
+                "display": "Click/cracking"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Click/cracking",
+                "display": "Click/cracking (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_14"
+        },
+        "Inc_Symptom_11": {
+            "type": "Counter",
+            "attribute": "count_symptom_Osteoarthritis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_12"
+        },
+        "Simple_Transition_11": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.044,
+                    "transition": "Symptom_11"
+                },
+                {
+                    "distribution": 0.956,
+                    "transition": "Simple_Transition_12"
+                }
+            ]
+        },
+        "Symptom_11": {
+            "type": "Symptom",
+            "symptom": "Numbness",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "aa58bd6f9b5594426e29238f670d2c37645a62c4af2a95d2cf8eab97",
+                    "display": "Osteoarthritis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "5e64248c6dfdd9b0355365045dd9ca9174bcb16e4de6d3214125d663",
+                "display": "Numbness"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Numbness",
+                "display": "Numbness (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_11"
+        },
+        "Inc_Symptom_12": {
+            "type": "Counter",
+            "attribute": "count_symptom_Osteoarthritis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_9"
+        },
+        "Simple_Transition_12": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.044,
+                    "transition": "Symptom_12"
+                },
+                {
+                    "distribution": 0.956,
+                    "transition": "Simple_Transition_9"
+                }
+            ]
+        },
+        "Symptom_12": {
+            "type": "Symptom",
+            "symptom": "Locking",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "aa58bd6f9b5594426e29238f670d2c37645a62c4af2a95d2cf8eab97",
+                    "display": "Osteoarthritis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "1163485cca3200ad358ae51c7377b842ebb0d241d903f2ed9b079903",
+                "display": "Locking"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Locking",
+                "display": "Locking (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_12"
+        },
+        "Inc_Symptom_9": {
+            "type": "Counter",
+            "attribute": "count_symptom_Osteoarthritis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_10"
+        },
+        "Simple_Transition_9": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.066,
+                    "transition": "Symptom_9"
+                },
+                {
+                    "distribution": 0.9339999999999999,
+                    "transition": "Simple_Transition_10"
+                }
+            ]
+        },
+        "Symptom_9": {
+            "type": "Symptom",
+            "symptom": "Weakness",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "aa58bd6f9b5594426e29238f670d2c37645a62c4af2a95d2cf8eab97",
+                    "display": "Osteoarthritis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "55745b2b7bac210b4dd69514296d37add8b79e6db0e859e38241e0b3",
+                "display": "Weakness"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Weakness",
+                "display": "Weakness (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_9"
+        },
+        "Inc_Symptom_10": {
+            "type": "Counter",
+            "attribute": "count_symptom_Osteoarthritis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_15"
+        },
+        "Simple_Transition_10": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.066,
+                    "transition": "Symptom_10"
+                },
+                {
+                    "distribution": 0.9339999999999999,
+                    "transition": "Simple_Transition_15"
+                }
+            ]
+        },
+        "Symptom_10": {
+            "type": "Symptom",
+            "symptom": "Fear",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "aa58bd6f9b5594426e29238f670d2c37645a62c4af2a95d2cf8eab97",
+                    "display": "Osteoarthritis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "c4fd1d5fc1ac219e2cf1837b48500771b00fc82dc190540b0bbd7dce",
+                "display": "Fear"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Fear",
+                "display": "Fear (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_10"
+        },
+        "Inc_Symptom_15": {
+            "type": "Counter",
+            "attribute": "count_symptom_Osteoarthritis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_7"
+        },
+        "Simple_Transition_15": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.128,
+                    "transition": "Symptom_15"
+                },
+                {
+                    "distribution": 0.872,
+                    "transition": "Simple_Transition_7"
+                }
+            ]
+        },
+        "Symptom_15": {
+            "type": "Symptom",
+            "symptom": "Difficulty_walking",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "aa58bd6f9b5594426e29238f670d2c37645a62c4af2a95d2cf8eab97",
+                    "display": "Osteoarthritis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "fdb9aa9183fa07ae54ceba4674155d67009f062cebb3c0a7a84fb8fc",
+                "display": "Difficulty_walking"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Difficulty_walking",
+                "display": "Difficulty_walking (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_15",
+            "nature": {
+                "Inside_the_home": 100.0
+            }
+        },
+        "Inc_Symptom_7": {
+            "type": "Counter",
+            "attribute": "count_symptom_Osteoarthritis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_8"
+        },
+        "Simple_Transition_7": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.132,
+                    "transition": "Symptom_7"
+                },
+                {
+                    "distribution": 0.868,
+                    "transition": "Simple_Transition_8"
+                }
+            ]
+        },
+        "Symptom_7": {
+            "type": "Symptom",
+            "symptom": "Grating",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "aa58bd6f9b5594426e29238f670d2c37645a62c4af2a95d2cf8eab97",
+                    "display": "Osteoarthritis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "12b49cccf2cbd6d62789f0eb8f88df5ce5453dcb02f967604b0b045e",
+                "display": "Grating"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Grating",
+                "display": "Grating (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_7"
+        },
+        "Inc_Symptom_8": {
+            "type": "Counter",
+            "attribute": "count_symptom_Osteoarthritis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_6"
+        },
+        "Simple_Transition_8": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.132,
+                    "transition": "Symptom_8"
+                },
+                {
+                    "distribution": 0.868,
+                    "transition": "Simple_Transition_6"
+                }
+            ]
+        },
+        "Symptom_8": {
+            "type": "Symptom",
+            "symptom": "Inactivity",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "aa58bd6f9b5594426e29238f670d2c37645a62c4af2a95d2cf8eab97",
+                    "display": "Osteoarthritis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "e3b5df407b941e3dd981a116c9489a57dc08d4185f23f70319b796d1",
+                "display": "Inactivity"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Inactivity",
+                "display": "Inactivity (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_8"
+        },
+        "Inc_Symptom_6": {
+            "type": "Counter",
+            "attribute": "count_symptom_Osteoarthritis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_4"
+        },
+        "Simple_Transition_6": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.154,
+                    "transition": "Symptom_6"
+                },
+                {
+                    "distribution": 0.846,
+                    "transition": "Simple_Transition_4"
+                }
+            ]
+        },
+        "Symptom_6": {
+            "type": "Symptom",
+            "symptom": "Swelling",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "aa58bd6f9b5594426e29238f670d2c37645a62c4af2a95d2cf8eab97",
+                    "display": "Osteoarthritis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "113c720a638eb0c292bb643f9369c66d2bbbd7dd453f774c3fbe8f0d",
+                "display": "Swelling"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Swelling",
+                "display": "Swelling (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_6",
+            "location_main": "Joints"
+        },
+        "Inc_Symptom_4": {
+            "type": "Counter",
+            "attribute": "count_symptom_Osteoarthritis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_5"
+        },
+        "Simple_Transition_4": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.176,
+                    "transition": "Symptom_4"
+                },
+                {
+                    "distribution": 0.8240000000000001,
+                    "transition": "Simple_Transition_5"
+                }
+            ]
+        },
+        "Symptom_4": {
+            "type": "Symptom",
+            "symptom": "Altered_sleep",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "aa58bd6f9b5594426e29238f670d2c37645a62c4af2a95d2cf8eab97",
+                    "display": "Osteoarthritis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "de01088e72600ab921630c4c27f6deedf73b22577f19a58744a2fa39",
+                "display": "Altered_sleep"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Altered_sleep",
+                "display": "Altered_sleep (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_4",
+            "nature": {
+                "Decreased_(Insomnia)": 100
+            }
+        },
+        "Inc_Symptom_5": {
+            "type": "Counter",
+            "attribute": "count_symptom_Osteoarthritis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_3"
+        },
+        "Simple_Transition_5": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.176,
+                    "transition": "Symptom_5"
+                },
+                {
+                    "distribution": 0.8240000000000001,
+                    "transition": "Simple_Transition_3"
+                }
+            ]
+        },
+        "Symptom_5": {
+            "type": "Symptom",
+            "symptom": "Altered_mental_state",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "aa58bd6f9b5594426e29238f670d2c37645a62c4af2a95d2cf8eab97",
+                    "display": "Osteoarthritis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "cd12201509979a6e72f066cb2769d57ba054b22501e2d51e5931d32f",
+                "display": "Altered_mental_state"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Altered_mental_state",
+                "display": "Altered_mental_state (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_5",
+            "nature": {
+                "Mood_change": 100
+            }
+        },
+        "Inc_Symptom_3": {
+            "type": "Counter",
+            "attribute": "count_symptom_Osteoarthritis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_2"
+        },
+        "Simple_Transition_3": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.264,
+                    "transition": "Symptom_3"
+                },
+                {
+                    "distribution": 0.736,
+                    "transition": "Simple_Transition_2"
+                }
+            ]
+        },
+        "Symptom_3": {
+            "type": "Symptom",
+            "symptom": "Stiffness",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "aa58bd6f9b5594426e29238f670d2c37645a62c4af2a95d2cf8eab97",
+                    "display": "Osteoarthritis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "996856bf861bd37d8b63fccfd7765f36e6eb9e955a952312bae8fd30",
+                "display": "Stiffness"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Stiffness",
+                "display": "Stiffness (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_3"
+        },
+        "Inc_Symptom_2": {
+            "type": "Counter",
+            "attribute": "count_symptom_Osteoarthritis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_1"
+        },
+        "Simple_Transition_2": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.6919999999999998,
+                    "transition": "Symptom_2"
+                },
+                {
+                    "distribution": 0.30800000000000016,
+                    "transition": "Simple_Transition_1"
+                }
+            ]
+        },
+        "Symptom_2": {
+            "type": "Symptom",
+            "symptom": "Limitation_of_activities",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "aa58bd6f9b5594426e29238f670d2c37645a62c4af2a95d2cf8eab97",
+                    "display": "Osteoarthritis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "54d3622d66441d9c5060fc3263516bf67671bdc2c23ad965f285a64e",
+                "display": "Limitation_of_activities"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Limitation_of_activities",
+                "display": "Limitation_of_activities (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_2"
+        },
+        "Inc_Symptom_1": {
+            "type": "Counter",
+            "attribute": "count_symptom_Osteoarthritis",
+            "action": "increment",
+            "direct_transition": "End_Doctor_Visit"
+        },
+        "Check_Symptom_1": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "count_symptom_Osteoarthritis",
+                        "operator": "<",
+                        "value": 1
+                    },
+                    "transition": "Symptom_1"
+                },
+                {
+                    "transition": "End_Doctor_Visit"
+                }
+            ]
+        },
+        "Simple_Transition_1": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 1.0,
+                    "transition": "Symptom_1"
+                },
+                {
+                    "distribution": 0.0,
+                    "transition": "Check_Symptom_1"
+                }
+            ]
+        },
+        "Symptom_1": {
+            "type": "Symptom",
+            "symptom": "Pain",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "aa58bd6f9b5594426e29238f670d2c37645a62c4af2a95d2cf8eab97",
+                    "display": "Osteoarthritis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "b53997e3394341bf572e719d81807dccb1f18f2e0a7ba143787f64e0",
+                "display": "Pain"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Pain",
+                "display": "Pain (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_1",
+            "nature": {
+                "Sharp": 71.4,
+                "Dull": 65.9,
+                "Burning": 6.6,
+                "Radiating": 1.1
+            },
+            "frequency": {
+                "Unpredictable": 25.3,
+                "Constant": 23.1,
+                "Unstable": 22.0
+            },
+            "excitation": {
+                "Activity": 50.5,
+                "Sleeping": 17.6
+            }
+        },
+        "End_Doctor_Visit": {
+            "type": "EncounterEnd",
+            "direct_transition": "ConditionEnds"
+        },
+        "ConditionEnds": {
+            "type": "ConditionEnd",
+            "direct_transition": "TerminalState",
+            "condition_onset": "Osteoarthritis_Infection"
+        },
+        "TerminalState": {
+            "type": "Terminal"
+        }
+    }
+}

@@ -1,0 +1,898 @@
+{
+    "name": "Bacterial meningitis",
+    "states": {
+        "Initial": {
+            "type": "Initial",
+            "direct_transition": "Check_History_Age_Attribute"
+        },
+        "No_Infection": {
+            "type": "Simple",
+            "direct_transition": "TerminalState"
+        },
+        "Check_History_Age_Attribute": {
+            "type": "Guard",
+            "allow": {
+                "condition_type": "Attribute",
+                "attribute": "age_time_to_the_end",
+                "operator": "<=",
+                "value": 0
+            },
+            "direct_transition": "Begin_Module_Transition"
+        },
+        "Begin_Module_Transition": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "M"
+                    },
+                    "transition": "Male"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "F"
+                    },
+                    "transition": "Female"
+                }
+            ]
+        },
+        "Male": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.62,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.38,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Men have an approx lifetime risk of Bacterial meningitis of 62.0%."
+            ]
+        },
+        "Female": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.38,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.62,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Women have an approx lifetime risk of Bacterial meningitis of 38.0%."
+            ]
+        },
+        "Check_Race": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-black"
+                    },
+                    "transition": "Race_race-ethnicity-black"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-hispanic"
+                    },
+                    "transition": "Race_race-ethnicity-hispanic"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-white"
+                    },
+                    "transition": "Race_race-ethnicity-white"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Native"
+                    },
+                    "transition": "Race_Native"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Asian"
+                    },
+                    "transition": "Race_Asian"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Other"
+                    },
+                    "transition": "Race_Other"
+                }
+            ]
+        },
+        "Race_race-ethnicity-black": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-hispanic": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-white": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Native": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Asian": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Other": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Potential_Infection": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 0
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 4
+                            }
+                        ]
+                    },
+                    "transition": "Ages_0_4"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 5
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 14
+                            }
+                        ]
+                    },
+                    "transition": "Ages_5_14"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 15
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 24
+                            }
+                        ]
+                    },
+                    "transition": "Ages_15_24"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 25
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 64
+                            }
+                        ]
+                    },
+                    "transition": "Ages_25_64"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Age",
+                        "operator": ">=",
+                        "unit": "years",
+                        "quantity": 65
+                    },
+                    "transition": "Age_65_More"
+                }
+            ]
+        },
+        "Ages_0_4": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.4
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.6
+                }
+            ]
+        },
+        "Ages_5_14": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.23800000000000002
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.762
+                }
+            ]
+        },
+        "Ages_15_24": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.092
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.908
+                }
+            ]
+        },
+        "Ages_25_64": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.205
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.795
+                }
+            ]
+        },
+        "Age_65_More": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.061
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.9390000000000001
+                }
+            ]
+        },
+        "Doctor_Visit": {
+            "type": "Encounter",
+            "encounter_class": "ambulatory",
+            "reason": "Bacterial meningitis_Infection",
+            "codes": [
+                {
+                    "system": "SNOMED-CT",
+                    "code": "185345009",
+                    "display": "Encounter for symptom"
+                }
+            ],
+            "direct_transition": "Bacterial_meningitis_Infection"
+        },
+        "Init_Symptom_Counter": {
+            "type": "SetAttribute",
+            "attribute": "count_symptom_Bacterial meningitis",
+            "value": 0,
+            "direct_transition": "Simple_Transition_9"
+        },
+        "Bacterial_meningitis_Infection": {
+            "type": "ConditionOnset",
+            "codes": [
+                {
+                    "system": "sha224",
+                    "code": "76dc7b5b53cd42f51f6ad99ba8130651d2694cb2eb7a4f970031b8be",
+                    "display": "Bacterial meningitis"
+                }
+            ],
+            "target_encounter": "Doctor_Visit",
+            "remarks": [
+                null,
+                null
+            ],
+            "direct_transition": "Init_Symptom_Counter"
+        },
+        "Inc_Symptom_9": {
+            "type": "Counter",
+            "attribute": "count_symptom_Bacterial meningitis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_10"
+        },
+        "Simple_Transition_9": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.03,
+                    "transition": "Symptom_9"
+                },
+                {
+                    "distribution": 0.97,
+                    "transition": "Simple_Transition_10"
+                }
+            ]
+        },
+        "Symptom_9": {
+            "type": "Symptom",
+            "symptom": "Swelling",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "76dc7b5b53cd42f51f6ad99ba8130651d2694cb2eb7a4f970031b8be",
+                    "display": "Bacterial meningitis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "113c720a638eb0c292bb643f9369c66d2bbbd7dd453f774c3fbe8f0d",
+                "display": "Swelling"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Swelling",
+                "display": "Swelling (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_9",
+            "nature": {
+                "Papilledema": 100
+            },
+            "location": {
+                "Optic_disc": 100
+            },
+            "location_main": "Eye"
+        },
+        "Inc_Symptom_10": {
+            "type": "Counter",
+            "attribute": "count_symptom_Bacterial meningitis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_8"
+        },
+        "Simple_Transition_10": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.05,
+                    "transition": "Symptom_10"
+                },
+                {
+                    "distribution": 0.95,
+                    "transition": "Simple_Transition_8"
+                }
+            ]
+        },
+        "Symptom_10": {
+            "type": "Symptom",
+            "symptom": "Seizures",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "76dc7b5b53cd42f51f6ad99ba8130651d2694cb2eb7a4f970031b8be",
+                    "display": "Bacterial meningitis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "46205510c23842bbb91fc6e83a9676c5f6d465ed8bc7a37b4e739554",
+                "display": "Seizures"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Seizures",
+                "display": "Seizures (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_10"
+        },
+        "Inc_Symptom_8": {
+            "type": "Counter",
+            "attribute": "count_symptom_Bacterial meningitis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_7"
+        },
+        "Simple_Transition_8": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.07,
+                    "transition": "Symptom_8"
+                },
+                {
+                    "distribution": 0.9299999999999999,
+                    "transition": "Simple_Transition_7"
+                }
+            ]
+        },
+        "Symptom_8": {
+            "type": "Symptom",
+            "symptom": "Hemiparesis",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "76dc7b5b53cd42f51f6ad99ba8130651d2694cb2eb7a4f970031b8be",
+                    "display": "Bacterial meningitis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "602a318cb1dbece3ed21ef97c94c8ec4afe57497b3e4f00a3176aa9d",
+                "display": "Hemiparesis"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Hemiparesis",
+                "display": "Hemiparesis (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_8"
+        },
+        "Inc_Symptom_7": {
+            "type": "Counter",
+            "attribute": "count_symptom_Bacterial meningitis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_4"
+        },
+        "Simple_Transition_7": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.23,
+                    "transition": "Symptom_7"
+                },
+                {
+                    "distribution": 0.77,
+                    "transition": "Simple_Transition_4"
+                }
+            ]
+        },
+        "Symptom_7": {
+            "type": "Symptom",
+            "symptom": "Altered_communication",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "76dc7b5b53cd42f51f6ad99ba8130651d2694cb2eb7a4f970031b8be",
+                    "display": "Bacterial meningitis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "c8a0ac0ac26b2e8e784648bcc6e91dc794000fa3868b07ff0da3ed51",
+                "display": "Altered_communication"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Altered_communication",
+                "display": "Altered_communication (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_7",
+            "nature": {
+                "Decreased_(Aphasia)": 100
+            }
+        },
+        "Inc_Symptom_4": {
+            "type": "Counter",
+            "attribute": "count_symptom_Bacterial meningitis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_6"
+        },
+        "Simple_Transition_4": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.26,
+                    "transition": "Symptom_4"
+                },
+                {
+                    "distribution": 0.74,
+                    "transition": "Simple_Transition_6"
+                }
+            ]
+        },
+        "Symptom_4": {
+            "type": "Symptom",
+            "symptom": "Eruption",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "76dc7b5b53cd42f51f6ad99ba8130651d2694cb2eb7a4f970031b8be",
+                    "display": "Bacterial meningitis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "9c05deea152bde37538960256281882c3db91355046ae3f663b022f3",
+                "display": "Eruption"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Eruption",
+                "display": "Eruption (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_4",
+            "nature": {
+                "Erythematous": 100
+            },
+            "location_main": "Skin"
+        },
+        "Inc_Symptom_6": {
+            "type": "Counter",
+            "attribute": "count_symptom_Bacterial meningitis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_2"
+        },
+        "Simple_Transition_6": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.33,
+                    "transition": "Symptom_6"
+                },
+                {
+                    "distribution": 0.6699999999999999,
+                    "transition": "Simple_Transition_2"
+                }
+            ]
+        },
+        "Symptom_6": {
+            "type": "Symptom",
+            "symptom": "Focal_neurological_symptoms",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "76dc7b5b53cd42f51f6ad99ba8130651d2694cb2eb7a4f970031b8be",
+                    "display": "Bacterial meningitis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "ed996614e2bd7219aef5be32d98d36a8632e595db2a623d1564df9aa",
+                "display": "Focal_neurological_symptoms"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Focal_neurological_symptoms",
+                "display": "Focal_neurological_symptoms (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_6"
+        },
+        "Inc_Symptom_2": {
+            "type": "Counter",
+            "attribute": "count_symptom_Bacterial meningitis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_5"
+        },
+        "Simple_Transition_2": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.74,
+                    "transition": "Symptom_2"
+                },
+                {
+                    "distribution": 0.26,
+                    "transition": "Simple_Transition_5"
+                }
+            ]
+        },
+        "Symptom_2": {
+            "type": "Symptom",
+            "symptom": "Nausea",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "76dc7b5b53cd42f51f6ad99ba8130651d2694cb2eb7a4f970031b8be",
+                    "display": "Bacterial meningitis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "4bfaad9ba1fc33a53577f561224e418da51d4a6ee49f73d1d830f919",
+                "display": "Nausea"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Nausea",
+                "display": "Nausea (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_2"
+        },
+        "Inc_Symptom_5": {
+            "type": "Counter",
+            "attribute": "count_symptom_Bacterial meningitis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_3"
+        },
+        "Simple_Transition_5": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.77,
+                    "transition": "Symptom_5"
+                },
+                {
+                    "distribution": 0.22999999999999998,
+                    "transition": "Simple_Transition_3"
+                }
+            ]
+        },
+        "Symptom_5": {
+            "type": "Symptom",
+            "symptom": "Fever",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "76dc7b5b53cd42f51f6ad99ba8130651d2694cb2eb7a4f970031b8be",
+                    "display": "Bacterial meningitis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "33202f1868c1e81499c012c676d1dbf167ded283c3a2dc9c34916408",
+                "display": "Fever"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Fever",
+                "display": "Fever (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_5"
+        },
+        "Inc_Symptom_3": {
+            "type": "Counter",
+            "attribute": "count_symptom_Bacterial meningitis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_1"
+        },
+        "Simple_Transition_3": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.83,
+                    "transition": "Symptom_3"
+                },
+                {
+                    "distribution": 0.17000000000000004,
+                    "transition": "Simple_Transition_1"
+                }
+            ]
+        },
+        "Symptom_3": {
+            "type": "Symptom",
+            "symptom": "Stiffness",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "76dc7b5b53cd42f51f6ad99ba8130651d2694cb2eb7a4f970031b8be",
+                    "display": "Bacterial meningitis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "996856bf861bd37d8b63fccfd7765f36e6eb9e955a952312bae8fd30",
+                "display": "Stiffness"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Stiffness",
+                "display": "Stiffness (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_3",
+            "location_main": "Neck"
+        },
+        "Inc_Symptom_1": {
+            "type": "Counter",
+            "attribute": "count_symptom_Bacterial meningitis",
+            "action": "increment",
+            "direct_transition": "End_Doctor_Visit"
+        },
+        "Check_Symptom_1": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "count_symptom_Bacterial meningitis",
+                        "operator": "<",
+                        "value": 1
+                    },
+                    "transition": "Symptom_1"
+                },
+                {
+                    "transition": "End_Doctor_Visit"
+                }
+            ]
+        },
+        "Simple_Transition_1": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.87,
+                    "transition": "Symptom_1"
+                },
+                {
+                    "distribution": 0.13,
+                    "transition": "Check_Symptom_1"
+                }
+            ]
+        },
+        "Symptom_1": {
+            "type": "Symptom",
+            "symptom": "Pain",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "76dc7b5b53cd42f51f6ad99ba8130651d2694cb2eb7a4f970031b8be",
+                    "display": "Bacterial meningitis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "b53997e3394341bf572e719d81807dccb1f18f2e0a7ba143787f64e0",
+                "display": "Pain"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Pain",
+                "display": "Pain (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_1",
+            "location_main": "Head (headache)"
+        },
+        "End_Doctor_Visit": {
+            "type": "EncounterEnd",
+            "direct_transition": "ConditionEnds"
+        },
+        "ConditionEnds": {
+            "type": "ConditionEnd",
+            "direct_transition": "TerminalState",
+            "condition_onset": "Bacterial_meningitis_Infection"
+        },
+        "TerminalState": {
+            "type": "Terminal"
+        }
+    }
+}

@@ -1,0 +1,539 @@
+{
+    "name": "Carpal tunnel syndrome",
+    "states": {
+        "Initial": {
+            "type": "Initial",
+            "direct_transition": "Check_History_Age_Attribute"
+        },
+        "No_Infection": {
+            "type": "Simple",
+            "direct_transition": "TerminalState"
+        },
+        "Check_History_Age_Attribute": {
+            "type": "Guard",
+            "allow": {
+                "condition_type": "Attribute",
+                "attribute": "age_time_to_the_end",
+                "operator": "<=",
+                "value": 0
+            },
+            "direct_transition": "Begin_Module_Transition"
+        },
+        "Begin_Module_Transition": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "M"
+                    },
+                    "transition": "Male"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "F"
+                    },
+                    "transition": "Female"
+                }
+            ]
+        },
+        "Male": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.2404,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.7596,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Men have an approx lifetime risk of Carpal tunnel syndrome of 24.04%."
+            ]
+        },
+        "Female": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.7211,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.27890000000000004,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Women have an approx lifetime risk of Carpal tunnel syndrome of 72.11%."
+            ]
+        },
+        "Check_Race": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-black"
+                    },
+                    "transition": "Race_race-ethnicity-black"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-hispanic"
+                    },
+                    "transition": "Race_race-ethnicity-hispanic"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-white"
+                    },
+                    "transition": "Race_race-ethnicity-white"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Native"
+                    },
+                    "transition": "Race_Native"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Asian"
+                    },
+                    "transition": "Race_Asian"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Other"
+                    },
+                    "transition": "Race_Other"
+                }
+            ]
+        },
+        "Race_race-ethnicity-black": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-hispanic": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-white": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Native": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Asian": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Other": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Potential_Infection": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 40
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 50
+                            }
+                        ]
+                    },
+                    "transition": "Ages_40_50"
+                }
+            ]
+        },
+        "Ages_40_50": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.8
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.19999999999999996
+                }
+            ]
+        },
+        "Doctor_Visit": {
+            "type": "Encounter",
+            "encounter_class": "ambulatory",
+            "reason": "Carpal tunnel syndrome_Infection",
+            "codes": [
+                {
+                    "system": "SNOMED-CT",
+                    "code": "185345009",
+                    "display": "Encounter for symptom"
+                }
+            ],
+            "direct_transition": "Carpal_tunnel_syndrome_Infection"
+        },
+        "Init_Symptom_Counter": {
+            "type": "SetAttribute",
+            "attribute": "count_symptom_Carpal tunnel syndrome",
+            "value": 0,
+            "direct_transition": "Simple_Transition_4"
+        },
+        "Carpal_tunnel_syndrome_Infection": {
+            "type": "ConditionOnset",
+            "codes": [
+                {
+                    "system": "sha224",
+                    "code": "ec228cc7c3e5c062190aa88e5b67a8626d2384e1e4ba7cf819fe3b43",
+                    "display": "Carpal tunnel syndrome"
+                }
+            ],
+            "target_encounter": "Doctor_Visit",
+            "remarks": [
+                null,
+                null
+            ],
+            "direct_transition": "Init_Symptom_Counter"
+        },
+        "Inc_Symptom_4": {
+            "type": "Counter",
+            "attribute": "count_symptom_Carpal tunnel syndrome",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_1"
+        },
+        "Simple_Transition_4": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.08,
+                    "transition": "Symptom_4"
+                },
+                {
+                    "distribution": 0.92,
+                    "transition": "Simple_Transition_1"
+                }
+            ]
+        },
+        "Symptom_4": {
+            "type": "Symptom",
+            "symptom": "Weakness",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "ec228cc7c3e5c062190aa88e5b67a8626d2384e1e4ba7cf819fe3b43",
+                    "display": "Carpal tunnel syndrome"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "55745b2b7bac210b4dd69514296d37add8b79e6db0e859e38241e0b3",
+                "display": "Weakness"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Weakness",
+                "display": "Weakness (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_4",
+            "location_main": "Forearm"
+        },
+        "Inc_Symptom_1": {
+            "type": "Counter",
+            "attribute": "count_symptom_Carpal tunnel syndrome",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_3"
+        },
+        "Simple_Transition_1": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.28,
+                    "transition": "Symptom_1"
+                },
+                {
+                    "distribution": 0.72,
+                    "transition": "Simple_Transition_3"
+                }
+            ]
+        },
+        "Symptom_1": {
+            "type": "Symptom",
+            "symptom": "Pain",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "ec228cc7c3e5c062190aa88e5b67a8626d2384e1e4ba7cf819fe3b43",
+                    "display": "Carpal tunnel syndrome"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "b53997e3394341bf572e719d81807dccb1f18f2e0a7ba143787f64e0",
+                "display": "Pain"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Pain",
+                "display": "Pain (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_1",
+            "location_main": "Neck"
+        },
+        "Inc_Symptom_3": {
+            "type": "Counter",
+            "attribute": "count_symptom_Carpal tunnel syndrome",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_5"
+        },
+        "Simple_Transition_3": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.373,
+                    "transition": "Symptom_3"
+                },
+                {
+                    "distribution": 0.627,
+                    "transition": "Simple_Transition_5"
+                }
+            ]
+        },
+        "Symptom_3": {
+            "type": "Symptom",
+            "symptom": "Altered_sensation",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "ec228cc7c3e5c062190aa88e5b67a8626d2384e1e4ba7cf819fe3b43",
+                    "display": "Carpal tunnel syndrome"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "349d4f43d1c6ab57d61e728405ce5d9617feb9380d99cf6063497cab",
+                "display": "Altered_sensation"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Altered_sensation",
+                "display": "Altered_sensation (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_3",
+            "location_main": "Handpalm, thumb, pointing finger, middle finger"
+        },
+        "Inc_Symptom_5": {
+            "type": "Counter",
+            "attribute": "count_symptom_Carpal tunnel syndrome",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_2"
+        },
+        "Simple_Transition_5": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.589,
+                    "transition": "Symptom_5"
+                },
+                {
+                    "distribution": 0.41100000000000003,
+                    "transition": "Simple_Transition_2"
+                }
+            ]
+        },
+        "Symptom_5": {
+            "type": "Symptom",
+            "symptom": "Reduced_agility",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "ec228cc7c3e5c062190aa88e5b67a8626d2384e1e4ba7cf819fe3b43",
+                    "display": "Carpal tunnel syndrome"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "c57cbed096aa8e6db77f3c1084d23db7ce849a156c51bb0ec7d4b95f",
+                "display": "Reduced_agility"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Reduced_agility",
+                "display": "Reduced_agility (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_5",
+            "location_main": "Hand"
+        },
+        "Inc_Symptom_2": {
+            "type": "Counter",
+            "attribute": "count_symptom_Carpal tunnel syndrome",
+            "action": "increment",
+            "direct_transition": "End_Doctor_Visit"
+        },
+        "Check_Symptom_2": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "count_symptom_Carpal tunnel syndrome",
+                        "operator": "<",
+                        "value": 1
+                    },
+                    "transition": "Symptom_2"
+                },
+                {
+                    "transition": "End_Doctor_Visit"
+                }
+            ]
+        },
+        "Simple_Transition_2": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.7070000000000001,
+                    "transition": "Symptom_2"
+                },
+                {
+                    "distribution": 0.2929999999999999,
+                    "transition": "Check_Symptom_2"
+                }
+            ]
+        },
+        "Symptom_2": {
+            "type": "Symptom",
+            "symptom": "Altered_movement",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "ec228cc7c3e5c062190aa88e5b67a8626d2384e1e4ba7cf819fe3b43",
+                    "display": "Carpal tunnel syndrome"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "36283203f8075204b5e5d6fc61b18ac25344a44037adbe6241afec2a",
+                "display": "Altered_movement"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Altered_movement",
+                "display": "Altered_movement (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_2",
+            "nature": {
+                "Tremor": 100
+            },
+            "location_main": "Hands"
+        },
+        "End_Doctor_Visit": {
+            "type": "EncounterEnd",
+            "direct_transition": "ConditionEnds"
+        },
+        "ConditionEnds": {
+            "type": "ConditionEnd",
+            "direct_transition": "TerminalState",
+            "condition_onset": "Carpal_tunnel_syndrome_Infection"
+        },
+        "TerminalState": {
+            "type": "Terminal"
+        }
+    }
+}

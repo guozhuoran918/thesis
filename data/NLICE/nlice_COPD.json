@@ -1,0 +1,544 @@
+{
+    "name": "COPD",
+    "states": {
+        "Initial": {
+            "type": "Initial",
+            "direct_transition": "Check_History_Age_Attribute"
+        },
+        "No_Infection": {
+            "type": "Simple",
+            "direct_transition": "TerminalState"
+        },
+        "Check_History_Age_Attribute": {
+            "type": "Guard",
+            "allow": {
+                "condition_type": "Attribute",
+                "attribute": "age_time_to_the_end",
+                "operator": "<=",
+                "value": 0
+            },
+            "direct_transition": "Begin_Module_Transition"
+        },
+        "Begin_Module_Transition": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "M"
+                    },
+                    "transition": "Male"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "F"
+                    },
+                    "transition": "Female"
+                }
+            ]
+        },
+        "Male": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.875,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.125,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Men have an approx lifetime risk of COPD of 87.5%."
+            ]
+        },
+        "Female": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.21100000000000002,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.7889999999999999,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Women have an approx lifetime risk of COPD of 21.1%."
+            ]
+        },
+        "Check_Race": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-black"
+                    },
+                    "transition": "Race_race-ethnicity-black"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-hispanic"
+                    },
+                    "transition": "Race_race-ethnicity-hispanic"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-white"
+                    },
+                    "transition": "Race_race-ethnicity-white"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Native"
+                    },
+                    "transition": "Race_Native"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Asian"
+                    },
+                    "transition": "Race_Asian"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Other"
+                    },
+                    "transition": "Race_Other"
+                }
+            ]
+        },
+        "Race_race-ethnicity-black": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-hispanic": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-white": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Native": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Asian": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Other": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Potential_Infection": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 0
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 40
+                            }
+                        ]
+                    },
+                    "transition": "Ages_0_40"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 40
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 64
+                            }
+                        ]
+                    },
+                    "transition": "Ages_40_64"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Age",
+                        "operator": ">=",
+                        "unit": "years",
+                        "quantity": 65
+                    },
+                    "transition": "Age_65_More"
+                }
+            ]
+        },
+        "Ages_0_40": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.126
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.874
+                }
+            ]
+        },
+        "Ages_40_64": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.32159999999999994
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.6784000000000001
+                }
+            ]
+        },
+        "Age_65_More": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.5569
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.44310000000000005
+                }
+            ]
+        },
+        "Doctor_Visit": {
+            "type": "Encounter",
+            "encounter_class": "ambulatory",
+            "reason": "COPD_Infection",
+            "codes": [
+                {
+                    "system": "SNOMED-CT",
+                    "code": "185345009",
+                    "display": "Encounter for symptom"
+                }
+            ],
+            "direct_transition": "COPD_Infection"
+        },
+        "Init_Symptom_Counter": {
+            "type": "SetAttribute",
+            "attribute": "count_symptom_COPD",
+            "value": 0,
+            "direct_transition": "Simple_Transition_3"
+        },
+        "COPD_Infection": {
+            "type": "ConditionOnset",
+            "codes": [
+                {
+                    "system": "sha224",
+                    "code": "7c3c56908bd61a05bd6c9dd6f70de91fdee2d58658e649109f518f25",
+                    "display": "COPD"
+                }
+            ],
+            "target_encounter": "Doctor_Visit",
+            "remarks": [
+                null,
+                null
+            ],
+            "direct_transition": "Init_Symptom_Counter"
+        },
+        "Inc_Symptom_3": {
+            "type": "Counter",
+            "attribute": "count_symptom_COPD",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_1"
+        },
+        "Simple_Transition_3": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.283,
+                    "transition": "Symptom_3"
+                },
+                {
+                    "distribution": 0.7170000000000001,
+                    "transition": "Simple_Transition_1"
+                }
+            ]
+        },
+        "Symptom_3": {
+            "type": "Symptom",
+            "symptom": "Tightness",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7c3c56908bd61a05bd6c9dd6f70de91fdee2d58658e649109f518f25",
+                    "display": "COPD"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "552261d3f8b9dd8112627bd9772da572b693ce793e0a662c02bfc100",
+                "display": "Tightness"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Tightness",
+                "display": "Tightness (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_3",
+            "location_main": "Chest"
+        },
+        "Inc_Symptom_1": {
+            "type": "Counter",
+            "attribute": "count_symptom_COPD",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_2"
+        },
+        "Simple_Transition_1": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.417,
+                    "transition": "Symptom_1"
+                },
+                {
+                    "distribution": 0.583,
+                    "transition": "Simple_Transition_2"
+                }
+            ]
+        },
+        "Symptom_1": {
+            "type": "Symptom",
+            "symptom": "Altered_breathing",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7c3c56908bd61a05bd6c9dd6f70de91fdee2d58658e649109f518f25",
+                    "display": "COPD"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "4adee241f83fe4d9f59f73fa0eed67e8d37b09cacdfd5f11f0dccb33",
+                "display": "Altered_breathing"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Altered_breathing",
+                "display": "Altered_breathing (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_1",
+            "nature": {
+                "Wheezing": 100
+            }
+        },
+        "Inc_Symptom_2": {
+            "type": "Counter",
+            "attribute": "count_symptom_COPD",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_4"
+        },
+        "Simple_Transition_2": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.587,
+                    "transition": "Symptom_2"
+                },
+                {
+                    "distribution": 0.41300000000000003,
+                    "transition": "Simple_Transition_4"
+                }
+            ]
+        },
+        "Symptom_2": {
+            "type": "Symptom",
+            "symptom": "Cough",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7c3c56908bd61a05bd6c9dd6f70de91fdee2d58658e649109f518f25",
+                    "display": "COPD"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "309a5349d71e883fa7fa92df41e8a25d21a4f2eb53d8eaf2c0e8dc53",
+                "display": "Cough"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Cough",
+                "display": "Cough (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_2"
+        },
+        "Inc_Symptom_4": {
+            "type": "Counter",
+            "attribute": "count_symptom_COPD",
+            "action": "increment",
+            "direct_transition": "End_Doctor_Visit"
+        },
+        "Check_Symptom_4": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "count_symptom_COPD",
+                        "operator": "<",
+                        "value": 1
+                    },
+                    "transition": "Symptom_4"
+                },
+                {
+                    "transition": "End_Doctor_Visit"
+                }
+            ]
+        },
+        "Simple_Transition_4": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.704,
+                    "transition": "Symptom_4"
+                },
+                {
+                    "distribution": 0.29600000000000004,
+                    "transition": "Check_Symptom_4"
+                }
+            ]
+        },
+        "Symptom_4": {
+            "type": "Symptom",
+            "symptom": "Fatigue",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7c3c56908bd61a05bd6c9dd6f70de91fdee2d58658e649109f518f25",
+                    "display": "COPD"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "2fcd1411fe5c281066f8fb8288ec437e3e77cac98170de6c40edfb05",
+                "display": "Fatigue"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Fatigue",
+                "display": "Fatigue (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_4"
+        },
+        "End_Doctor_Visit": {
+            "type": "EncounterEnd",
+            "direct_transition": "ConditionEnds"
+        },
+        "ConditionEnds": {
+            "type": "ConditionEnd",
+            "direct_transition": "TerminalState",
+            "condition_onset": "COPD_Infection"
+        },
+        "TerminalState": {
+            "type": "Terminal"
+        }
+    }
+}

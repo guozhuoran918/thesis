@@ -1,0 +1,938 @@
+{
+    "name": "Migraine",
+    "states": {
+        "Initial": {
+            "type": "Initial",
+            "direct_transition": "Check_History_Age_Attribute"
+        },
+        "No_Infection": {
+            "type": "Simple",
+            "direct_transition": "TerminalState"
+        },
+        "Check_History_Age_Attribute": {
+            "type": "Guard",
+            "allow": {
+                "condition_type": "Attribute",
+                "attribute": "age_time_to_the_end",
+                "operator": "<=",
+                "value": 0
+            },
+            "direct_transition": "Begin_Module_Transition"
+        },
+        "Begin_Module_Transition": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "M"
+                    },
+                    "transition": "Male"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "F"
+                    },
+                    "transition": "Female"
+                }
+            ]
+        },
+        "Male": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.086,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.914,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Men have an approx lifetime risk of Migraine of 8.6%."
+            ]
+        },
+        "Female": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.175,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.825,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Women have an approx lifetime risk of Migraine of 17.5%."
+            ]
+        },
+        "Check_Race": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-black"
+                    },
+                    "transition": "Race_race-ethnicity-black"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-hispanic"
+                    },
+                    "transition": "Race_race-ethnicity-hispanic"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-white"
+                    },
+                    "transition": "Race_race-ethnicity-white"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Native"
+                    },
+                    "transition": "Race_Native"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Asian"
+                    },
+                    "transition": "Race_Asian"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Other"
+                    },
+                    "transition": "Race_Other"
+                }
+            ]
+        },
+        "Race_race-ethnicity-black": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-hispanic": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-white": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Native": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Asian": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Other": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Potential_Infection": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 0
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 9
+                            }
+                        ]
+                    },
+                    "transition": "Ages_0_9"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 10
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 19
+                            }
+                        ]
+                    },
+                    "transition": "Ages_10_19"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 20
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 29
+                            }
+                        ]
+                    },
+                    "transition": "Ages_20_29"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 30
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 39
+                            }
+                        ]
+                    },
+                    "transition": "Ages_30_39"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 40
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 49
+                            }
+                        ]
+                    },
+                    "transition": "Ages_40_49"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 50
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 59
+                            }
+                        ]
+                    },
+                    "transition": "Ages_50_59"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Age",
+                        "operator": ">=",
+                        "unit": "years",
+                        "quantity": 60
+                    },
+                    "transition": "Age_60_More"
+                }
+            ]
+        },
+        "Ages_0_9": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.04
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.96
+                }
+            ]
+        },
+        "Ages_10_19": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.4
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.6
+                }
+            ]
+        },
+        "Ages_20_29": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.26
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.74
+                }
+            ]
+        },
+        "Ages_30_39": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.18
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.8200000000000001
+                }
+            ]
+        },
+        "Ages_40_49": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.064
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.9359999999999999
+                }
+            ]
+        },
+        "Ages_50_59": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.034
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.966
+                }
+            ]
+        },
+        "Age_60_More": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.017
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.983
+                }
+            ]
+        },
+        "Doctor_Visit": {
+            "type": "Encounter",
+            "encounter_class": "ambulatory",
+            "reason": "Migraine_Infection",
+            "codes": [
+                {
+                    "system": "SNOMED-CT",
+                    "code": "185345009",
+                    "display": "Encounter for symptom"
+                }
+            ],
+            "direct_transition": "Migraine_Infection"
+        },
+        "Init_Symptom_Counter": {
+            "type": "SetAttribute",
+            "attribute": "count_symptom_Migraine",
+            "value": 0,
+            "direct_transition": "Simple_Transition_7"
+        },
+        "Migraine_Infection": {
+            "type": "ConditionOnset",
+            "codes": [
+                {
+                    "system": "sha224",
+                    "code": "be0e32a1c80918a53ed94490ec351b0f0b11d4c582ada9df71a3dc79",
+                    "display": "Migraine"
+                }
+            ],
+            "target_encounter": "Doctor_Visit",
+            "remarks": [
+                null,
+                null
+            ],
+            "direct_transition": "Init_Symptom_Counter"
+        },
+        "Inc_Symptom_7": {
+            "type": "Counter",
+            "attribute": "count_symptom_Migraine",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_6"
+        },
+        "Simple_Transition_7": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.001,
+                    "transition": "Symptom_7"
+                },
+                {
+                    "distribution": 0.999,
+                    "transition": "Simple_Transition_6"
+                }
+            ]
+        },
+        "Symptom_7": {
+            "type": "Symptom",
+            "symptom": "Altered_vision",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "be0e32a1c80918a53ed94490ec351b0f0b11d4c582ada9df71a3dc79",
+                    "display": "Migraine"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "fd7922583a46857c87bba429132d7559af3f70200c1ff1d3a051b19f",
+                "display": "Altered_vision"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Altered_vision",
+                "display": "Altered_vision (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_7",
+            "nature": {
+                "Double": 100
+            }
+        },
+        "Inc_Symptom_6": {
+            "type": "Counter",
+            "attribute": "count_symptom_Migraine",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_8"
+        },
+        "Simple_Transition_6": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.0011,
+                    "transition": "Symptom_6"
+                },
+                {
+                    "distribution": 0.9989,
+                    "transition": "Simple_Transition_8"
+                }
+            ]
+        },
+        "Symptom_6": {
+            "type": "Symptom",
+            "symptom": "Weakness",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "be0e32a1c80918a53ed94490ec351b0f0b11d4c582ada9df71a3dc79",
+                    "display": "Migraine"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "55745b2b7bac210b4dd69514296d37add8b79e6db0e859e38241e0b3",
+                "display": "Weakness"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Weakness",
+                "display": "Weakness (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_6",
+            "location_main": "Limb"
+        },
+        "Inc_Symptom_8": {
+            "type": "Counter",
+            "attribute": "count_symptom_Migraine",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_4"
+        },
+        "Simple_Transition_8": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.0011,
+                    "transition": "Symptom_8"
+                },
+                {
+                    "distribution": 0.9989,
+                    "transition": "Simple_Transition_4"
+                }
+            ]
+        },
+        "Symptom_8": {
+            "type": "Symptom",
+            "symptom": "Stiffness",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "be0e32a1c80918a53ed94490ec351b0f0b11d4c582ada9df71a3dc79",
+                    "display": "Migraine"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "996856bf861bd37d8b63fccfd7765f36e6eb9e955a952312bae8fd30",
+                "display": "Stiffness"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Stiffness",
+                "display": "Stiffness (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_8",
+            "location_main": "Neck"
+        },
+        "Inc_Symptom_4": {
+            "type": "Counter",
+            "attribute": "count_symptom_Migraine",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_5"
+        },
+        "Simple_Transition_4": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.0012,
+                    "transition": "Symptom_4"
+                },
+                {
+                    "distribution": 0.9988,
+                    "transition": "Simple_Transition_5"
+                }
+            ]
+        },
+        "Symptom_4": {
+            "type": "Symptom",
+            "symptom": "Altered_mental_state",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "be0e32a1c80918a53ed94490ec351b0f0b11d4c582ada9df71a3dc79",
+                    "display": "Migraine"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "cd12201509979a6e72f066cb2769d57ba054b22501e2d51e5931d32f",
+                "display": "Altered_mental_state"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Altered_mental_state",
+                "display": "Altered_mental_state (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_4",
+            "nature": {
+                "Loss_of_consciousness": 100
+            }
+        },
+        "Inc_Symptom_5": {
+            "type": "Counter",
+            "attribute": "count_symptom_Migraine",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_9"
+        },
+        "Simple_Transition_5": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.0013,
+                    "transition": "Symptom_5"
+                },
+                {
+                    "distribution": 0.9987,
+                    "transition": "Simple_Transition_9"
+                }
+            ]
+        },
+        "Symptom_5": {
+            "type": "Symptom",
+            "symptom": "Aura",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "be0e32a1c80918a53ed94490ec351b0f0b11d4c582ada9df71a3dc79",
+                    "display": "Migraine"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "eaab6f8d5f185ea81bdecfebe311ffd71567c24ea8294f9e0d1ff583",
+                "display": "Aura"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Aura",
+                "display": "Aura (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_5"
+        },
+        "Inc_Symptom_9": {
+            "type": "Counter",
+            "attribute": "count_symptom_Migraine",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_3"
+        },
+        "Simple_Transition_9": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.013000000000000001,
+                    "transition": "Symptom_9"
+                },
+                {
+                    "distribution": 0.987,
+                    "transition": "Simple_Transition_3"
+                }
+            ]
+        },
+        "Symptom_9": {
+            "type": "Symptom",
+            "symptom": "Focal_neurological_symptoms",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "be0e32a1c80918a53ed94490ec351b0f0b11d4c582ada9df71a3dc79",
+                    "display": "Migraine"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "ed996614e2bd7219aef5be32d98d36a8632e595db2a623d1564df9aa",
+                "display": "Focal_neurological_symptoms"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Focal_neurological_symptoms",
+                "display": "Focal_neurological_symptoms (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_9"
+        },
+        "Inc_Symptom_3": {
+            "type": "Counter",
+            "attribute": "count_symptom_Migraine",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_2"
+        },
+        "Simple_Transition_3": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.409,
+                    "transition": "Symptom_3"
+                },
+                {
+                    "distribution": 0.591,
+                    "transition": "Simple_Transition_2"
+                }
+            ]
+        },
+        "Symptom_3": {
+            "type": "Symptom",
+            "symptom": "Vomiting",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "be0e32a1c80918a53ed94490ec351b0f0b11d4c582ada9df71a3dc79",
+                    "display": "Migraine"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "b06b5017765be3c38635646c097b44bec54bd51e74f27a5da7e12d6e",
+                "display": "Vomiting"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Vomiting",
+                "display": "Vomiting (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_3"
+        },
+        "Inc_Symptom_2": {
+            "type": "Counter",
+            "attribute": "count_symptom_Migraine",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_1"
+        },
+        "Simple_Transition_2": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.7759999999999999,
+                    "transition": "Symptom_2"
+                },
+                {
+                    "distribution": 0.2240000000000001,
+                    "transition": "Simple_Transition_1"
+                }
+            ]
+        },
+        "Symptom_2": {
+            "type": "Symptom",
+            "symptom": "Nausea",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "be0e32a1c80918a53ed94490ec351b0f0b11d4c582ada9df71a3dc79",
+                    "display": "Migraine"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "4bfaad9ba1fc33a53577f561224e418da51d4a6ee49f73d1d830f919",
+                "display": "Nausea"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Nausea",
+                "display": "Nausea (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_2"
+        },
+        "Inc_Symptom_1": {
+            "type": "Counter",
+            "attribute": "count_symptom_Migraine",
+            "action": "increment",
+            "direct_transition": "End_Doctor_Visit"
+        },
+        "Check_Symptom_1": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "count_symptom_Migraine",
+                        "operator": "<",
+                        "value": 1
+                    },
+                    "transition": "Symptom_1"
+                },
+                {
+                    "transition": "End_Doctor_Visit"
+                }
+            ]
+        },
+        "Simple_Transition_1": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.9850545923120183,
+                    "transition": "Symptom_1"
+                },
+                {
+                    "distribution": 0.014945407687981693,
+                    "transition": "Check_Symptom_1"
+                }
+            ]
+        },
+        "Symptom_1": {
+            "type": "Symptom",
+            "symptom": "Pain",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "be0e32a1c80918a53ed94490ec351b0f0b11d4c582ada9df71a3dc79",
+                    "display": "Migraine"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "b53997e3394341bf572e719d81807dccb1f18f2e0a7ba143787f64e0",
+                "display": "Pain"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Pain",
+                "display": "Pain (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_1",
+            "vas": {
+                "4": 4.4,
+                "5": 10.8,
+                "6": 13.5,
+                "7": 20.8,
+                "8": 24.5,
+                "9": 17.5,
+                "10": 60.9
+            },
+            "nature": {
+                "Throbbing": 90.9,
+                "Stabbing": 70.9,
+                "Pressure": 90.1,
+                "Aching": 86.5
+            },
+            "location": {
+                "Unilateral": 66.57,
+                "Bilateral": 33.34
+            },
+            "location_main": "Head (headache)",
+            "duration": {
+                "4-24h": 65.5,
+                "24-72h": 21.3,
+                "48-72h": 13.1
+            },
+            "onset": {
+                "Hyperacute": 100.0
+            }
+        },
+        "End_Doctor_Visit": {
+            "type": "EncounterEnd",
+            "direct_transition": "ConditionEnds"
+        },
+        "ConditionEnds": {
+            "type": "ConditionEnd",
+            "direct_transition": "TerminalState",
+            "condition_onset": "Migraine_Infection"
+        },
+        "TerminalState": {
+            "type": "Terminal"
+        }
+    }
+}

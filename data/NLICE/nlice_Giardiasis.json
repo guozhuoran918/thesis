@@ -1,0 +1,885 @@
+{
+    "name": "Giardiasis",
+    "states": {
+        "Initial": {
+            "type": "Initial",
+            "direct_transition": "Check_History_Age_Attribute"
+        },
+        "No_Infection": {
+            "type": "Simple",
+            "direct_transition": "TerminalState"
+        },
+        "Check_History_Age_Attribute": {
+            "type": "Guard",
+            "allow": {
+                "condition_type": "Attribute",
+                "attribute": "age_time_to_the_end",
+                "operator": "<=",
+                "value": 0
+            },
+            "direct_transition": "Begin_Module_Transition"
+        },
+        "Begin_Module_Transition": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "M"
+                    },
+                    "transition": "Male"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "F"
+                    },
+                    "transition": "Female"
+                }
+            ]
+        },
+        "Male": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.39,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.61,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Men have an approx lifetime risk of Giardiasis of 39.0%."
+            ]
+        },
+        "Female": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.61,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.39,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Women have an approx lifetime risk of Giardiasis of 61.0%."
+            ]
+        },
+        "Check_Race": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-black"
+                    },
+                    "transition": "Race_race-ethnicity-black"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-hispanic"
+                    },
+                    "transition": "Race_race-ethnicity-hispanic"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-white"
+                    },
+                    "transition": "Race_race-ethnicity-white"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Native"
+                    },
+                    "transition": "Race_Native"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Asian"
+                    },
+                    "transition": "Race_Asian"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Other"
+                    },
+                    "transition": "Race_Other"
+                }
+            ]
+        },
+        "Race_race-ethnicity-black": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-hispanic": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-white": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Native": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Asian": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Other": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Potential_Infection": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 0
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 15
+                            }
+                        ]
+                    },
+                    "transition": "Ages_0_15"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 15
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 24
+                            }
+                        ]
+                    },
+                    "transition": "Ages_15_24"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 25
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 34
+                            }
+                        ]
+                    },
+                    "transition": "Ages_25_34"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 35
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 44
+                            }
+                        ]
+                    },
+                    "transition": "Ages_35_44"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 45
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 55
+                            }
+                        ]
+                    },
+                    "transition": "Ages_45_55"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Age",
+                        "operator": ">=",
+                        "unit": "years",
+                        "quantity": 55
+                    },
+                    "transition": "Age_55_More"
+                }
+            ]
+        },
+        "Ages_0_15": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.16570000000000001
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.8343
+                }
+            ]
+        },
+        "Ages_15_24": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.16140000000000002
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.8386
+                }
+            ]
+        },
+        "Ages_25_34": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.1794
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.8206
+                }
+            ]
+        },
+        "Ages_35_44": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.168
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.832
+                }
+            ]
+        },
+        "Ages_45_55": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.1598
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.8402000000000001
+                }
+            ]
+        },
+        "Age_55_More": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.16570000000000001
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.8343
+                }
+            ]
+        },
+        "Doctor_Visit": {
+            "type": "Encounter",
+            "encounter_class": "ambulatory",
+            "reason": "Giardiasis_Infection",
+            "codes": [
+                {
+                    "system": "SNOMED-CT",
+                    "code": "185345009",
+                    "display": "Encounter for symptom"
+                }
+            ],
+            "direct_transition": "Giardiasis_Infection"
+        },
+        "Init_Symptom_Counter": {
+            "type": "SetAttribute",
+            "attribute": "count_symptom_Giardiasis",
+            "value": 0,
+            "direct_transition": "Simple_Transition_3"
+        },
+        "Giardiasis_Infection": {
+            "type": "ConditionOnset",
+            "codes": [
+                {
+                    "system": "sha224",
+                    "code": "c7691804dea484731a4b91866fe8da298a1cdb9d95bde8ac3fc48b70",
+                    "display": "Giardiasis"
+                }
+            ],
+            "target_encounter": "Doctor_Visit",
+            "remarks": [
+                null,
+                null
+            ],
+            "direct_transition": "Init_Symptom_Counter"
+        },
+        "Inc_Symptom_3": {
+            "type": "Counter",
+            "attribute": "count_symptom_Giardiasis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_5"
+        },
+        "Simple_Transition_3": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.075,
+                    "transition": "Symptom_3"
+                },
+                {
+                    "distribution": 0.925,
+                    "transition": "Simple_Transition_5"
+                }
+            ]
+        },
+        "Symptom_3": {
+            "type": "Symptom",
+            "symptom": "Distension",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "c7691804dea484731a4b91866fe8da298a1cdb9d95bde8ac3fc48b70",
+                    "display": "Giardiasis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "168470ec86bd9e41446a7a76a67ff7356474ddb7395d3e72c0665a10",
+                "display": "Distension"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Distension",
+                "display": "Distension (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_3",
+            "location_main": "Abdomen"
+        },
+        "Inc_Symptom_5": {
+            "type": "Counter",
+            "attribute": "count_symptom_Giardiasis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_1"
+        },
+        "Simple_Transition_5": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.0889,
+                    "transition": "Symptom_5"
+                },
+                {
+                    "distribution": 0.9111,
+                    "transition": "Simple_Transition_1"
+                }
+            ]
+        },
+        "Symptom_5": {
+            "type": "Symptom",
+            "symptom": "Constipation",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "c7691804dea484731a4b91866fe8da298a1cdb9d95bde8ac3fc48b70",
+                    "display": "Giardiasis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "1d8232f64303899fda48ad10f14a097d318512868f367f1418106473",
+                "display": "Constipation"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Constipation",
+                "display": "Constipation (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_5"
+        },
+        "Inc_Symptom_1": {
+            "type": "Counter",
+            "attribute": "count_symptom_Giardiasis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_4"
+        },
+        "Simple_Transition_1": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.11349999999999999,
+                    "transition": "Symptom_1"
+                },
+                {
+                    "distribution": 0.8865000000000001,
+                    "transition": "Simple_Transition_4"
+                }
+            ]
+        },
+        "Symptom_1": {
+            "type": "Symptom",
+            "symptom": "Eruption",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "c7691804dea484731a4b91866fe8da298a1cdb9d95bde8ac3fc48b70",
+                    "display": "Giardiasis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "9c05deea152bde37538960256281882c3db91355046ae3f663b022f3",
+                "display": "Eruption"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Eruption",
+                "display": "Eruption (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_1",
+            "nature": {
+                "Erythematous": 100.0
+            },
+            "location_main": "Skin"
+        },
+        "Inc_Symptom_4": {
+            "type": "Counter",
+            "attribute": "count_symptom_Giardiasis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_6"
+        },
+        "Simple_Transition_4": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.1848,
+                    "transition": "Symptom_4"
+                },
+                {
+                    "distribution": 0.8152,
+                    "transition": "Simple_Transition_6"
+                }
+            ]
+        },
+        "Symptom_4": {
+            "type": "Symptom",
+            "symptom": "Alterred_stool",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "c7691804dea484731a4b91866fe8da298a1cdb9d95bde8ac3fc48b70",
+                    "display": "Giardiasis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "81c0584d81b50b9e261de2e562ab75d8d2e05e32a677bb82dd855e3f",
+                "display": "Alterred_stool"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Alterred_stool",
+                "display": "Alterred_stool (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_4",
+            "nature": {
+                "Diarrhea": 100
+            }
+        },
+        "Inc_Symptom_6": {
+            "type": "Counter",
+            "attribute": "count_symptom_Giardiasis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_7"
+        },
+        "Simple_Transition_6": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.256,
+                    "transition": "Symptom_6"
+                },
+                {
+                    "distribution": 0.744,
+                    "transition": "Simple_Transition_7"
+                }
+            ]
+        },
+        "Symptom_6": {
+            "type": "Symptom",
+            "symptom": "Vomitting",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "c7691804dea484731a4b91866fe8da298a1cdb9d95bde8ac3fc48b70",
+                    "display": "Giardiasis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "56e4798c2b50f76afaefeda8dba46c89c82d0b77b666fe7112046d6e",
+                "display": "Vomitting"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Vomitting",
+                "display": "Vomitting (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_6"
+        },
+        "Inc_Symptom_7": {
+            "type": "Counter",
+            "attribute": "count_symptom_Giardiasis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_2"
+        },
+        "Simple_Transition_7": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.4252,
+                    "transition": "Symptom_7"
+                },
+                {
+                    "distribution": 0.5748,
+                    "transition": "Simple_Transition_2"
+                }
+            ]
+        },
+        "Symptom_7": {
+            "type": "Symptom",
+            "symptom": "Nausea",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "c7691804dea484731a4b91866fe8da298a1cdb9d95bde8ac3fc48b70",
+                    "display": "Giardiasis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "4bfaad9ba1fc33a53577f561224e418da51d4a6ee49f73d1d830f919",
+                "display": "Nausea"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Nausea",
+                "display": "Nausea (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_7"
+        },
+        "Inc_Symptom_2": {
+            "type": "Counter",
+            "attribute": "count_symptom_Giardiasis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_9"
+        },
+        "Simple_Transition_2": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.4617,
+                    "transition": "Symptom_2"
+                },
+                {
+                    "distribution": 0.5383,
+                    "transition": "Simple_Transition_9"
+                }
+            ]
+        },
+        "Symptom_2": {
+            "type": "Symptom",
+            "symptom": "Enlargement",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "c7691804dea484731a4b91866fe8da298a1cdb9d95bde8ac3fc48b70",
+                    "display": "Giardiasis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "bcd3df3c4eaa1a96735b1fffecbb334e5367bacd3cb12cf1c20db8df",
+                "display": "Enlargement"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Enlargement",
+                "display": "Enlargement (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_2",
+            "location_main": "Liver"
+        },
+        "Inc_Symptom_9": {
+            "type": "Counter",
+            "attribute": "count_symptom_Giardiasis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_8"
+        },
+        "Simple_Transition_9": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.6907,
+                    "transition": "Symptom_9"
+                },
+                {
+                    "distribution": 0.3093,
+                    "transition": "Simple_Transition_8"
+                }
+            ]
+        },
+        "Symptom_9": {
+            "type": "Symptom",
+            "symptom": "Pain",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "c7691804dea484731a4b91866fe8da298a1cdb9d95bde8ac3fc48b70",
+                    "display": "Giardiasis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "b53997e3394341bf572e719d81807dccb1f18f2e0a7ba143787f64e0",
+                "display": "Pain"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Pain",
+                "display": "Pain (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_9",
+            "location_main": "Abdomen",
+            "excitation": {
+                "Palpation": 54.69
+            }
+        },
+        "Inc_Symptom_8": {
+            "type": "Counter",
+            "attribute": "count_symptom_Giardiasis",
+            "action": "increment",
+            "direct_transition": "End_Doctor_Visit"
+        },
+        "Check_Symptom_8": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "count_symptom_Giardiasis",
+                        "operator": "<",
+                        "value": 1
+                    },
+                    "transition": "Symptom_8"
+                },
+                {
+                    "transition": "End_Doctor_Visit"
+                }
+            ]
+        },
+        "Simple_Transition_8": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.7124000000000001,
+                    "transition": "Symptom_8"
+                },
+                {
+                    "distribution": 0.28759999999999986,
+                    "transition": "Check_Symptom_8"
+                }
+            ]
+        },
+        "Symptom_8": {
+            "type": "Symptom",
+            "symptom": "Altered_appetite",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "c7691804dea484731a4b91866fe8da298a1cdb9d95bde8ac3fc48b70",
+                    "display": "Giardiasis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "37880d6bad43977d87e574e871787f45bf112a38f4bb07a5368b78fb",
+                "display": "Altered_appetite"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Altered_appetite",
+                "display": "Altered_appetite (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_8",
+            "nature": {
+                "Decrease_(anorexia)": 100
+            }
+        },
+        "End_Doctor_Visit": {
+            "type": "EncounterEnd",
+            "direct_transition": "ConditionEnds"
+        },
+        "ConditionEnds": {
+            "type": "ConditionEnd",
+            "direct_transition": "TerminalState",
+            "condition_onset": "Giardiasis_Infection"
+        },
+        "TerminalState": {
+            "type": "Terminal"
+        }
+    }
+}

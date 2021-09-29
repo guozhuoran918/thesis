@@ -1,0 +1,672 @@
+{
+    "name": "Norovirus gastroenteritis",
+    "states": {
+        "Initial": {
+            "type": "Initial",
+            "direct_transition": "Check_History_Age_Attribute"
+        },
+        "No_Infection": {
+            "type": "Simple",
+            "direct_transition": "TerminalState"
+        },
+        "Check_History_Age_Attribute": {
+            "type": "Guard",
+            "allow": {
+                "condition_type": "Attribute",
+                "attribute": "age_time_to_the_end",
+                "operator": "<=",
+                "value": 0
+            },
+            "direct_transition": "Begin_Module_Transition"
+        },
+        "Begin_Module_Transition": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "M"
+                    },
+                    "transition": "Male"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "F"
+                    },
+                    "transition": "Female"
+                }
+            ]
+        },
+        "Male": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.5529999999999999,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.44700000000000006,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Men have an approx lifetime risk of Norovirus gastroenteritis of 55.3%."
+            ]
+        },
+        "Female": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.447,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.5529999999999999,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Women have an approx lifetime risk of Norovirus gastroenteritis of 44.7%."
+            ]
+        },
+        "Check_Race": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-black"
+                    },
+                    "transition": "Race_race-ethnicity-black"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-hispanic"
+                    },
+                    "transition": "Race_race-ethnicity-hispanic"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-white"
+                    },
+                    "transition": "Race_race-ethnicity-white"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Native"
+                    },
+                    "transition": "Race_Native"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Asian"
+                    },
+                    "transition": "Race_Asian"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Other"
+                    },
+                    "transition": "Race_Other"
+                }
+            ]
+        },
+        "Race_race-ethnicity-black": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-hispanic": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-white": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Native": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Asian": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Other": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Potential_Infection": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 0
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 6
+                            }
+                        ]
+                    },
+                    "transition": "Ages_0_6"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 6
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 11
+                            }
+                        ]
+                    },
+                    "transition": "Ages_6_11"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 12
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 23
+                            }
+                        ]
+                    },
+                    "transition": "Ages_12_23"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 24
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 35
+                            }
+                        ]
+                    },
+                    "transition": "Ages_24_35"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 36
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 47
+                            }
+                        ]
+                    },
+                    "transition": "Ages_36_47"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 48
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 60
+                            }
+                        ]
+                    },
+                    "transition": "Ages_48_60"
+                }
+            ]
+        },
+        "Ages_0_6": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.063
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.937
+                }
+            ]
+        },
+        "Ages_6_11": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.217
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.783
+                }
+            ]
+        },
+        "Ages_12_23": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.389
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.611
+                }
+            ]
+        },
+        "Ages_24_35": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.188
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.812
+                }
+            ]
+        },
+        "Ages_36_47": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.09300000000000001
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.907
+                }
+            ]
+        },
+        "Ages_48_60": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.059000000000000004
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.941
+                }
+            ]
+        },
+        "Doctor_Visit": {
+            "type": "Encounter",
+            "encounter_class": "ambulatory",
+            "reason": "Norovirus gastroenteritis_Infection",
+            "codes": [
+                {
+                    "system": "SNOMED-CT",
+                    "code": "185345009",
+                    "display": "Encounter for symptom"
+                }
+            ],
+            "direct_transition": "Norovirus_gastroenteritis_Infection"
+        },
+        "Init_Symptom_Counter": {
+            "type": "SetAttribute",
+            "attribute": "count_symptom_Norovirus gastroenteritis",
+            "value": 0,
+            "direct_transition": "Simple_Transition_1"
+        },
+        "Norovirus_gastroenteritis_Infection": {
+            "type": "ConditionOnset",
+            "codes": [
+                {
+                    "system": "sha224",
+                    "code": "1397b19617dba29030f67fed323b7bef71426194bdaff1e48e0a9fce",
+                    "display": "Norovirus gastroenteritis"
+                }
+            ],
+            "target_encounter": "Doctor_Visit",
+            "remarks": [
+                null,
+                null
+            ],
+            "direct_transition": "Init_Symptom_Counter"
+        },
+        "Inc_Symptom_1": {
+            "type": "Counter",
+            "attribute": "count_symptom_Norovirus gastroenteritis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_3"
+        },
+        "Simple_Transition_1": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.359,
+                    "transition": "Symptom_1"
+                },
+                {
+                    "distribution": 0.641,
+                    "transition": "Simple_Transition_3"
+                }
+            ]
+        },
+        "Symptom_1": {
+            "type": "Symptom",
+            "symptom": "Altered_stool",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "1397b19617dba29030f67fed323b7bef71426194bdaff1e48e0a9fce",
+                    "display": "Norovirus gastroenteritis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "e09acf6d495cdf47539595cfb44610a700bbd57182e6dab50ba01218",
+                "display": "Altered_stool"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Altered_stool",
+                "display": "Altered_stool (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_1",
+            "nature": {
+                "Mucoid": 100.0
+            }
+        },
+        "Inc_Symptom_3": {
+            "type": "Counter",
+            "attribute": "count_symptom_Norovirus gastroenteritis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_4"
+        },
+        "Simple_Transition_3": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.6542999999999999,
+                    "transition": "Symptom_3"
+                },
+                {
+                    "distribution": 0.3457000000000001,
+                    "transition": "Simple_Transition_4"
+                }
+            ]
+        },
+        "Symptom_3": {
+            "type": "Symptom",
+            "symptom": "Fever",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "1397b19617dba29030f67fed323b7bef71426194bdaff1e48e0a9fce",
+                    "display": "Norovirus gastroenteritis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "33202f1868c1e81499c012c676d1dbf167ded283c3a2dc9c34916408",
+                "display": "Fever"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Fever",
+                "display": "Fever (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_3",
+            "vas": {
+                "Temperature_>39_degrees": 31.9
+            },
+            "duration": {
+                "0_-_2_days": 65.6,
+                ">2_days": 35.4
+            }
+        },
+        "Inc_Symptom_4": {
+            "type": "Counter",
+            "attribute": "count_symptom_Norovirus gastroenteritis",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_2"
+        },
+        "Simple_Transition_4": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.8232,
+                    "transition": "Symptom_4"
+                },
+                {
+                    "distribution": 0.17679999999999996,
+                    "transition": "Simple_Transition_2"
+                }
+            ]
+        },
+        "Symptom_4": {
+            "type": "Symptom",
+            "symptom": "Vomitting",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "1397b19617dba29030f67fed323b7bef71426194bdaff1e48e0a9fce",
+                    "display": "Norovirus gastroenteritis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "56e4798c2b50f76afaefeda8dba46c89c82d0b77b666fe7112046d6e",
+                "display": "Vomitting"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Vomitting",
+                "display": "Vomitting (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_4",
+            "duration": {
+                "0_-_2_days": 73.1,
+                ">2_days": 26.9
+            }
+        },
+        "Inc_Symptom_2": {
+            "type": "Counter",
+            "attribute": "count_symptom_Norovirus gastroenteritis",
+            "action": "increment",
+            "direct_transition": "End_Doctor_Visit"
+        },
+        "Check_Symptom_2": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "count_symptom_Norovirus gastroenteritis",
+                        "operator": "<",
+                        "value": 1
+                    },
+                    "transition": "Symptom_2"
+                },
+                {
+                    "transition": "End_Doctor_Visit"
+                }
+            ]
+        },
+        "Simple_Transition_2": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.9775,
+                    "transition": "Symptom_2"
+                },
+                {
+                    "distribution": 0.022499999999999964,
+                    "transition": "Check_Symptom_2"
+                }
+            ]
+        },
+        "Symptom_2": {
+            "type": "Symptom",
+            "symptom": "Alterred_stool",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "1397b19617dba29030f67fed323b7bef71426194bdaff1e48e0a9fce",
+                    "display": "Norovirus gastroenteritis"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "81c0584d81b50b9e261de2e562ab75d8d2e05e32a677bb82dd855e3f",
+                "display": "Alterred_stool"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Alterred_stool",
+                "display": "Alterred_stool (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_2",
+            "nature": {
+                "Diarrhea": 100
+            },
+            "duration": {
+                "0_-_5_days": 65.7,
+                "5_-_8_days": 25.1,
+                ">8_days": 9.2
+            }
+        },
+        "End_Doctor_Visit": {
+            "type": "EncounterEnd",
+            "direct_transition": "ConditionEnds"
+        },
+        "ConditionEnds": {
+            "type": "ConditionEnd",
+            "direct_transition": "TerminalState",
+            "condition_onset": "Norovirus_gastroenteritis_Infection"
+        },
+        "TerminalState": {
+            "type": "Terminal"
+        }
+    }
+}

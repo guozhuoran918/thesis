@@ -1,0 +1,541 @@
+{
+    "name": "Pulmonary edema, young",
+    "states": {
+        "Initial": {
+            "type": "Initial",
+            "direct_transition": "Check_History_Age_Attribute"
+        },
+        "No_Infection": {
+            "type": "Simple",
+            "direct_transition": "TerminalState"
+        },
+        "Check_History_Age_Attribute": {
+            "type": "Guard",
+            "allow": {
+                "condition_type": "Attribute",
+                "attribute": "age_time_to_the_end",
+                "operator": "<=",
+                "value": 0
+            },
+            "direct_transition": "Begin_Module_Transition"
+        },
+        "Begin_Module_Transition": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "M"
+                    },
+                    "transition": "Male"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "F"
+                    },
+                    "transition": "Female"
+                }
+            ]
+        },
+        "Male": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.33,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.6699999999999999,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Men have an approx lifetime risk of Pulmonary edema, young of 33.0%."
+            ]
+        },
+        "Female": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.67,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.32999999999999996,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Women have an approx lifetime risk of Pulmonary edema, young of 67.0%."
+            ]
+        },
+        "Check_Race": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-black"
+                    },
+                    "transition": "Race_race-ethnicity-black"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-hispanic"
+                    },
+                    "transition": "Race_race-ethnicity-hispanic"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-white"
+                    },
+                    "transition": "Race_race-ethnicity-white"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Native"
+                    },
+                    "transition": "Race_Native"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Asian"
+                    },
+                    "transition": "Race_Asian"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Other"
+                    },
+                    "transition": "Race_Other"
+                }
+            ]
+        },
+        "Race_race-ethnicity-black": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-hispanic": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-white": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Native": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Asian": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Other": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Potential_Infection": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 0
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 64
+                            }
+                        ]
+                    },
+                    "transition": "Ages_0_64"
+                }
+            ]
+        },
+        "Ages_0_64": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 1.0
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.0
+                }
+            ]
+        },
+        "Doctor_Visit": {
+            "type": "Encounter",
+            "encounter_class": "ambulatory",
+            "reason": "Pulmonary edema, young_Infection",
+            "codes": [
+                {
+                    "system": "SNOMED-CT",
+                    "code": "185345009",
+                    "display": "Encounter for symptom"
+                }
+            ],
+            "direct_transition": "Pulmonary_edema,_young_Infection"
+        },
+        "Init_Symptom_Counter": {
+            "type": "SetAttribute",
+            "attribute": "count_symptom_Pulmonary edema, young",
+            "value": 0,
+            "direct_transition": "Simple_Transition_5"
+        },
+        "Pulmonary_edema,_young_Infection": {
+            "type": "ConditionOnset",
+            "codes": [
+                {
+                    "system": "sha224",
+                    "code": "7eb53ce2b124d02a19354d52d51d85f34341a0b96d65a11e6a0a70a3",
+                    "display": "Pulmonary edema, young"
+                }
+            ],
+            "target_encounter": "Doctor_Visit",
+            "remarks": [
+                null,
+                null
+            ],
+            "direct_transition": "Init_Symptom_Counter"
+        },
+        "Inc_Symptom_5": {
+            "type": "Counter",
+            "attribute": "count_symptom_Pulmonary edema, young",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_4"
+        },
+        "Simple_Transition_5": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.0,
+                    "transition": "Symptom_5"
+                },
+                {
+                    "distribution": 1.0,
+                    "transition": "Simple_Transition_4"
+                }
+            ]
+        },
+        "Symptom_5": {
+            "type": "Symptom",
+            "symptom": "Altered_mental_state",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7eb53ce2b124d02a19354d52d51d85f34341a0b96d65a11e6a0a70a3",
+                    "display": "Pulmonary edema, young"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "cd12201509979a6e72f066cb2769d57ba054b22501e2d51e5931d32f",
+                "display": "Altered_mental_state"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Altered_mental_state",
+                "display": "Altered_mental_state (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_5",
+            "nature": {
+                "Confusion_OR_delirium": 100
+            }
+        },
+        "Inc_Symptom_4": {
+            "type": "Counter",
+            "attribute": "count_symptom_Pulmonary edema, young",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_3"
+        },
+        "Simple_Transition_4": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.043,
+                    "transition": "Symptom_4"
+                },
+                {
+                    "distribution": 0.957,
+                    "transition": "Simple_Transition_3"
+                }
+            ]
+        },
+        "Symptom_4": {
+            "type": "Symptom",
+            "symptom": "Cough",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7eb53ce2b124d02a19354d52d51d85f34341a0b96d65a11e6a0a70a3",
+                    "display": "Pulmonary edema, young"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "309a5349d71e883fa7fa92df41e8a25d21a4f2eb53d8eaf2c0e8dc53",
+                "display": "Cough"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Cough",
+                "display": "Cough (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_4",
+            "nature": {
+                "Bloody": 100
+            }
+        },
+        "Inc_Symptom_3": {
+            "type": "Counter",
+            "attribute": "count_symptom_Pulmonary edema, young",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_2"
+        },
+        "Simple_Transition_3": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.10400000000000001,
+                    "transition": "Symptom_3"
+                },
+                {
+                    "distribution": 0.896,
+                    "transition": "Simple_Transition_2"
+                }
+            ]
+        },
+        "Symptom_3": {
+            "type": "Symptom",
+            "symptom": "Dizziness",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7eb53ce2b124d02a19354d52d51d85f34341a0b96d65a11e6a0a70a3",
+                    "display": "Pulmonary edema, young"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "84ddaa60ee1ff246d13f75d1c064306fd3929eb22f06255ee1948dae",
+                "display": "Dizziness"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Dizziness",
+                "display": "Dizziness (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_3"
+        },
+        "Inc_Symptom_2": {
+            "type": "Counter",
+            "attribute": "count_symptom_Pulmonary edema, young",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_1"
+        },
+        "Simple_Transition_2": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.6,
+                    "transition": "Symptom_2"
+                },
+                {
+                    "distribution": 0.4,
+                    "transition": "Simple_Transition_1"
+                }
+            ]
+        },
+        "Symptom_2": {
+            "type": "Symptom",
+            "symptom": "Pain",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7eb53ce2b124d02a19354d52d51d85f34341a0b96d65a11e6a0a70a3",
+                    "display": "Pulmonary edema, young"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "b53997e3394341bf572e719d81807dccb1f18f2e0a7ba143787f64e0",
+                "display": "Pain"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Pain",
+                "display": "Pain (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_2",
+            "location_main": "Chest"
+        },
+        "Inc_Symptom_1": {
+            "type": "Counter",
+            "attribute": "count_symptom_Pulmonary edema, young",
+            "action": "increment",
+            "direct_transition": "End_Doctor_Visit"
+        },
+        "Check_Symptom_1": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "count_symptom_Pulmonary edema, young",
+                        "operator": "<",
+                        "value": 1
+                    },
+                    "transition": "Symptom_1"
+                },
+                {
+                    "transition": "End_Doctor_Visit"
+                }
+            ]
+        },
+        "Simple_Transition_1": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.774,
+                    "transition": "Symptom_1"
+                },
+                {
+                    "distribution": 0.22599999999999998,
+                    "transition": "Check_Symptom_1"
+                }
+            ]
+        },
+        "Symptom_1": {
+            "type": "Symptom",
+            "symptom": "Altered_breathing",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7eb53ce2b124d02a19354d52d51d85f34341a0b96d65a11e6a0a70a3",
+                    "display": "Pulmonary edema, young"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "4adee241f83fe4d9f59f73fa0eed67e8d37b09cacdfd5f11f0dccb33",
+                "display": "Altered_breathing"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Altered_breathing",
+                "display": "Altered_breathing (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_1",
+            "nature": {
+                "Dyspnea": 100
+            }
+        },
+        "End_Doctor_Visit": {
+            "type": "EncounterEnd",
+            "direct_transition": "ConditionEnds"
+        },
+        "ConditionEnds": {
+            "type": "ConditionEnd",
+            "direct_transition": "TerminalState",
+            "condition_onset": "Pulmonary_edema,_young_Infection"
+        },
+        "TerminalState": {
+            "type": "Terminal"
+        }
+    }
+}

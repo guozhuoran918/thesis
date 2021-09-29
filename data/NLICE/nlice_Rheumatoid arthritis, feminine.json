@@ -1,0 +1,778 @@
+{
+    "name": "Rheumatoid arthritis, feminine",
+    "states": {
+        "Initial": {
+            "type": "Initial",
+            "direct_transition": "Check_History_Age_Attribute"
+        },
+        "No_Infection": {
+            "type": "Simple",
+            "direct_transition": "TerminalState"
+        },
+        "Check_History_Age_Attribute": {
+            "type": "Guard",
+            "allow": {
+                "condition_type": "Attribute",
+                "attribute": "age_time_to_the_end",
+                "operator": "<=",
+                "value": 0
+            },
+            "direct_transition": "Begin_Module_Transition"
+        },
+        "Begin_Module_Transition": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "F"
+                    },
+                    "transition": "Female"
+                },
+                {
+                    "transition": "TerminalState"
+                }
+            ]
+        },
+        "Female": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 1.0,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.0,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Women have an approx lifetime risk of Rheumatoid arthritis, feminine of 100.0%."
+            ]
+        },
+        "Check_Race": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-black"
+                    },
+                    "transition": "Race_race-ethnicity-black"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-hispanic"
+                    },
+                    "transition": "Race_race-ethnicity-hispanic"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-white"
+                    },
+                    "transition": "Race_race-ethnicity-white"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Native"
+                    },
+                    "transition": "Race_Native"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Asian"
+                    },
+                    "transition": "Race_Asian"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Other"
+                    },
+                    "transition": "Race_Other"
+                }
+            ]
+        },
+        "Race_race-ethnicity-black": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-hispanic": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-white": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Native": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Asian": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Other": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Potential_Infection": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 0
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 58
+                            }
+                        ]
+                    },
+                    "transition": "Ages_0_58"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Age",
+                        "operator": ">=",
+                        "unit": "years",
+                        "quantity": 58
+                    },
+                    "transition": "Age_58_More"
+                }
+            ]
+        },
+        "Ages_0_58": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.5
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.5
+                }
+            ]
+        },
+        "Age_58_More": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.5
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.5
+                }
+            ]
+        },
+        "Doctor_Visit": {
+            "type": "Encounter",
+            "encounter_class": "ambulatory",
+            "reason": "Rheumatoid arthritis, feminine_Infection",
+            "codes": [
+                {
+                    "system": "SNOMED-CT",
+                    "code": "185345009",
+                    "display": "Encounter for symptom"
+                }
+            ],
+            "direct_transition": "Rheumatoid_arthritis,_feminine_Infection"
+        },
+        "Init_Symptom_Counter": {
+            "type": "SetAttribute",
+            "attribute": "count_symptom_Rheumatoid arthritis, feminine",
+            "value": 0,
+            "direct_transition": "Simple_Transition_1"
+        },
+        "Rheumatoid_arthritis,_feminine_Infection": {
+            "type": "ConditionOnset",
+            "codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a2775f72b0f61041dc01996bb218f2c1d455fa1200abfea5e77c60a",
+                    "display": "Rheumatoid arthritis, feminine"
+                }
+            ],
+            "target_encounter": "Doctor_Visit",
+            "remarks": [
+                null,
+                null
+            ],
+            "direct_transition": "Init_Symptom_Counter"
+        },
+        "Inc_Symptom_1": {
+            "type": "Counter",
+            "attribute": "count_symptom_Rheumatoid arthritis, feminine",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_10"
+        },
+        "Simple_Transition_1": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.02,
+                    "transition": "Symptom_1"
+                },
+                {
+                    "distribution": 0.98,
+                    "transition": "Simple_Transition_10"
+                }
+            ]
+        },
+        "Symptom_1": {
+            "type": "Symptom",
+            "symptom": "Raynaud's_sign",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a2775f72b0f61041dc01996bb218f2c1d455fa1200abfea5e77c60a",
+                    "display": "Rheumatoid arthritis, feminine"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "9c7bd206e14eee6b4db39ff0149d619a5a009fd0a0d456dbee49dd8e",
+                "display": "Raynaud's_sign"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Raynaud's_sign",
+                "display": "Raynaud's_sign (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_1",
+            "nature": {
+                "Blue_(Raynaud's)_OR_white_(Raynaud's)": 100
+            },
+            "location_main": "Extremities"
+        },
+        "Inc_Symptom_10": {
+            "type": "Counter",
+            "attribute": "count_symptom_Rheumatoid arthritis, feminine",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_5"
+        },
+        "Simple_Transition_10": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.22,
+                    "transition": "Symptom_10"
+                },
+                {
+                    "distribution": 0.78,
+                    "transition": "Simple_Transition_5"
+                }
+            ]
+        },
+        "Symptom_10": {
+            "type": "Symptom",
+            "symptom": "Disability",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a2775f72b0f61041dc01996bb218f2c1d455fa1200abfea5e77c60a",
+                    "display": "Rheumatoid arthritis, feminine"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "93f045b3b63dd64335751b26a9ad2b40d1a946f5afb6a244f134a34e",
+                "display": "Disability"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Disability",
+                "display": "Disability (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_10",
+            "vas": {
+                "Severe": 100.0
+            }
+        },
+        "Inc_Symptom_5": {
+            "type": "Counter",
+            "attribute": "count_symptom_Rheumatoid arthritis, feminine",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_2"
+        },
+        "Simple_Transition_5": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.3,
+                    "transition": "Symptom_5"
+                },
+                {
+                    "distribution": 0.7,
+                    "transition": "Simple_Transition_2"
+                }
+            ]
+        },
+        "Symptom_5": {
+            "type": "Symptom",
+            "symptom": "Fever",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a2775f72b0f61041dc01996bb218f2c1d455fa1200abfea5e77c60a",
+                    "display": "Rheumatoid arthritis, feminine"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "33202f1868c1e81499c012c676d1dbf167ded283c3a2dc9c34916408",
+                "display": "Fever"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Fever",
+                "display": "Fever (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_5"
+        },
+        "Inc_Symptom_2": {
+            "type": "Counter",
+            "attribute": "count_symptom_Rheumatoid arthritis, feminine",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_3"
+        },
+        "Simple_Transition_2": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.32,
+                    "transition": "Symptom_2"
+                },
+                {
+                    "distribution": 0.6799999999999999,
+                    "transition": "Simple_Transition_3"
+                }
+            ]
+        },
+        "Symptom_2": {
+            "type": "Symptom",
+            "symptom": "Pain",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a2775f72b0f61041dc01996bb218f2c1d455fa1200abfea5e77c60a",
+                    "display": "Rheumatoid arthritis, feminine"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "b53997e3394341bf572e719d81807dccb1f18f2e0a7ba143787f64e0",
+                "display": "Pain"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Pain",
+                "display": "Pain (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_2",
+            "location_main": "Muscles"
+        },
+        "Inc_Symptom_3": {
+            "type": "Counter",
+            "attribute": "count_symptom_Rheumatoid arthritis, feminine",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_9"
+        },
+        "Simple_Transition_3": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.34,
+                    "transition": "Symptom_3"
+                },
+                {
+                    "distribution": 0.6599999999999999,
+                    "transition": "Simple_Transition_9"
+                }
+            ]
+        },
+        "Symptom_3": {
+            "type": "Symptom",
+            "symptom": "Dryness",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a2775f72b0f61041dc01996bb218f2c1d455fa1200abfea5e77c60a",
+                    "display": "Rheumatoid arthritis, feminine"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "2b1dffb6fead0509a840a9df05435bc7c44faa6f64176a48372eb8cd",
+                "display": "Dryness"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Dryness",
+                "display": "Dryness (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_3",
+            "location_main": "Mouth"
+        },
+        "Inc_Symptom_9": {
+            "type": "Counter",
+            "attribute": "count_symptom_Rheumatoid arthritis, feminine",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_4"
+        },
+        "Simple_Transition_9": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.36,
+                    "transition": "Symptom_9"
+                },
+                {
+                    "distribution": 0.64,
+                    "transition": "Simple_Transition_4"
+                }
+            ]
+        },
+        "Symptom_9": {
+            "type": "Symptom",
+            "symptom": "Functional_disability",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a2775f72b0f61041dc01996bb218f2c1d455fa1200abfea5e77c60a",
+                    "display": "Rheumatoid arthritis, feminine"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "23d0efc1bf79cb8f4e1e14e0ad4d245cf86134fd5cc1cc8dc30b6306",
+                "display": "Functional_disability"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Functional_disability",
+                "display": "Functional_disability (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_9"
+        },
+        "Inc_Symptom_4": {
+            "type": "Counter",
+            "attribute": "count_symptom_Rheumatoid arthritis, feminine",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_7"
+        },
+        "Simple_Transition_4": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.44,
+                    "transition": "Symptom_4"
+                },
+                {
+                    "distribution": 0.56,
+                    "transition": "Simple_Transition_7"
+                }
+            ]
+        },
+        "Symptom_4": {
+            "type": "Symptom",
+            "symptom": "Weight_loss",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a2775f72b0f61041dc01996bb218f2c1d455fa1200abfea5e77c60a",
+                    "display": "Rheumatoid arthritis, feminine"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "6f13338cd7d207e914dcda25caf646b74992f3c128f1f124d6c09d34",
+                "display": "Weight_loss"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Weight_loss",
+                "display": "Weight_loss (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_4"
+        },
+        "Inc_Symptom_7": {
+            "type": "Counter",
+            "attribute": "count_symptom_Rheumatoid arthritis, feminine",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_6"
+        },
+        "Simple_Transition_7": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.54,
+                    "transition": "Symptom_7"
+                },
+                {
+                    "distribution": 0.45999999999999996,
+                    "transition": "Simple_Transition_6"
+                }
+            ]
+        },
+        "Symptom_7": {
+            "type": "Symptom",
+            "symptom": "Altered_appetite",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a2775f72b0f61041dc01996bb218f2c1d455fa1200abfea5e77c60a",
+                    "display": "Rheumatoid arthritis, feminine"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "37880d6bad43977d87e574e871787f45bf112a38f4bb07a5368b78fb",
+                "display": "Altered_appetite"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Altered_appetite",
+                "display": "Altered_appetite (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_7",
+            "nature": {
+                "Decreased_(Anorexia)": 100
+            }
+        },
+        "Inc_Symptom_6": {
+            "type": "Counter",
+            "attribute": "count_symptom_Rheumatoid arthritis, feminine",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_8"
+        },
+        "Simple_Transition_6": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.6,
+                    "transition": "Symptom_6"
+                },
+                {
+                    "distribution": 0.4,
+                    "transition": "Simple_Transition_8"
+                }
+            ]
+        },
+        "Symptom_6": {
+            "type": "Symptom",
+            "symptom": "Fatigue",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a2775f72b0f61041dc01996bb218f2c1d455fa1200abfea5e77c60a",
+                    "display": "Rheumatoid arthritis, feminine"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "2fcd1411fe5c281066f8fb8288ec437e3e77cac98170de6c40edfb05",
+                "display": "Fatigue"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Fatigue",
+                "display": "Fatigue (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_6"
+        },
+        "Inc_Symptom_8": {
+            "type": "Counter",
+            "attribute": "count_symptom_Rheumatoid arthritis, feminine",
+            "action": "increment",
+            "direct_transition": "End_Doctor_Visit"
+        },
+        "Check_Symptom_8": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "count_symptom_Rheumatoid arthritis, feminine",
+                        "operator": "<",
+                        "value": 1
+                    },
+                    "transition": "Symptom_8"
+                },
+                {
+                    "transition": "End_Doctor_Visit"
+                }
+            ]
+        },
+        "Simple_Transition_8": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.76,
+                    "transition": "Symptom_8"
+                },
+                {
+                    "distribution": 0.24,
+                    "transition": "Check_Symptom_8"
+                }
+            ]
+        },
+        "Symptom_8": {
+            "type": "Symptom",
+            "symptom": "Stiffness",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a2775f72b0f61041dc01996bb218f2c1d455fa1200abfea5e77c60a",
+                    "display": "Rheumatoid arthritis, feminine"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "996856bf861bd37d8b63fccfd7765f36e6eb9e955a952312bae8fd30",
+                "display": "Stiffness"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Stiffness",
+                "display": "Stiffness (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_8",
+            "excitation": {
+                "Morning": 100.0
+            }
+        },
+        "End_Doctor_Visit": {
+            "type": "EncounterEnd",
+            "direct_transition": "ConditionEnds"
+        },
+        "ConditionEnds": {
+            "type": "ConditionEnd",
+            "direct_transition": "TerminalState",
+            "condition_onset": "Rheumatoid_arthritis,_feminine_Infection"
+        },
+        "TerminalState": {
+            "type": "Terminal"
+        }
+    }
+}

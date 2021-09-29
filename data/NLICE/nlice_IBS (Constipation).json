@@ -1,0 +1,800 @@
+{
+    "name": "IBS (Constipation)",
+    "states": {
+        "Initial": {
+            "type": "Initial",
+            "direct_transition": "Check_History_Age_Attribute"
+        },
+        "No_Infection": {
+            "type": "Simple",
+            "direct_transition": "TerminalState"
+        },
+        "Check_History_Age_Attribute": {
+            "type": "Guard",
+            "allow": {
+                "condition_type": "Attribute",
+                "attribute": "age_time_to_the_end",
+                "operator": "<=",
+                "value": 0
+            },
+            "direct_transition": "Begin_Module_Transition"
+        },
+        "Begin_Module_Transition": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "M"
+                    },
+                    "transition": "Male"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Gender",
+                        "gender": "F"
+                    },
+                    "transition": "Female"
+                }
+            ]
+        },
+        "Male": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.16,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.84,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Men have an approx lifetime risk of IBS (Constipation) of 16.0%."
+            ]
+        },
+        "Female": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.84,
+                    "transition": "Check_Race"
+                },
+                {
+                    "distribution": 0.16000000000000003,
+                    "transition": "TerminalState"
+                }
+            ],
+            "remarks": [
+                "Women have an approx lifetime risk of IBS (Constipation) of 84.0%."
+            ]
+        },
+        "Check_Race": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-black"
+                    },
+                    "transition": "Race_race-ethnicity-black"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-hispanic"
+                    },
+                    "transition": "Race_race-ethnicity-hispanic"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "race-ethnicity-white"
+                    },
+                    "transition": "Race_race-ethnicity-white"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Native"
+                    },
+                    "transition": "Race_Native"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Asian"
+                    },
+                    "transition": "Race_Asian"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Race",
+                        "race": "Other"
+                    },
+                    "transition": "Race_Other"
+                }
+            ]
+        },
+        "Race_race-ethnicity-black": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-hispanic": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_race-ethnicity-white": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Native": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Asian": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Race_Other": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.25
+                },
+                {
+                    "transition": "No_Infection",
+                    "distribution": 0.75
+                }
+            ]
+        },
+        "Potential_Infection": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 35
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 49
+                            }
+                        ]
+                    },
+                    "transition": "Ages_35_49"
+                },
+                {
+                    "condition": {
+                        "condition_type": "And",
+                        "conditions": [
+                            {
+                                "condition_type": "Age",
+                                "operator": ">=",
+                                "unit": "years",
+                                "quantity": 50
+                            },
+                            {
+                                "condition_type": "Age",
+                                "operator": "<=",
+                                "unit": "years",
+                                "quantity": 64
+                            }
+                        ]
+                    },
+                    "transition": "Ages_50_64"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Age",
+                        "operator": ">=",
+                        "unit": "years",
+                        "quantity": 65
+                    },
+                    "transition": "Age_65_More"
+                }
+            ]
+        },
+        "Ages_35_49": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.17
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.83
+                }
+            ]
+        },
+        "Ages_50_64": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.36
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.64
+                }
+            ]
+        },
+        "Age_65_More": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "transition": "Doctor_Visit",
+                    "distribution": 0.16699999999999998
+                },
+                {
+                    "transition": "Potential_Infection",
+                    "distribution": 0.833
+                }
+            ]
+        },
+        "Doctor_Visit": {
+            "type": "Encounter",
+            "encounter_class": "ambulatory",
+            "reason": "IBS (Constipation)_Infection",
+            "codes": [
+                {
+                    "system": "SNOMED-CT",
+                    "code": "185345009",
+                    "display": "Encounter for symptom"
+                }
+            ],
+            "direct_transition": "IBS_(Constipation)_Infection"
+        },
+        "Init_Symptom_Counter": {
+            "type": "SetAttribute",
+            "attribute": "count_symptom_IBS (Constipation)",
+            "value": 0,
+            "direct_transition": "Simple_Transition_9"
+        },
+        "IBS_(Constipation)_Infection": {
+            "type": "ConditionOnset",
+            "codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a65e698bae388fab25175013b291eb2be29c77c0923a0735f5bba80",
+                    "display": "IBS (Constipation)"
+                }
+            ],
+            "target_encounter": "Doctor_Visit",
+            "remarks": [
+                null,
+                null
+            ],
+            "direct_transition": "Init_Symptom_Counter"
+        },
+        "Inc_Symptom_9": {
+            "type": "Counter",
+            "attribute": "count_symptom_IBS (Constipation)",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_6"
+        },
+        "Simple_Transition_9": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.0001,
+                    "transition": "Symptom_9"
+                },
+                {
+                    "distribution": 0.9999,
+                    "transition": "Simple_Transition_6"
+                }
+            ]
+        },
+        "Symptom_9": {
+            "type": "Symptom",
+            "symptom": "Discoloration",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a65e698bae388fab25175013b291eb2be29c77c0923a0735f5bba80",
+                    "display": "IBS (Constipation)"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "9dc9936f40245bb429b1e36607ae9093093ca8c3f74f43503a791875",
+                "display": "Discoloration"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Discoloration",
+                "display": "Discoloration (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_9",
+            "nature": {
+                "Yellow_(Jaundice)": 100
+            }
+        },
+        "Inc_Symptom_6": {
+            "type": "Counter",
+            "attribute": "count_symptom_IBS (Constipation)",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_7"
+        },
+        "Simple_Transition_6": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.002,
+                    "transition": "Symptom_6"
+                },
+                {
+                    "distribution": 0.998,
+                    "transition": "Simple_Transition_7"
+                }
+            ]
+        },
+        "Symptom_6": {
+            "type": "Symptom",
+            "symptom": "Fever",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a65e698bae388fab25175013b291eb2be29c77c0923a0735f5bba80",
+                    "display": "IBS (Constipation)"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "33202f1868c1e81499c012c676d1dbf167ded283c3a2dc9c34916408",
+                "display": "Fever"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Fever",
+                "display": "Fever (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_6"
+        },
+        "Inc_Symptom_7": {
+            "type": "Counter",
+            "attribute": "count_symptom_IBS (Constipation)",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_8"
+        },
+        "Simple_Transition_7": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.003,
+                    "transition": "Symptom_7"
+                },
+                {
+                    "distribution": 0.997,
+                    "transition": "Simple_Transition_8"
+                }
+            ]
+        },
+        "Symptom_7": {
+            "type": "Symptom",
+            "symptom": "Altered_appetite",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a65e698bae388fab25175013b291eb2be29c77c0923a0735f5bba80",
+                    "display": "IBS (Constipation)"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "37880d6bad43977d87e574e871787f45bf112a38f4bb07a5368b78fb",
+                "display": "Altered_appetite"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Altered_appetite",
+                "display": "Altered_appetite (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_7"
+        },
+        "Inc_Symptom_8": {
+            "type": "Counter",
+            "attribute": "count_symptom_IBS (Constipation)",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_5"
+        },
+        "Simple_Transition_8": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.011000000000000001,
+                    "transition": "Symptom_8"
+                },
+                {
+                    "distribution": 0.989,
+                    "transition": "Simple_Transition_5"
+                }
+            ]
+        },
+        "Symptom_8": {
+            "type": "Symptom",
+            "symptom": "Vomiting",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a65e698bae388fab25175013b291eb2be29c77c0923a0735f5bba80",
+                    "display": "IBS (Constipation)"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "b06b5017765be3c38635646c097b44bec54bd51e74f27a5da7e12d6e",
+                "display": "Vomiting"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Vomiting",
+                "display": "Vomiting (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_8"
+        },
+        "Inc_Symptom_5": {
+            "type": "Counter",
+            "attribute": "count_symptom_IBS (Constipation)",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_4"
+        },
+        "Simple_Transition_5": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.07,
+                    "transition": "Symptom_5"
+                },
+                {
+                    "distribution": 0.9299999999999999,
+                    "transition": "Simple_Transition_4"
+                }
+            ]
+        },
+        "Symptom_5": {
+            "type": "Symptom",
+            "symptom": "Nausea",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a65e698bae388fab25175013b291eb2be29c77c0923a0735f5bba80",
+                    "display": "IBS (Constipation)"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "4bfaad9ba1fc33a53577f561224e418da51d4a6ee49f73d1d830f919",
+                "display": "Nausea"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Nausea",
+                "display": "Nausea (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_5"
+        },
+        "Inc_Symptom_4": {
+            "type": "Counter",
+            "attribute": "count_symptom_IBS (Constipation)",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_1"
+        },
+        "Simple_Transition_4": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.55,
+                    "transition": "Symptom_4"
+                },
+                {
+                    "distribution": 0.44999999999999996,
+                    "transition": "Simple_Transition_1"
+                }
+            ]
+        },
+        "Symptom_4": {
+            "type": "Symptom",
+            "symptom": "Flatulence",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a65e698bae388fab25175013b291eb2be29c77c0923a0735f5bba80",
+                    "display": "IBS (Constipation)"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "d37a4968424fbbd7a711aec00f98f65805b331a38ce8f966a1225a05",
+                "display": "Flatulence"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Flatulence",
+                "display": "Flatulence (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_4"
+        },
+        "Inc_Symptom_1": {
+            "type": "Counter",
+            "attribute": "count_symptom_IBS (Constipation)",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_2"
+        },
+        "Simple_Transition_1": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.72,
+                    "transition": "Symptom_1"
+                },
+                {
+                    "distribution": 0.28,
+                    "transition": "Simple_Transition_2"
+                }
+            ]
+        },
+        "Symptom_1": {
+            "type": "Symptom",
+            "symptom": "Pain",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a65e698bae388fab25175013b291eb2be29c77c0923a0735f5bba80",
+                    "display": "IBS (Constipation)"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "b53997e3394341bf572e719d81807dccb1f18f2e0a7ba143787f64e0",
+                "display": "Pain"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Pain",
+                "display": "Pain (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_1",
+            "vas": {
+                "Mild": 33.0,
+                "Moderate_-_severe": 67.0
+            },
+            "nature": {
+                "Cramping": 90.0,
+                "Dull": 10.0
+            },
+            "location": {
+                "Lower_abdomen": 30.5,
+                "Umbilical": 30.5,
+                "Other": 39.0
+            },
+            "location_main": "Abdomen",
+            "excitation": {
+                "Improvement_with_defecation": 58.0,
+                "Worsening_after_meals": 52.0,
+                "Worsening_with_stress": 50.0
+            }
+        },
+        "Inc_Symptom_2": {
+            "type": "Counter",
+            "attribute": "count_symptom_IBS (Constipation)",
+            "action": "increment",
+            "direct_transition": "Simple_Transition_3"
+        },
+        "Simple_Transition_2": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.78,
+                    "transition": "Symptom_2"
+                },
+                {
+                    "distribution": 0.21999999999999997,
+                    "transition": "Simple_Transition_3"
+                }
+            ]
+        },
+        "Symptom_2": {
+            "type": "Symptom",
+            "symptom": "Bloating",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a65e698bae388fab25175013b291eb2be29c77c0923a0735f5bba80",
+                    "display": "IBS (Constipation)"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "61d64452689de68a4c2247ef338595c0f90ddd3c928957a29af49c5e",
+                "display": "Bloating"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Bloating",
+                "display": "Bloating (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_2"
+        },
+        "Inc_Symptom_3": {
+            "type": "Counter",
+            "attribute": "count_symptom_IBS (Constipation)",
+            "action": "increment",
+            "direct_transition": "End_Doctor_Visit"
+        },
+        "Check_Symptom_3": {
+            "type": "Simple",
+            "conditional_transition": [
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "count_symptom_IBS (Constipation)",
+                        "operator": "<",
+                        "value": 1
+                    },
+                    "transition": "Symptom_3"
+                },
+                {
+                    "transition": "End_Doctor_Visit"
+                }
+            ]
+        },
+        "Simple_Transition_3": {
+            "type": "Simple",
+            "distributed_transition": [
+                {
+                    "distribution": 0.78,
+                    "transition": "Symptom_3"
+                },
+                {
+                    "distribution": 0.21999999999999997,
+                    "transition": "Check_Symptom_3"
+                }
+            ]
+        },
+        "Symptom_3": {
+            "type": "Symptom",
+            "symptom": "Altered_stool",
+            "range": {
+                "low": 25,
+                "high": 50
+            },
+            "condition_codes": [
+                {
+                    "system": "sha224",
+                    "code": "7a65e698bae388fab25175013b291eb2be29c77c0923a0735f5bba80",
+                    "display": "IBS (Constipation)"
+                }
+            ],
+            "symptom_code": {
+                "system": "sha224",
+                "code": "e09acf6d495cdf47539595cfb44610a700bbd57182e6dab50ba01218",
+                "display": "Altered_stool"
+            },
+            "value_code": {
+                "system": "sha224",
+                "code": "Altered_stool",
+                "display": "Altered_stool (finding)"
+            },
+            "remarks": [],
+            "direct_transition": "Inc_Symptom_3",
+            "nature": {
+                "Hard": 100.0,
+                "Lumpy": 60.0
+            },
+            "frequency": {
+                "Rarely": 42.6,
+                "Often": 57.4
+            }
+        },
+        "End_Doctor_Visit": {
+            "type": "EncounterEnd",
+            "direct_transition": "ConditionEnds"
+        },
+        "ConditionEnds": {
+            "type": "ConditionEnd",
+            "direct_transition": "TerminalState",
+            "condition_onset": "IBS_(Constipation)_Infection"
+        },
+        "TerminalState": {
+            "type": "Terminal"
+        }
+    }
+}
