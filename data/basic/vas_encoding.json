@@ -1,0 +1,20 @@
+{
+    "other": 1,
+    "6": 2,
+    "Excessive": 3,
+    ">5_kg": 4,
+    "Intense": 5,
+    "Moderate_-_severe": 6,
+    "4": 7,
+    "Moderate_-_Severe": 8,
+    "Temperature_>39_degrees": 9,
+    "5": 10,
+    "7": 11,
+    "10": 12,
+    "9": 13,
+    "Severe": 14,
+    "8": 15,
+    "Moderate": 16,
+    "Moderate_to_severe": 17,
+    "Mild": 18
+}

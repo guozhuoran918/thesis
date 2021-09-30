@@ -1,0 +1,92 @@
+{
+    "Chest": [],
+    "Throat": [],
+    "Nose": [
+        "Mucosal_areas"
+    ],
+    "Head (headache)": [
+        "Unilateral",
+        "Bilateral",
+        "Occiptal_region",
+        "Other"
+    ],
+    "Abdomen": [
+        "Right_Lower_Quadrant",
+        "Left_abdomen",
+        "Right_abdomen",
+        "Left_Lower_Quadrant",
+        "Umbilical_region",
+        "Epigastric_region",
+        "Lower_abdomen",
+        "Umbilical",
+        "Other"
+    ],
+    "Skin": [],
+    "Liver": [],
+    "Back": [],
+    "Epigastric": [],
+    "Joints": [
+        "any_MTP1",
+        "big_toe_IP",
+        "lesser_toes",
+        "midfoot",
+        "ankle",
+        "knee_joint",
+        "hip",
+        "shoulder",
+        "elbow",
+        "wrist",
+        "hand",
+        "CMC"
+    ],
+    "Extremities": [],
+    "Muscles": [],
+    "Mouth": [],
+    "Limb": [
+        "Lower_extremities_or_arms",
+        "Other_bodyparts"
+    ],
+    "Neck": [],
+    "Eye": [
+        "Optic_disc",
+        "Conjunctiva"
+    ],
+    "Lower extremities": [],
+    "Extremities, lower": [],
+    "Calf": [],
+    "Hip": [
+        "Peri-anal,_inner_thighs"
+    ],
+    "Leg": [],
+    "Hands": [],
+    "Handpalm, thumb, pointing finger, middle finger": [],
+    "Forearm": [],
+    "Hand": [],
+    "Ear": [],
+    "Head, post aurical": [],
+    "Ear, eardrum": [],
+    "Vagina": [],
+    "Vulva, skin": [],
+    "Genitalia": [],
+    "Parineal area": [],
+    "Urethra": [],
+    "Lymph nodes": [
+        "Neck_and_supraclavicular",
+        "Other"
+    ],
+    "Face": [],
+    "Subcutaneous": [],
+    "Waist": [],
+    "Rectum": [],
+    "Scrotum": [],
+    "Breast": [],
+    "Nipple": [],
+    "Nipple OR skin, breast": [],
+    "Armpit": [],
+    "GI tract": [],
+    "Tongue": [],
+    "Legs": [],
+    "Skeleton": [],
+    "Shoulder OR pelvis": [],
+    "Eyes (ophtalmoplegia)": []
+}

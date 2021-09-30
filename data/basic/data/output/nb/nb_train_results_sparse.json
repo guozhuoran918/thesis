@@ -1,0 +1,19 @@
+{
+    "name": "Naive Bayes Classifier AI MED",
+    "accuracy": {
+        "train": 0.8375783647419848,
+        "test": 0.8373665681420261
+    },
+    "precision_weighted": {
+        "train": 0.8726709198679428,
+        "test": 0.8725193478051898
+    },
+    "recall_weighted": {
+        "train": 0.8375783647419848,
+        "test": 0.8373665681420261
+    },
+    "top_5": {
+        "train": 0.9975299809853718,
+        "test": 0.9974433797089445
+    }
+}

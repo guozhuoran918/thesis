@@ -1,0 +1,1447 @@
+{
+    "Cough": {
+        "nature": [
+            "Mucus",
+            "Blood",
+            "Bloody",
+            "Chronic",
+            "Phlegm"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Altered_breathing": {
+        "nature": [
+            "Wheezing",
+            "Dyspnoea",
+            "Dyspnea"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Fatigue": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Pain": {
+        "nature": [
+            "Aching",
+            "Burning",
+            "Cramping",
+            "Stinging",
+            "Radiating",
+            "Throbbing",
+            "Sharp",
+            "Pressure",
+            "Thunderclap",
+            "Stabbing",
+            "Intermittent_claudication",
+            "Dull"
+        ],
+        "location": [
+            "Left_Lower_Quadrant",
+            "Lower_abdomen",
+            "Left_abdomen",
+            "Bilateral",
+            "Right_abdomen",
+            "Right_Lower_Quadrant",
+            "Umbilical_region",
+            "Unilateral",
+            "Occiptal_region",
+            "Umbilical",
+            "Epigastric_region",
+            "Other"
+        ],
+        "location_main": [
+            "Head (headache)",
+            "Lower extremities",
+            "Calf",
+            "Skeleton",
+            "Back",
+            "Epigastric",
+            "Neck",
+            "Vagina",
+            "Extremities, lower",
+            "Waist",
+            "Parineal area",
+            "Muscles",
+            "Genitalia",
+            "Breast",
+            "Abdomen",
+            "Chest",
+            "Head, post aurical"
+        ],
+        "vas": [
+            "Moderate",
+            "10",
+            "Mild",
+            "Severe",
+            "Moderate_-_Severe",
+            "6",
+            "5",
+            "4",
+            "8",
+            "Intense",
+            "7",
+            "9",
+            "Moderate_-_severe"
+        ],
+        "excitation": [
+            "When_pressing",
+            "Palpation",
+            "Sleeping",
+            "Worsening_after_meals",
+            "Worsening_with_stress",
+            "When_standing",
+            "Intercourse",
+            "Activity",
+            "Improvement_with_defecation",
+            "Walking_OR_mild_exertion"
+        ],
+        "frequency": [
+            "Unstable",
+            "Constant",
+            "Unpredictable",
+            "Periodic"
+        ],
+        "onset": [
+            "Hyperacute",
+            "60_-_300_sec",
+            ">_300_sec",
+            "<2_sec"
+        ],
+        "duration": [
+            ">14_days",
+            "1-48h",
+            "1_-_7_days",
+            "Indefinite",
+            "0_-_24_hours",
+            "4-24h",
+            "48-72h",
+            "24-72h",
+            "8_-_14_days"
+        ]
+    },
+    "Soreness": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Throat"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Nausea_": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Vomiting": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Congestion": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Ear",
+            "Ear, eardrum",
+            "Nose"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Fever": {
+        "nature": [
+            "Local"
+        ],
+        "location": [],
+        "location_main": [
+            "Joints"
+        ],
+        "vas": [
+            "Moderate",
+            "Mild",
+            "Severe",
+            "Moderate_to_severe",
+            "Temperature_>39_degrees"
+        ],
+        "excitation": [],
+        "frequency": [
+            "Periodic"
+        ],
+        "onset": [],
+        "duration": [
+            "Short_-_Medium",
+            "Long",
+            ">2_days",
+            "0_-_2_days"
+        ]
+    },
+    "Discoloration": {
+        "nature": [
+            "Blue_(Raynaud's)_OR_white_(Raynaud's)",
+            "Yellow_(Jaundice)",
+            "White_(Paleness)",
+            "Red_(Erythema)",
+            "Blue_(Cyanosis)"
+        ],
+        "location": [],
+        "location_main": [
+            "Extremities",
+            "Head, post aurical"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Altered_mental_state": {
+        "nature": [
+            "Confusion_OR_delirium",
+            "Mood_change",
+            "Syncope",
+            "Confusion",
+            "Loss_of_consciousness",
+            "Neurocognitive_dysfunction"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Chills": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Discharge": {
+        "nature": [
+            "Phlegm,_bloody",
+            "Yellow,_green_or_pus-like",
+            "Thin,_mucosal",
+            "Clear"
+        ],
+        "location": [],
+        "location_main": [
+            "Ear",
+            "Vagina",
+            "Nose",
+            "Nipple",
+            "Urethra"
+        ],
+        "vas": [],
+        "excitation": [
+            "Coughing"
+        ],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Tightness": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Chest"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Dizziness": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Altered_stool": {
+        "nature": [
+            "Narrow",
+            "Lumpy",
+            "Diarrhea,_bloody",
+            "Hard",
+            "Mucoid",
+            "Diarrhea"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [
+            "Often",
+            "Rarely"
+        ],
+        "onset": [],
+        "duration": []
+    },
+    "Tenesmus": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Alterred_stool": {
+        "nature": [
+            "Diarrhea"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": [
+            "0_-_5_days",
+            "5_-_8_days",
+            ">8_days"
+        ]
+    },
+    "Vomitting": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": [
+            ">2_days",
+            "0_-_2_days"
+        ]
+    },
+    "Eruption": {
+        "nature": [
+            "Erythematous"
+        ],
+        "location": [],
+        "location_main": [
+            "Joints",
+            "Skin",
+            "Vulva, skin"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [
+            "Periodic"
+        ],
+        "onset": [],
+        "duration": []
+    },
+    "Enlargement": {
+        "nature": [
+            "Tender"
+        ],
+        "location": [
+            "Other",
+            "Neck_and_supraclavicular"
+        ],
+        "location_main": [
+            "Lymph nodes",
+            "Liver"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Distension": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Abdomen"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Constipation": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Nausea": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Altered_appetite": {
+        "nature": [
+            "Decreased_(anorexia)",
+            "Yellow_(Jaundice)",
+            "Decreased_(Anorexia)",
+            "Fullness",
+            "Decrease_(anorexia)",
+            "Decrease_(Anorexia)"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [
+            "Eating"
+        ],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Bloating": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Abdomen"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Flatulence": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Regurgitation": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Slow_healing": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Joints"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Tenderness": {
+        "nature": [],
+        "location": [
+            "hip",
+            "lesser_toes",
+            "midfoot",
+            "ankle",
+            "knee_joint",
+            "big_toe_IP",
+            "wrist",
+            "any_MTP1",
+            "elbow",
+            "hand",
+            "CMC",
+            "shoulder"
+        ],
+        "location_main": [
+            "Joints"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [
+            "Periodic"
+        ],
+        "onset": [],
+        "duration": []
+    },
+    "Swelling": {
+        "nature": [
+            "Papilledema"
+        ],
+        "location": [
+            "hip",
+            "lesser_toes",
+            "midfoot",
+            "ankle",
+            "Optic_disc",
+            "knee_joint",
+            "big_toe_IP",
+            "wrist",
+            "any_MTP1",
+            "elbow",
+            "hand",
+            "CMC",
+            "shoulder"
+        ],
+        "location_main": [
+            "Eye",
+            "Joints",
+            "Face",
+            "Head, post aurical"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [
+            "Periodic"
+        ],
+        "onset": [],
+        "duration": []
+    },
+    "Altered_sleep": {
+        "nature": [
+            "Decreased_(Insomnia)"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [
+            "Periodic"
+        ],
+        "onset": [],
+        "duration": []
+    },
+    "Difficulty_walking": {
+        "nature": [
+            "Inside_the_home"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [
+            "Periodic"
+        ],
+        "onset": [],
+        "duration": []
+    },
+    "Throbbing": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Joints"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [
+            "Periodic"
+        ],
+        "onset": [],
+        "duration": []
+    },
+    "Raynaud's_sign": {
+        "nature": [
+            "Blue_(Raynaud's)_OR_white_(Raynaud's)"
+        ],
+        "location": [],
+        "location_main": [
+            "Extremities"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Dryness": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Mouth"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Weight_loss": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Stiffness": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Neck"
+        ],
+        "vas": [],
+        "excitation": [
+            "Morning"
+        ],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Functional_disability": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Disability": {
+        "nature": [
+            "Standing_up_from_chair_OR_walking_OR_stair_climbing",
+            "Hearing"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [
+            "Severe"
+        ],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Limitation_of_activities": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Grating": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Inactivity": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Weakness": {
+        "nature": [],
+        "location": [
+            "Lower_extremities_or_arms",
+            "Other_bodyparts"
+        ],
+        "location_main": [
+            "Forearm",
+            "Muscles",
+            "Limb",
+            "Shoulder OR pelvis"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": [
+            ">4000h",
+            "<4000h"
+        ]
+    },
+    "Fear": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Numbness": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Locking": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Cramping": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Click/cracking": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Aura": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Altered_vision": {
+        "nature": [
+            "Double"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Focal_neurological_symptoms": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Altered_communication": {
+        "nature": [
+            "Decreased_(Aphasia)"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Hemiparesis": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Seizures": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Altered_sensation": {
+        "nature": [
+            "Tingling",
+            "Paresthesia",
+            "Numbness",
+            "Radiating",
+            "Itchiness"
+        ],
+        "location": [
+            "Peri-anal,_inner_thighs"
+        ],
+        "location_main": [
+            "Ear",
+            "Handpalm, thumb, pointing finger, middle finger",
+            "Vagina",
+            "Extremities, lower",
+            "Hip"
+        ],
+        "vas": [],
+        "excitation": [
+            "When_standing"
+        ],
+        "frequency": [],
+        "onset": [],
+        "duration": [
+            ">4000h",
+            "<4000h"
+        ]
+    },
+    "Pain_relief_": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Leg"
+        ],
+        "vas": [],
+        "excitation": [
+            "Walking_bent_forward",
+            "Sitting_or_bending_forward"
+        ],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Incontinence": {
+        "nature": [
+            "Urinary"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Pain_relief": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [
+            "Sitting/bending_forward",
+            "Walking_bent_forward"
+        ],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Incontinence_": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Altered_movement": {
+        "nature": [
+            "Increased_(Restless_leg_syndrome)",
+            "Involunatry_(Dyskinesia)",
+            "Tremor"
+        ],
+        "location": [],
+        "location_main": [
+            "Legs",
+            "Hands"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [
+            "Sudden"
+        ],
+        "duration": []
+    },
+    "Reduced_agility": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Hand"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Altered_behaviour": {
+        "nature": [
+            "Crying"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [
+            "Excessive"
+        ],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Inflamamtion": {
+        "nature": [
+            "Puruluent",
+            "Rhinitis"
+        ],
+        "location": [
+            "Mucosal_areas"
+        ],
+        "location_main": [
+            "Ear",
+            "Nose"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Tiredness": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Inflammation": {
+        "nature": [
+            "Atrophic",
+            "Rhinitis"
+        ],
+        "location": [
+            "Mucosal_areas",
+            "Conjunctiva"
+        ],
+        "location_main": [
+            "Eye",
+            "Nose",
+            "Tongue"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Altered_urination": {
+        "nature": [
+            "Frequent",
+            "Bloody",
+            "Painful",
+            "Nightly"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Urgency": {
+        "nature": [
+            "Urinary"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Self-diagnosis": {
+        "nature": [
+            "Cystitis"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Painful_urination": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Dysuria": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Pollakisurie": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Lower_abdominal_pain_": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Flank_pain": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Odour": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Vagina"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Dyspareunia": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Bleeding": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Vagina",
+            "GI tract",
+            "Rectum"
+        ],
+        "vas": [],
+        "excitation": [
+            "Intercourse",
+            "Coitus"
+        ],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Ulceration": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Genitalia"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Discomfort": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Urethra"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Systemic_symptoms": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Meningitis_symptoms": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Formation_of_new_lesions": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Alterred_breathing": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Nodule": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Subcutaneous"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Alterred_weight": {
+        "nature": [
+            "Weight_loss"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Altered_weight": {
+        "nature": [
+            "Loss",
+            "Weight_loss"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [
+            ">5_kg"
+        ],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Altered_apettite": {
+        "nature": [
+            "Decreased_(Anorexia)"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Mass": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Breast",
+            "Scrotum"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Mass_OR_pain": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Abdomen",
+            "Armpit"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Gynaecomastia": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Retraction": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Nipple OR skin, breast"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Indigestion": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Dysphagia": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Reflux": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Nausea_OR_vomiting": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Voice_change": {
+        "nature": [
+            "Hoarse"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Pain_OR_mass": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Neck"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Alopecia": {
+        "nature": [],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Altered_cardiac_sounds": {
+        "nature": [
+            "Murmur"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Altered_cardiac_rhythm": {
+        "nature": [
+            "Increased_(tachycardia)"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Altered_development": {
+        "nature": [
+            "Delay"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Altered_motor": {
+        "nature": [
+            "Myoclonus",
+            "Ataxia"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Altered_memory": {
+        "nature": [
+            "Decreased_(forgetfulness)"
+        ],
+        "location": [],
+        "location_main": [],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    },
+    "Paralysis": {
+        "nature": [],
+        "location": [],
+        "location_main": [
+            "Eyes (ophtalmoplegia)"
+        ],
+        "vas": [],
+        "excitation": [],
+        "frequency": [],
+        "onset": [],
+        "duration": []
+    }
+}
