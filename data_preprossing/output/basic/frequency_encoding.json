@@ -1,0 +1,9 @@
+{
+    "other": 1,
+    "Rarely": 2,
+    "Periodic": 3,
+    "Unpredictable": 4,
+    "Often": 5,
+    "Constant": 6,
+    "Unstable": 7
+}
