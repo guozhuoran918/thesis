@@ -1,0 +1,18 @@
+{
+    "Altered_appetite": 0,
+    "Pain": 1,
+    "Flatulence": 2,
+    "Discoloration": 3,
+    "Nausea": 4,
+    "Bloating": 5,
+    "Vomiting": 6,
+    "Fever": 7,
+    "Altered_stool": 8,
+    "Regurgitation": 9,
+    "Vomitting": 10,
+    "Constipation": 11,
+    "Enlargement": 12,
+    "Eruption": 13,
+    "Distension": 14,
+    "Tenesmus": 15
+}

@@ -1,8 +1,10 @@
 import json
+import torch
 import os
 from collections import namedtuple
 from itertools import repeat
 from scipy.sparse import  csc_matrix
+from fractions import Fraction
 # from scipy import sparse
 import numpy as np
 from . import configuration as config
@@ -12,6 +14,53 @@ RLPatient = namedtuple('AiMedPatient', ('symptoms', 'condition'))
 RLState = namedtuple('AiMedState', ('symptoms'))
 RLPatient_Context= namedtuple('AiMedPatient', ('age', 'gender', 'symptoms', 'condition'))
 RLState_Context = namedtuple('AiMedState', ('age','gender', 'symptoms'))
+default_age={
+"age-0-1-years": 1.536246615603,
+"age-1-4-years" : 4.6087398468089,
+"age-5-14-years" : 11.4611269862763,
+"age-15-29-years" : 21.3235812629491,
+"age-30-44-years" :20.2551962493181,
+"age-45-59-years" : 20.4205176044076,
+"age-60-74-years" : 13.987739661922,
+"age-g-75-years" : 6.4068517727151
+}
+default_sex={
+    "sex-male":50,
+    "sex-female":50,
+}
+classlabel = [24, 29, 49, 38, 5, 3, 43, 48, 41, 37, 12, 31, 9, 42, 35, 28, 8, 14, 36, 4, 40, 19, 20, 21, 39, 53, 10, 25, 0, 44, 2, 17, 45]
+
+def get_pro_age(condition,age,all_piors):
+    value = all_piors.get(condition)
+    age_keys = value.get("age")
+    age_keys = default_age if age_keys=={} else age_keys
+    for a in age_keys.keys():
+        ages = a.split("-")
+        age_min,age_max = ages[1],ages[2]
+        if age_min =="g":
+            age_min=age_max
+            age_max=140
+        age_min,age_max = int(age_min),int(age_max)
+        if (age>=age_min and age<=age_max):
+            return age_keys[a]
+    return 0
+
+
+
+def get_pro_sex(condition,sex,all_piors):
+    value = all_piors.get(condition)
+    sex_keys = value.get("sex")
+    sex_keys = default_sex if sex_keys=={} else sex_keys
+    gender = "sex-male" if sex == '0' else "sex-female"
+    return sex_keys[gender]
+
+def get_pro_incidence(condition,all_piors):
+    v = all_piors.get(condition)
+    value = v.get("incidence")
+    value = value.split('/')
+    result = float(value[0])/float(value[1])
+    return result
+
 class AiBasicMedEnv:
     def __init__(
             self,
@@ -130,6 +179,7 @@ class AiBasicMedEnv:
         symptoms = np.array(symptoms)
         patient = AiMedPatient(age, race, gender, symptoms, condition)
         return patient
+    
 
     def reset(self):
         line = self.get_line()
@@ -1107,10 +1157,11 @@ class RLBasicMedEnvContext:
             vas_enc,
             onset_enc,
             duration_enc,
-            clf,
+            piors,
             classifer,
             max_turn,
             epoch,
+            policy,
             **kwargs
     ):
         """
@@ -1131,7 +1182,7 @@ class RLBasicMedEnvContext:
         self.vas_file=vas_enc
         self.onset_file=onset_enc
         self.duration_file=duration_enc
-        self.clf = clf
+        self.piors =piors
         self.epoch = epoch
         self.classifier = classifer
         self.line_number = 0
@@ -1148,12 +1199,15 @@ class RLBasicMedEnvContext:
         self.onset_map=None
         self.duration_map=None
         self.initial_symptom_map = None
+        self.piors_map = None
         self.num_symptoms = None
         self.num_conditions = None
+        self.current_Q = None
         self.max_turn = max_turn
         self.status = None
+        self.conditions_reverse = None
         self.check_file_exists()
-
+        self.policy = policy
         self.load_data_file()
         self.load_symptom_map()
         self.load_condition_map()
@@ -1167,7 +1221,7 @@ class RLBasicMedEnvContext:
         self.reward_correct_inquiry = kwargs.get('reward_inquiry', self.max_turn)
         self.reward_wrong_inquiry = kwargs.get('reward_inquiry', 0)
         self.reward_repeated = kwargs.get('reward_repeated', -1)
-        self.reward_diagnose_correct = kwargs.get('reward_diagnose_correct', 2*self.max_turn)
+        self.reward_diagnose_correct = kwargs.get('reward_diagnose_correct', self.max_turn)
         self.reward_diagnose_incorrect = kwargs.get('reward_diagnose_incorrect', 0)
 
     def check_file_exists(self):
@@ -1203,12 +1257,15 @@ class RLBasicMedEnvContext:
             self.onset_map = json.load(fp)
         with open(self.duration_file) as fp:
             self.duration_map = json.load(fp)
+        with open(self.piors) as fp:
+            self.piors_map = json.load(fp)
     def load_condition_map(self):
         with open(self.condition_map_file) as fp:
             conditions = json.load(fp)
             sorted_conditions = sorted(conditions.keys())
             self.condition_map = {code: idx for idx, code in enumerate(sorted_conditions)}
             self.num_conditions = len(self.condition_map)
+        self.conditions_reverse = dict(map(reversed, self.condition_map.items()))
      
     def readline(self):
         line = self.data.readline()
@@ -1236,6 +1293,7 @@ class RLBasicMedEnvContext:
         _race = parts[2]      
         age = int(parts[3])
         condition = parts[4]
+        age = self.get_age(condition)
         symptom_list = parts[6]
         gender = 0 if _gender == 'M' else 1
         race = self.RACE_CODE.get(_race)
@@ -1280,6 +1338,29 @@ class RLBasicMedEnvContext:
         patient = RLPatient_Context(age,gender,symptoms, condition)
         return patient
 
+    def get_age(self,condition):
+        import random
+        #synthea generated dataset is not based on the age distribution, so we re-set age
+        value = self.piors_map.get(condition)
+        ages = value.get("age")
+        age_keys = default_age if ages=={} else ages
+        age_position = self.randomS(age_keys)
+        age = age_position.split("-")
+        age_min,age_max = age[1],age[2]
+        if age_min =="g":
+            age_min=age_max
+            age_max=140
+        age_min,age_max = int(age_min),int(age_max)
+        return random.randint(age_min,age_max)
+    
+    def randomS(self,age_keys):
+        import random
+        target = random.randint(0,int(sum(age_keys.values())))
+        sum_=0
+        for k,v in age_keys.items():
+            sum_+=v
+            if sum_>=target:
+                return k
     def reset(self):
         if self.line_number == self.epoch:
             self.line_number = 0
@@ -1336,7 +1417,9 @@ class RLBasicMedEnvContext:
         return False, None, None
 
     def take_action(self, action):
-        is_valid, action_type, action_value = self.is_valid_action(action)
+        self.current_Q = action
+        top1 = action.max(1)[1].view(1, 1)
+        is_valid, action_type, action_value = self.is_valid_action(top1.item())
         if not is_valid:
             raise ValueError("Invalid action: %s" % action)
         if action_type == self.is_inquiry:
@@ -1375,7 +1458,12 @@ class RLBasicMedEnvContext:
         # if len(self.inquiry_list) < 2:
         #     return None,self.reward_repeated,config.DIALOGUE_STATUS_FAILED
         classlabel = [24, 29, 49, 38, 5, 3, 43, 48, 41, 37, 12, 31, 9, 42, 35, 28, 8, 14, 36, 4, 40, 19, 20, 21, 39, 53, 10, 25, 0, 44, 2, 17, 45]
-        action = classlabel[action-1]
+        if not self.policy:
+            action = classlabel[action-1]
+        else:
+            conditions = self.policy_transformation()
+            sorted_ = np.argsort(conditions)  
+            action = classlabel[sorted_[-1]]
         is_correct = self.iscorrect(self.patient.condition,action)
         # is_correct = self.patient.condition==action
         reward = self.reward_diagnose_correct if is_correct else self.reward_diagnose_incorrect
@@ -1383,19 +1471,80 @@ class RLBasicMedEnvContext:
             return None,reward,config.DIALOGUE_STATUS_SUCCESS
         else:
             return None,reward,config.DIALOGUE_STATUS_FAILED
-    def top_5(self,action):
+    
+    
+    def top_5(self):
         classlabel = [24, 29, 49, 38, 5, 3, 43, 48, 41, 37, 12, 31, 9, 42, 35, 28, 8, 14, 36, 4, 40, 19, 20, 21, 39, 53, 10, 25, 0, 44, 2, 17, 45]
-        new_a= []
+        # index =self.current_Q.keys().item()
+        # value = self.current_Q.values().item()
+        result = self.current_Q.flatten().tolist()
+        if not self.policy:
+            conditions =[]
+            for v in result:
+                inx = result.index(v)
+                if inx>=(self.num_symptoms):
+                    conditions.append(v)
+        else:
+            conditions = self.policy_transformation()
+        sorted_ = np.argsort(conditions)
+        top_5 = []
+        debug = []
+        for i in range(5):
+             top_5.append(classlabel[sorted_[-(i+1)]])
+             debug.append(sorted_[-(i+1)])
+    
         is_correct = False
-        for a in action:
-            a = a % (self.num_symptoms-1)
+        for a in top_5:
             # is_correct = self.iscorrect(self.patient.condition,classlabel[a-1])
-            is_correct = self.patient.condition==classlabel[a-1]
+            is_correct = self.iscorrect(self.patient.condition,a)
             if(is_correct == True):
                 return None,self.reward_diagnose_correct,config.DIALOGUE_STATUS_SUCCESS
         return None,self.reward_diagnose_incorrect,config.DIALOGUE_STATUS_FAILED
 
+    def top_3(self):
+        classlabel = [24, 29, 49, 38, 5, 3, 43, 48, 41, 37, 12, 31, 9, 42, 35, 28, 8, 14, 36, 4, 40, 19, 20, 21, 39, 53, 10, 25, 0, 44, 2, 17, 45]
+        # index =self.current_Q.keys().item()
+        # value = self.current_Q.values().item()
+        result = self.current_Q.flatten().tolist()
+        if not self.policy:
+            conditions =[]
+            for v in result:
+                inx = result.index(v)
+                if inx>=(self.num_symptoms):
+                    conditions.append(v)
+        else:
+            conditions = self.policy_transformation()
+        sorted_ = np.argsort(conditions)    
+        top_3 = []
+        debug = []
+        for i in range(3):
+             top_3.append(classlabel[sorted_[-(i+1)]])
+             debug.append(sorted_[-(i+1)])
+    
+        is_correct = False
+        for a in top_3:
+            # is_correct = self.iscorrect(self.patient.condition,classlabel[a-1])
+            is_correct = self.iscorrect(self.patient.condition,a)
+            if(is_correct == True):
+                return None,self.reward_diagnose_correct,config.DIALOGUE_STATUS_SUCCESS
+        return None,self.reward_diagnose_incorrect,config.DIALOGUE_STATUS_FAILED
 
+    def policy_transformation(self):
+        result = self.current_Q.flatten().tolist()
+        conditions = []
+        for v in result:
+            inx = result.index(v)
+            if inx>=(self.num_symptoms):
+                conditions.append(v)
+        sorted_ = np.argsort(conditions)
+        for i in sorted_:
+            co = self.conditions_reverse.get(classlabel[i])
+            pro_age = get_pro_age(co,self.patient.age,self.piors_map)/100
+            pro_gender=get_pro_sex(co,self.patient.gender,self.piors_map)/100
+            incidence = get_pro_incidence(co,self.piors_map)
+            # conditions[i] = conditions[i]*pro_age*pro_gender+incidence
+            conditions[i] = conditions[i]*pro_age*pro_gender
+        return conditions
 
     def iscorrect(self,condition,action):
         if condition in [48,49] and action in [48,49]:
@@ -1404,8 +1553,8 @@ class RLBasicMedEnvContext:
                 return True
         elif condition in [40,41] and action in [40,41]:
                 return True
-        elif condition in [28,44,45] and action in [28,44,45]:
-                return True
+        # elif condition in [28,44,45] and action in [28,44,45]:
+        #         return True
         elif condition == action:
             return True
         else:

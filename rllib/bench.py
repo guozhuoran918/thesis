@@ -10,6 +10,7 @@ class MedBench:
         self.success = 0
         self.sucessrate = []
         self.num_episodes = num_episodes
+        self.top5=0
 
     def run_trial(self, debug=True):
         for idx in range(self.num_episodes):
@@ -34,11 +35,14 @@ class MedBench:
                     self.episode_duration.append(num_runs)
                     self.rewardList.append(rewards)
                     self.success = self.success+1
+                    self.top5 = self.top5+1
                     break
                 if done == config.DIALOGUE_STATUS_FAILED or jdx+1 > config.MAX_TURN:
                     num_runs = jdx+1
                     self.rewardList.append(rewards)
                     self.episode_duration.append(num_runs)
+                    # _,reward,done=self.agent.env.top_5()
+                    # self.top5 = self.top5+1 if done==config.DIALOGUE_STATUS_SUCCESS else self.top5
                     break
             if (jdx+1) % self.agent.target_update == 0:
                 self.agent.double_q_update()
@@ -46,6 +50,9 @@ class MedBench:
 
     def get_success_rate(self):
         return self.success/self.num_episodes
+    
+    def get_top5_rate(self):
+        return self.top5/self.num_episodes
     
     def get_average_rewards(self):
         return np.mean(self.rewardList)
@@ -65,8 +72,8 @@ class MedBenchEval:
         # self.episode_loss = []
         self.success = 0
         self.num_episodes = num_episodes
-        self.top_3 = 0
-        self.top_5 = 0
+        self.top3 = 0
+        self.top5 = 0
         self.hint = np.zeros(self.num_episodes,dtype=int)
 
     def run_trial(self, debug=True):
@@ -92,15 +99,27 @@ class MedBenchEval:
                     self.episode_duration.append(num_runs)
                     self.rewardList.append(rewards)
                     self.success = self.success+1
+                    self.top5 = self.top5+1
+                    self.top3 = self.top3+1
                     break
                 if done == config.DIALOGUE_STATUS_FAILED or jdx+1 > config.MAX_TURN:
                     num_runs = jdx+1
                     self.rewardList.append(rewards)
                     self.episode_duration.append(num_runs)
+                    _,reward,done=self.agent.env.top_5()
+                    self.top5 = self.top5+1 if done==config.DIALOGUE_STATUS_SUCCESS else self.top5
+                    _,reward,done=self.agent.env.top_3()
+                    self.top3 = self.top3+1 if done==config.DIALOGUE_STATUS_SUCCESS else self.top3
                     break
     def get_success_rate(self):
         return self.success/self.num_episodes
     
+    def get_top5_rate(self):
+        return self.top5/self.num_episodes
+
+    def get_top3_rate(self):
+        return self.top3/self.num_episodes
+
     def get_average_rewards(self):
         return np.mean(self.rewardList)
 

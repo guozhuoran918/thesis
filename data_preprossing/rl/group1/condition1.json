@@ -1,0 +1,11 @@
+{
+    "Asthma": 0,
+    "COPD": 1,
+    "Covid-19": 2,
+    "Pneumococcal pneumonia": 3,
+    "Pneumothorax": 4,
+    "Pulmonary edema  old": 5,
+    "Pulmonary edema  oldest": 6,
+    "Pulmonary edema  young": 7,
+    "Seasonal Influenza": 8
+}

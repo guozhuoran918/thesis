@@ -1,0 +1,11 @@
+{
+    "Acute pancreatitis": 0,
+    "Appendicitis": 1,
+    "Atrophic gastritis": 2,
+    "Functional constipation": 3,
+    "Giardiasis": 4,
+    "IBS (Constipation)": 5,
+    "Norovirus gastroenteritis": 6,
+    "Salmonella infection": 7,
+    "Yersinia enterocolitica infection": 8
+}

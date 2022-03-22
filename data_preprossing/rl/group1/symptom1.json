@@ -1,0 +1,16 @@
+{
+    "Tightness": 0,
+    "Altered_breathing": 1,
+    "Cough": 2,
+    "Fatigue": 3,
+    "Vomiting": 4,
+    "Congestion": 5,
+    "Fever": 6,
+    "Soreness": 7,
+    "Nausea": 8,
+    "Discoloration": 9,
+    "Pain": 10,
+    "Altered_mental_state": 11,
+    "Chills": 12,
+    "Dizziness": 13
+}

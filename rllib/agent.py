@@ -49,64 +49,6 @@ class ReplayMemory:
         return len(self.memory)
 
 
-class DQN(nn.Module):
-
-    def __init__(self, input_dim, output_dim, layer_config=None, non_linearity='relu'):
-        super(DQN, self).__init__()
-        self.input_dim = input_dim
-        self.output_dim = output_dim
-        self.layer_config = self.form_layer_config(layer_config)
-        self.non_linearity = non_linearity
-        self.model = self.compose_model()
-
-    def get_default_config(self):
-        return [
-            [self.input_dim, 48],
-            [48, 32],
-            [32, 32],
-            [32, self.output_dim]
-        ]
-
-    def form_layer_config(self, layer_config):
-        if layer_config is None:
-            return self.get_default_config()
-
-        if len(layer_config) < 2:
-            raise ValueError("Layer config must have at least two layers")
-
-        if layer_config[0][0] != self.input_dim:
-            raise ValueError("Input dimension of first layer config must be the same as input to the model")
-
-        if layer_config[-1][1] != self.output_dim:
-            raise ValueError("output dimension of last layer config must be the same as expected model output")
-
-        for idx in range(len(layer_config) - 1):
-            assert layer_config[idx][1] == layer_config[idx+1][0], "Dimension mismatch between layers %d and %d" % (idx, idx + 1)
-
-        return layer_config
-
-    def get_non_linear_class(self):
-        if self.non_linearity == 'tanh':
-            return nn.Tanh
-        else:
-            return nn.ReLU
-
-    def compose_model(self):
-        non_linear = self.get_non_linear_class()
-        layers = OrderedDict()
-        for idx in range(len(self.layer_config)):
-            input_dim, output_dim = self.layer_config[idx]
-            layers['linear-%d' % idx] = nn.Linear(input_dim, output_dim)
-            if idx != len(self.layer_config) - 1:
-                layers['nonlinear-%d' % idx] = non_linear()
-
-        return nn.Sequential(layers)
-
-    # Called with either one element to determine next action, or a batch
-    # during optimization. Returns tensor([[left0exp,right0exp]...]).
-    def forward(self, x):
-        return self.model(x)
-
 
 class MedAgent:
     def __init__(self, env, **kwargs):
@@ -133,7 +75,9 @@ class MedAgent:
         self.debug = kwargs.get('debug', False)
         self.train = kwargs.get('train',True)
         self.context = kwargs.get('context',False)
-
+        self.epsilon = lambda frame_idx: self.eps_end + \
+            (self.eps_start - self.eps_end) * \
+            math.exp(-1. * frame_idx / self.eps_decay)
         self.memory = ReplayMemory(self.replay_capacity)
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -250,21 +194,21 @@ class MedAgent:
             if self.debug:
                 print("Taking Best Action")
             with torch.no_grad():
-                return self.policy_network.forward(state).max(1)[1].view(1, 1)
+                # return self.policy_network.forward(state).max(1)[1].view(1, 1)
+                return self.policy_network.forward(state)
             
     def top_results(self,state):
         return self.policy_network.forward(state)
 
-    def decay_epsilon(self):
-        # if self.steps_done > self.learning_start:
-            # self.epsilon = self.eps_end + (self.eps_start - self.eps_end) * \
-            #                np.exp(-1 * (self.steps_done-self.learning_start) / self.eps_decay)
-        self.epsilon = lambda frame_idx: self.eps_end + \
-            (self.eps_start - self.eps_end) * \
-            math.exp(-1. * frame_idx / self.eps_decay)
+    # def decay_epsilon(self):
+    #     # if self.steps_done > self.learning_start:
+    #         # self.epsilon = self.eps_end + (self.eps_start - self.eps_end) * \
+    #         #                np.exp(-1 * (self.steps_done-self.learning_start) / self.eps_decay)
+    #     self.epsilon = lambda frame_idx: self.eps_end + \
+    #         (self.eps_start - self.eps_end) * \
+    #         math.exp(-1. * frame_idx / self.eps_decay)
 
     def step(self):
-        self.decay_epsilon()
         state = self.state
         action = self.select_action(state)
         values,indices = self.top_results(state).topk(5)
@@ -282,7 +226,7 @@ class MedAgent:
         #     # print(indices.tolist())
         #     next_state, _reward, done = self.env.top_5(indices.tolist()[0])
         # else:
-        next_state, _reward, done = self.env.take_action(action.item())
+        next_state, _reward, done = self.env.take_action(action)
         if self.debug:
             print("Next state: ", next_state)
             print("Reward: ", _reward)
@@ -290,7 +234,7 @@ class MedAgent:
         next_state = self.state_to_tensor(next_state)
         reward = torch.tensor([_reward], device=self.device)
         if self.train:
-            self.memory.push(state, action, next_state, reward)
+            self.memory.push(state, action.max(1)[1].view(1, 1), next_state, reward)
         self.state = next_state
         # if self.train:
         #     if self.steps_done % self.target_update == 0:

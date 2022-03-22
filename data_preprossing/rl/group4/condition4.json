@@ -1,0 +1,8 @@
+{
+    "Bacterial meningitis": 0,
+    "Migraine": 1,
+    "Subarachnoidal bleeding": 2,
+    "Tension type headache": 3,
+    "Viral meningitis  enterovirus": 4,
+    "Viral meningitis  varicella zoster virus": 5
+}

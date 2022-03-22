@@ -1,0 +1,9 @@
+{
+    "Altered_movement": 0,
+    "Pain": 1,
+    "Altered_sensation": 2,
+    "Reduced_agility": 3,
+    "Weakness": 4,
+    "Incontinence": 5,
+    "Pain_relief": 6
+}

@@ -1,0 +1,599 @@
+{
+    "Covid-19": {
+        "age": {
+            "age-0-14-years": 1.0,
+            "age-15-49-years": 55.0,
+            "age-50-64-years": 30.0,
+            "age-g-65-years": 15.0
+        },
+        "sex": {
+            "sex-male": 42.0,
+            "sex-female": 58.0
+        },
+        "incidence": "1200/100000"
+    },
+    "Seasonal Influenza": {
+        "age": {
+            "age-0-1-years": 1.9,
+            "age-2-5-years": 7.8,
+            "age-6-9-years": 5.4,
+            "age-10-17-years": 9.2,
+            "age-18-34-years": 25.9,
+            "age-35-59-years": 40.3,
+            "age-g-60-years": 9.5
+        },
+        "sex": {
+            "sex-male": 52.0,
+            "sex-female": 48.0
+        },
+        "incidence": "1700/100000"
+    },
+    "Pneumococcal pneumonia": {
+        "age": {},
+        "sex": {
+            "sex-male": 71.4,
+            "sex-female": 28.6
+        },
+        "incidence": "1015/100000"
+    },
+    "COPD": {
+        "age": {
+            "age-0-40-years": 12.6,
+            "age-40-64-years": 32.16,
+            "age-g-65-years": 55.69
+        },
+        "sex": {
+            "sex-male": 87.5,
+            "sex-female": 21.1
+        },
+        "incidence": "7600/100000"
+    },
+    "Asthma": {
+        "age": {
+            "age-0-40-years": 25.0,
+            "age-40-58-years": 50.0,
+            "age-g-58-years": 25.0
+        },
+        "sex": {
+            "sex-male": 29.0,
+            "sex-female": 71.0
+        },
+        "incidence": "7500/100000"
+    },
+    "Pneumothorax": {
+        "age": {
+            "age-0-14-years": 25.0,
+            "age-20-40-years": 65.0,
+            "age-g-75-years": 39.3
+        },
+        "sex": {
+            "sex-male": 85.7,
+            "sex-female": 14.3
+        },
+        "incidence": "24/100000"
+    },
+    "Pulmonary edema  young": {
+        "age": {
+            "age-0-64-years": 100.0
+        },
+        "sex": {
+            "sex-male": 33.0,
+            "sex-female": 67.0
+        },
+        "incidence": "0.08/100000"
+    },
+    "Pulmonary edema  old": {
+        "age": {
+            "age-65-84-years": 100.0
+        },
+        "sex": {
+            "sex-male": 34.2,
+            "sex-female": 65.8
+        },
+        "incidence": "1.3/100000"
+    },
+    "Pulmonary edema  oldest": {
+        "age": {
+            "age-g-85-years": 100.0
+        },
+        "sex": {
+            "sex-male": 34.2,
+            "sex-female": 65.8
+        },
+        "incidence": "14/100000"
+    },
+    "Salmonella infection": {
+        "age": {
+            "age-0-8-years": 16.4,
+            "age-8-41-years": 68.2,
+            "age-g-41-years": 16.4
+        },
+        "sex": {
+            "sex-male": 53.22,
+            "sex-female": 46.78
+        },
+        "incidence": "26/100000"
+    },
+    "Yersinia enterocolitica infection": {
+        "age": {
+            "age-0-5-years": 92.31,
+            "age-g-5-years": 7.69
+        },
+        "sex": {
+            "sex-male": 55.17,
+            "sex-female": 44.83
+        },
+        "incidence": "72/1000000"
+    },
+    "Norovirus gastroenteritis": {
+        "age": {
+            "age-0-6-years": 6.3,
+            "age-6-11-years": 21.7,
+            "age-12-23-years": 38.9,
+            "age-24-35-years": 18.8,
+            "age-36-47-years": 9.3,
+            "age-48-60-years": 5.9
+        },
+        "sex": {
+            "sex-male": 55.3,
+            "sex-female": 44.7
+        },
+        "incidence": "1600/100000"
+    },
+    "Giardiasis": {
+        "age": {
+            "age-0-15-years": 16.57,
+            "age-15-24-years": 16.14,
+            "age-25-34-years": 17.94,
+            "age-35-44-years": 16.8,
+            "age-45-55-years": 15.98,
+            "age-g-55-years": 16.57
+        },
+        "sex": {
+            "sex-male": 39.0,
+            "sex-female": 61.0
+        },
+        "incidence": "4470/100000"
+    },
+    "Appendicitis": {
+        "age": {
+            "age-0-6-years": 3.7,
+            "age-7-13-years": 24.15,
+            "age-14-17-years": 14.71,
+            "age-18-25-years": 21.4,
+            "age-26-35-years": 16.46,
+            "age-36-65-years": 16.2,
+            "age-g-65-years": 3.0
+        },
+        "sex": {
+            "sex-male": 54.7,
+            "sex-female": 45.3
+        },
+        "incidence": "151/100000"
+    },
+    "Functional constipation": {
+        "age": {
+            "age-35-49-years": 12.9,
+            "age-50-64-years": 14.8,
+            "age-g-65-years": 16.7
+        },
+        "sex": {
+            "sex-male": 25.0,
+            "sex-female": 75.0
+        },
+        "incidence": "2000/100000"
+    },
+    "Acute pancreatitis": {
+        "age": {},
+        "sex": {
+            "sex-male": 52.0,
+            "sex-female": 48.0
+        },
+        "incidence": "44/100000"
+    },
+    "IBS (Constipation)": {
+        "age": {
+            "age-35-49-years": 17.0,
+            "age-50-64-years": 36.0,
+            "age-g-65-years": 16.7
+        },
+        "sex": {
+            "sex-male": 16.0,
+            "sex-female": 84.0
+        },
+        "incidence": "5000/100000"
+    },
+    "Atrophic gastritis": {
+        "age": {},
+        "sex": {},
+        "incidence": "2000/100000"
+    },
+    "Gout": {
+        "age": {
+            "age-0-45-years": 16.4,
+            "age-45-75-years": 68.2,
+            "age-g-75-years": 16.4
+        },
+        "sex": {
+            "sex-male": 86.0,
+            "sex-female": 24.0
+        },
+        "incidence": "400/100000"
+    },
+    "Rheumatoid arthritis  feminine": {
+        "age": {
+            "age-0-58-years": 50.0,
+            "age-g-58-years": 50.0
+        },
+        "sex": {
+            "sex-female": 100.0,
+            "sex-male": 0.0
+        },
+        "incidence": "750/100000"
+    },
+    "Rheumatoid arthritis  masculine": {
+        "age": {
+            "age-0-58-years": 50.0,
+            "age-g-58-years": 50.0
+        },
+        "sex": {
+            "sex-female": 0.0,
+            "sex-male": 100.0
+        },
+        "incidence": "250/100000"
+    },
+    "Osteoarthritis": {
+        "age": {},
+        "sex": {},
+        "incidence": "1764/100000"
+    },
+    "Migraine": {
+        "age": {
+            "age-0-9-years": 4.0,
+            "age-10-19-years": 40.0,
+            "age-20-29-years": 26.0,
+            "age-30-39-years": 18.0,
+            "age-40-49-years": 6.4,
+            "age-50-59-years": 3.4,
+            "age-g-60-years": 1.7
+        },
+        "sex": {
+            "sex-male": 32.9,
+            "sex-female": 67.1
+        },
+        "incidence": "15000/100000"
+    },
+    "Tension type headache": {
+        "age": {
+            "age-0-9-years": 3.8,
+            "age-10-19-years": 29.8,
+            "age-20-29-years": 27.2,
+            "age-30-39-years": 22.2,
+            "age-40-49-years": 10.1,
+            "age-50-59-years": 4.4,
+            "age-g-60-years": 2.6
+        },
+        "sex": {
+            "sex-male": 3.1,
+            "sex-female": 8.1
+        },
+        "incidence": "85000/100000"
+    },
+    "Subarachnoidal bleeding": {
+        "age": {
+            "age-0-39-years": 2.0,
+            "age-40-50-years": 20.0,
+            "age-60-74-years": 66.0,
+            "age-g-75-years": 14.0
+        },
+        "sex": {
+            "sex-male": 57.9,
+            "sex-female": 42.1
+        },
+        "incidence": "9/100000"
+    },
+    "Bacterial meningitis": {
+        "age": {
+            "age-0-4-years": 40.0,
+            "age-5-14-years": 23.8,
+            "age-15-24-years": 9.2,
+            "age-25-64-years": 20.5,
+            "age-g-65-years": 6.1
+        },
+        "sex": {
+            "sex-male": 62.0,
+            "sex-female": 38.0
+        },
+        "incidence": "138/10000000"
+    },
+    "Viral meningitis  enterovirus": {
+        "age": {},
+        "sex": {
+            "sex-female": 47.1,
+            "sex-male": 52.9
+        },
+        "incidence": "2.13/100000"
+    },
+    "Viral meningitis  varicella zoster virus": {
+        "age": {},
+        "sex": {},
+        "incidence": "2.13/100000"
+    },
+    "Hernia Nuclei Pulposi": {
+        "age": {
+            "age-0-32-years": 15.8,
+            "age-32-60-years": 68.0,
+            "age-g-60-years": 15.8
+        },
+        "sex": {
+            "sex-male": 35.0,
+            "sex-female": 65.0
+        },
+        "incidence": "1200/100000"
+    },
+    "Lumbago": {
+        "age": {
+            "age-0-30-years": 3.0,
+            "age-31-50-years": 57.0,
+            "age-g-50-years": 40.0
+        },
+        "sex": {
+            "sex-male": 60.0,
+            "sex-female": 40.0
+        },
+        "incidence": "15000/100000"
+    },
+    "Cauda equina": {
+        "age": {
+            "age-0-40-years": 10.5,
+            "age-40-50-years": 57.0,
+            "age-g-50-years": 32.5
+        },
+        "sex": {
+            "sex-male": 50.0,
+            "sex-female": 50.0
+        },
+        "incidence": "34/10000000"
+    },
+    "Lumbar spinal stenosis": {
+        "age": {
+            "age-0-60-years": 14.9,
+            "age-60-70-years": 29.1,
+            "age-g-70-years": 57.0
+        },
+        "sex": {
+            "sex-male": 50.0,
+            "sex-female": 50.0
+        },
+        "incidence": "2/100000"
+    },
+    "Carpal tunnel syndrome": {
+        "age": {
+            "age-40-50-years": 80.0
+        },
+        "sex": {
+            "sex-male": 24.04,
+            "sex-female": 72.11
+        },
+        "incidence": "276/100000"
+    },
+    "Otitis media acuta": {
+        "age": {
+            "age-0-3-years": 0.0,
+            "age-3-3-years": 22.3,
+            "age-4-4-years": 29.0,
+            "age-5-5-years": 27.0,
+            "age-6-6-years": 21.0,
+            "age-g-6-years": 0.0
+        },
+        "sex": {
+            "sex-Female": 48.7,
+            "sex-Male": 51.3
+        },
+        "incidence": "25600/100000"
+    },
+    "Mastoiditis": {
+        "age": {
+            "age-0-2-years": 36.36,
+            "age-g-2-years": 64.77
+        },
+        "sex": {},
+        "incidence": "3.9/100000"
+    },
+    "Otitis externa": {
+        "age": {
+            "age-0-15-years": 44.95,
+            "age-16-30-years": 19.6,
+            "age-31-45-years": 17.23,
+            "age-46-60-years": 13.98,
+            "age-g-60-years": 4.24
+        },
+        "sex": {
+            "sex-male": 40.58,
+            "sex-female": 59.42
+        },
+        "incidence": "400/100000"
+    },
+    "Female cystitis": {
+        "age": {
+            "age-18-24-years": 80.0
+        },
+        "sex": {
+            "sex-male": 0.0,
+            "sex-female": 100.0
+        },
+        "incidence": "1200/100000"
+    },
+    "Acute pyelonefritis": {
+        "age": {
+            "age-18-24-years": 80.0
+        },
+        "sex": {
+            "sex-male": 0.0,
+            "sex-female": 100.0
+        },
+        "incidence": "1200/100000"
+    },
+    "Upper urinary tract infection": {
+        "age": {
+            "age-18-24-years": 80.0
+        },
+        "sex": {
+            "sex-male": 0.0,
+            "sex-female": 100.0
+        },
+        "incidence": "1200/100000"
+    },
+    "Lower urinary tract infection": {
+        "age": {
+            "age-18-24-years": 80.0
+        },
+        "sex": {
+            "sex-male": 0.0,
+            "sex-female": 100.0
+        },
+        "incidence": "1200/100000"
+    },
+    "Gonorrhea, feminine": {
+        "age": {
+            "age-0-9-years": 0.0,
+            "age-10-19-years": 6.85,
+            "age-20-29-years": 45.26,
+            "age-30-39-years": 24.69,
+            "age-40-49-years": 13.5,
+            "age-50-59-years": 7.0,
+            "age-60-69-years": 2.43,
+            "age-g-70-years": 0.27
+        },
+        "sex": {
+            "sex-female": 100.0,
+            "sex-male": 0.0
+        },
+        "incidence": "21/100000"
+    },
+    "Genital herpes  male": {
+        "age": {},
+        "sex": {
+            "sex-male": 100.0,
+            "sex-female":0.0
+        },
+        "incidence": "159/100000"
+    },
+    "Genital herpes  female": {
+        "age": {},
+        "sex": {
+            "sex-female": 100.0,
+            "sex-male":0.0
+        },
+        "incidence": "75/100000"
+    },
+    "Lung cancer": {
+        "age": {
+            "age-0-40-years": 2.3,
+            "age-41-74-years": 64.0,
+            "age-g-75-years": 33.7
+        },
+        "sex": {
+            "sex-male": 50.6,
+            "sex-female": 49.4
+        },
+        "incidence": "461/100000"
+    },
+    "Colon cancer": {
+        "age": {
+            "age-0-40-years": 2.3,
+            "age-41-74-years": 64.0,
+            "age-g-75-years": 33.7
+        },
+        "sex": {
+            "sex-male": 50.6,
+            "sex-female": 49.4
+        },
+        "incidence": "461/100000"
+    },
+    "Testicular cancer": {
+        "age": {},
+        "sex": {
+            "sex-male": 100.0,
+            "sex-female": 0.0
+        },
+        "incidence": "68/1000000"
+    },
+    "Breast cancer, female": {
+        "age": {
+            "age-0-20-years": 0.0,
+            "age-20-34-years": 1.8,
+            "age-35-44-years": 9.1,
+            "age-45-54-years": 21.6,
+            "age-55-64-years": 25.6,
+            "age-65-74-years": 21.9,
+            "age-75-84-years": 14.2,
+            "age-g-84-years": 5.7
+        },
+        "sex": {
+            "sex-male": 0.0,
+            "sex-female": 100.0
+        },
+        "incidence": "431/1000000"
+    },
+    "Ovarian cancer": {
+        "age": {
+            "age-12-26-years": 0.7,
+            "age-26-29-years": 0.7,
+            "age-30-50-years": 20.1,
+            "age-50-60-years": 20.1,
+            "age-61-72-years": 28.5,
+            "age-g-72-years": 28.5
+        },
+        "sex": {
+            "sex-male": 0.0,
+            "sex-female": 100.0
+        },
+        "incidence": "59/1000000"
+    },
+    "Oesophageal carcinoma": {
+        "age": {},
+        "sex": {
+            "sex-male": 72.55,
+            "sex-female": 27.45
+        },
+        "incidence": "1015/10000000"
+    },
+    "Bladder cancer": {
+        "age": {},
+        "sex": {
+            "sex-female": 16.21,
+            "sex-male": 83.78
+        },
+        "incidence": "185/1000000"
+    },
+    "Iron deficiency anaemia": {
+        "age": {},
+        "sex": {},
+        "incidence": "1058/100000"
+    },
+    "Vitamin D deficiency": {
+        "age": {},
+        "sex": {
+            "sex-female": 47.8,
+            "sex-male": 52.2
+        },
+        "incidence": "NaN"
+    },
+    "Vitamin B12 deficiency": {
+        "age": {},
+        "sex": {
+            "sex-female": 65.0,
+            "sex-male": 35.0
+        },
+        "incidence": "NaN"
+    },
+    "Wernicke-Korsakoff complex:": {
+        "age": {},
+        "sex": {
+            "sex-female": 37.0,
+            "sex-male": 63.0
+        },
+        "incidence": "100/1000000"
+    }
+}

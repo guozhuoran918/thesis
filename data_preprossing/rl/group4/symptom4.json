@@ -1,0 +1,21 @@
+{
+    "Focal_neurological_symptoms": 0,
+    "Pain": 1,
+    "Stiffness": 2,
+    "Fever": 3,
+    "Eruption": 4,
+    "Nausea": 5,
+    "Seizures": 6,
+    "Altered_communication": 7,
+    "Hemiparesis": 8,
+    "Swelling": 9,
+    "Vomiting": 10,
+    "Weakness": 11,
+    "Altered_vision": 12,
+    "Altered_mental_state": 13,
+    "Aura": 14,
+    "Soreness": 15,
+    "Dizziness": 16,
+    "Cough": 17,
+    "Altered_stool": 18
+}

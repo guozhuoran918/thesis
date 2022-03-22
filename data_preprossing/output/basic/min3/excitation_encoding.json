@@ -1,0 +1,16 @@
+{
+    "": 1,
+    "Morning": 2,
+    "When_standing": 3,
+    "Improvement_with_defecation": 4,
+    "Activity": 5,
+    "Sitting_or_bending_forward": 6,
+    "Worsening_with_stress": 7,
+    "When_pressing": 8,
+    "Worsening_after_meals": 9,
+    "Palpation": 10,
+    "Sleeping": 11,
+    "Walking_bent_forward": 12,
+    "Eating": 13,
+    "Walking_OR_mild_exertion": 14
+}
