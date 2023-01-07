@@ -36,13 +36,12 @@ class HRL(object):
         self.current_slots = {}
 
         if self.parameter.get("train_mode")==False:
-            self.test_by_group = {x:[0,0,0] for x in ['12', '13', '14', '19', '1', '4', '5', '6', '7']}
+            self.test_by_group = {x:[0,0,0] for x in ['1', '2', '3', '4', '5', '6', '7', '8', '9','10']}
             #这里的三维向量分别表示成功次数、group匹配正确的个数、隶属于某个group的个数
             self.disease_record = []
-            self.lower_reward_by_group = {x: [] for x in ['12', '13', '14', '19', '1', '4', '5', '6', '7']}
-            # self.master_index_by_group = {x:[] for x in ['12', '13', '14', '19', '1', '4', '5', '6', '7']}
+            self.lower_reward_by_group = {x: [] for x in ['1', '2', '3', '4', '5', '6', '7', '8', '9','10']}
             self.master_index_by_group = []
-            self.symptom_by_group = {x: [0,0] for x in ['12', '13', '14', '19', '1', '4', '5', '6', '7']}
+            self.symptom_by_group = {x: [0,0] for x in ['1', '2', '3', '4', '5', '6', '7', '8', '9','10']}
     def set_user(self,new_user):
         self.user = new_user
         self.state_tracker.user = new_user
@@ -72,7 +71,7 @@ class HRL(object):
 
             if action_type == "disease":
                 disease = self.state_tracker.user.goal["disease"]
-                labels = list(range(0,33))
+                labels = list(range(0,54))
                 state_rep = state2rep(state,self.symptom_db,self.parameter)
                 Ys,pre_disease = self.model.predict([state_rep])
                 self.disease_replay.append((state_rep,self.disease_db[disease]))
@@ -80,7 +79,7 @@ class HRL(object):
                 sorted_ = np.argsort(Ys.detach().cpu().numpy())[0]
                 top5 = []
                 for i in range(5):
-                    top5.append(self.id2disease[labels[sorted_[-(i+1)]]])
+                    top5.append(self.id2disease[sorted_[-(i+1)]])
             
                 master_action_index = len(self.master_action_space)
                 agent_action = {'action': 'inform', 'inform_slots': {"disease":top5}, 'request_slots': {},"explicit_inform_slots":{}, "implicit_inform_slots":{}}
@@ -101,7 +100,7 @@ class HRL(object):
 
             if dialogue_status == configuration.DIALOGUE_STATUS_REACH_MAX_TURN:
                 disease = self.state_tracker.user.goal["disease"]
-                labels = list(range(0,33))
+                labels = list(range(0,54))
                 state_rep = state2rep(self.state_tracker.get_state(),self.symptom_db,self.parameter)
                 Ys,pre_disease = self.model.predict([state_rep])
                 self.disease_replay.append((state_rep,self.disease_db[disease]))
@@ -117,7 +116,7 @@ class HRL(object):
                     sorted_ = np.argsort(Ys.detach().cpu().numpy())[0]
 
                 for i in range(5):
-                        top5.append(self.id2disease[labels[sorted_[-(i+1)]]])
+                        top5.append(self.id2disease[sorted_[-(i+1)]])
             
                 if disease == top5[0]:
                     dialogue_status = configuration.DIALOGUE_STATUS_SUCCESS
@@ -198,7 +197,8 @@ class HRL(object):
         return dbs
 
     def build_deep_learning_classifier(self):
-        self.model = dl_classifier(input_size=len(self.symptom_db)*8, hidden_size=256,
+        input_size = len(self.symptom_db)*9 if self.parameter['nlice'] else len(self.symptom_db)*3
+        self.model = dl_classifier(input_size=input_size, hidden_size=256,
                                    output_size=len(self.disease_db),
                                    parameter=self.parameter)
         if self.parameter.get("train_mode") == False:
@@ -219,6 +219,7 @@ class HRL(object):
         test_batch = random.sample(self.disease_replay, min(1000,len(self.disease_replay)))
         test_acc = self.model.test(test_batch=test_batch)
         print('disease_replay:{},loss:{:.4f}, test_acc:{:.4f}'.format(len(self.disease_replay), loss["loss"], test_acc))
+        return loss["loss"], test_acc
         #self.model.test_dl_classifier()
 
     def save_dl_model(self, model_performance, episodes_index, checkpoint_path=None):

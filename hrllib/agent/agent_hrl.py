@@ -2,7 +2,7 @@ import json
 import numpy as np
 import copy
 import sys, os
-from pytest import TempPathFactory
+# from pytest import TempPathFactory
 import torch
 import random
 import math
@@ -25,7 +25,7 @@ class AgentHRL(object):
         self.count = 0
         self.disease_replay = deque(maxlen=10000)
         self.master_action_space = []
-        self.group_id = [1,2,3,4,5]
+        self.group_id = [1,2,3,4,5,6,7,8,9,10]
         self.all_data = parameter.get("file_all")
         self.past_lower_agent_pool = {key: 0 for key in self.id2lowerAgent.keys()}
         # build lower agents
@@ -47,7 +47,7 @@ class AgentHRL(object):
             temp_parameter[label]['gamma'] = temp_parameter[label]['gamma_worker']
 
         # build master agent
-        self.input_size = len(self.symptom_set.keys())*8
+        self.input_size = len(self.symptom_set.keys())*9 if parameter.get("nlice") else len(self.symptom_set.keys())*3
         self.hidden_size = parameter.get("hidden_size_dqn", 100)
         self.output_size = len(self.id2lowerAgent)+1
         self.master = DQN2(input_size=self.input_size,

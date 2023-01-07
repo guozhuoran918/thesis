@@ -89,7 +89,7 @@ class User(object):
             gender = 0 if _gender == 'M' else 1
             race = parts[2]
             # age = int(parts[3])
-            disease = parts[4]
+            disease = parts[6]
             age = int(self.get_age(disease))
             temp = {}
             temp["gender"] = gender
@@ -100,14 +100,17 @@ class User(object):
             temp["explicit_inform_slots"] = {}
             temp["implicit_inform_slots"] = {}
             # temp["symptoms"] = {}
-            symptom_list = parts[6]
+            symptom_list = parts[8]
             symptoms = symptom_list.split(";")
-            temp_initial_symptom = np.random.choice(symptoms,1)
-            initial_symptom = temp_initial_symptom[0].split(":")[0]
+            nums_main = self.parameter["nums_main_complaint"]
+            replacement = True if nums_main>len(symptoms) else False
+            temp_initial_symptom = np.random.choice(symptoms,nums_main,replace=replacement)
+        
+            # initial_symptom = temp_initial_symptom[0].split(":")[0]
             for item in symptom_list.split(";"):                          
                     sym_list = item.split(":")
-                    _symptom, _nature, _location, _intensity, _duration, _onset, _exciation, _frequency, _ = sym_list
-                    complaint = "explicit_inform_slots" if _symptom ==initial_symptom else "implicit_inform_slots" 
+                    _symptom,_nature, _location_main,_location, _intensity, _duration, _onset, _exciation, _frequency, _ = sym_list
+                    complaint = "explicit_inform_slots" if item in temp_initial_symptom else "implicit_inform_slots" 
                     if(_symptom == "Alterred_stool"):
                         _symptom ="Altered_stool"
                     if(_symptom == "Nausea_"):
@@ -120,6 +123,7 @@ class User(object):
                         _symptom="Incontinence"
                     temp[complaint][_symptom] = {}
                     temp[complaint][_symptom]["nature"] = _nature
+                    temp[complaint][_symptom]["location_main"] = _location_main
                     temp[complaint][_symptom]["location"] = _location
                     temp[complaint][_symptom]["intensity"] = _intensity
                     temp[complaint][_symptom]["duration"] = _duration
@@ -193,7 +197,7 @@ class User(object):
     def next(self,agent_action,turn):
         agent_act_type = agent_action["action"]
         self.state["turn"] = turn
-        if self.state["turn"] == self.max_turn:
+        if self.state["turn"]>= self.max_turn:
             self.episode_over = True
             self.dialogue_status = configuration.DIALOGUE_STATUS_REACH_MAX_TURN
             self.state["action"] = configuration.CLOSE_DIALOGUE

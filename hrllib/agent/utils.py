@@ -40,31 +40,47 @@ def state2rep(state, slot_set, parameter):
     onset = load_db(parameter.get("onset"))
     duration = load_db(parameter.get("duration"))
     body = load_db(parameter.get("body"))
+    main_body = load_db(parameter.get("body-main"))
     # one hot
-    current_slots_rep = np.zeros((len(slot_set.keys()),8))
+  
+    if(parameter.get("nlice")):
+        current_slots_rep = np.zeros((len(slot_set.keys()),9))
+        for slot in slot_set:
+                if slot in current_slots.keys():
+                    # if current_slots[slot] == False:
+                    #     temp_slot = [-1,-1,-1,-1,-1,-1,-1,-1]
+                    if isinstance(current_slots[slot],dict):
+                        nlice = current_slots[slot]
+                        _nature_val = 1 if nlice["nature"] == "" or nlice["nature"] =="other" else nature.get(nlice["nature"])
+                        _location_main_val = 1 if nlice["location_main"] or nlice["location_main"] == "other" else main_body.get(nlice["location_main"])
+                        _location_val = 1 if nlice["location"] == "" or nlice["location"] == "other" else body.get(nlice["location"])
+                        _intensity_val = 1 if nlice["intensity"] == "" else vas.get(nlice["intensity"])
+                        _duration_val = 1 if nlice["duration"] == "" else duration.get(nlice["duration"])
+                        _onset_val = 1 if nlice["onset"] == "" else onset.get(nlice["onset"])
+                        _excitation_val = 1 if nlice["exciation"] == "" else excitation.get(nlice["exciation"])
+                        _frequency_val = 1 if nlice["frequency"] == "" else frequency.get(nlice["frequency"])               
+                        temp_slot = [1,_nature_val,_location_main_val,_location_val,_intensity_val,_duration_val,_onset_val,_excitation_val,_frequency_val]
+                    else:
+                        temp_slot = [-1,-1,-1,-1,-1,-1,-1,-1,-1]
 
-    for slot in slot_set:
-            if slot in current_slots.keys():
-                # if current_slots[slot] == False:
-                #     temp_slot = [-1,-1,-1,-1,-1,-1,-1,-1]
-                if isinstance(current_slots[slot],dict):
-                    nlice = current_slots[slot]
-                    _nature_val = 1 if nlice["nature"] == "" or nlice["nature"] =="other" else nature.get(nlice["nature"])
-                    _location_val = 1 if nlice["location"] == "" or nlice["location"] == "other" else body.get(nlice["location"])
-                    _intensity_val = 1 if nlice["intensity"] == "" else vas.get(nlice["intensity"])
-                    _duration_val = 1 if nlice["duration"] == "" else duration.get(nlice["duration"])
-                    _onset_val = 1 if nlice["onset"] == "" else onset.get(nlice["onset"])
-                    _excitation_val = 1 if nlice["exciation"] == "" else excitation.get(nlice["exciation"])
-                    _frequency_val = 1 if nlice["frequency"] == "" else frequency.get(nlice["frequency"])               
-                    temp_slot = [1,_nature_val,_location_val,_intensity_val,_duration_val,_onset_val,_excitation_val,_frequency_val]
                 else:
-                    temp_slot = [-1,-1,-1,-1,-1,-1,-1,-1]
-
-            else:
-                temp_slot = [0,0,0,0,0,0,0,1]
-            current_slots_rep[slot_set[slot], :] = temp_slot
+                    temp_slot = [0,0,0,0,0,0,0,0,1]
+                current_slots_rep[slot_set[slot], :] = temp_slot
+        state_rep = current_slots_rep.reshape(1,len(slot_set.keys())*9)[0]
             #print( temp_slot)
- 
+    else:
+        current_slots_rep = np.zeros((len(slot_set.keys()),3))
+        for slot in slot_set:
+                if slot in current_slots.keys():
+                    # if current_slots[slot] == False:
+                    #     temp_slot = [-1,-1,-1,-1,-1,-1,-1,-1]
+                    if isinstance(current_slots[slot],dict):                              
+                        temp_slot = [1,0,0]
+                    else:
+                        temp_slot = [1,0,0]
+                else:
+                    temp_slot = [0,0,1]
+                current_slots_rep[slot_set[slot], :] = temp_slot
+        state_rep = current_slots_rep.reshape(1,len(slot_set.keys())*3)[0]
 
-    state_rep = current_slots_rep.reshape(1,len(slot_set.keys())*8)[0]
     return state_rep

@@ -462,7 +462,7 @@ class DQN2(object):
             #print(os.getcwd())
             os.makedirs(checkpoint_path)
         agent_id = "hrl"
-        disease_number = 33
+        disease_number = self.params["disease_number"]
         success_rate = model_performance["success_rate"]
         average_reward = model_performance["average_reward"]
         average_turn = model_performance["average_turn"]

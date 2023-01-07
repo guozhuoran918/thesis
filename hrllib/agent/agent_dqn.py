@@ -18,7 +18,7 @@ class AgentDQN(Agent):
         self.symptom_set  = symptoms
         self.all_symptoms = parameter.get("symptoms")
         self.all_symptoms_db = self.load_db(self.all_symptoms)
-        self.input_dim = 8*len(self.all_symptoms_db.keys())
+        self.input_dim = 9*len(self.all_symptoms_db.keys()) if parameter.get("nlice") else 3*len(self.all_symptoms_db.keys())
         self.action_space = self._build_action_space(self.symptom_set)
         # self.output_dim = env.num_symptoms + env.num_conditions
         self.output_dim = len(self.action_space)

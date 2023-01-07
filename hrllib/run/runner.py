@@ -23,6 +23,7 @@ class RunningSteward(object):
         self.dataset = parameter["dataset"]
         self.test_dataset = parameter["test"]
         self.learning_curve = {}
+        self.learning_curve['parameter'] = parameter
         self.user = User(self.dataset,parameter)
         self.test_user = User(self.test_dataset,parameter)
         self.agent = AgentHRL(self.symptoms_db,self.conditions_db,parameter)
@@ -40,12 +41,14 @@ class RunningSteward(object):
     def simulate(self, epoch_number, train_mode=True):
 
         for index in range(0,epoch_number,1):
+            self.learning_curve[index] = {}
             if train_mode is True:
                 self.dialogue_manager.train()
-                self.simulation_epoch(epoch_size=1000,index = index)
-            result = self.evaluation_model(index)
-            
+                self.simulation_epoch(epoch_size=self.epoch_size,index = index)
+            result = self.evaluation_model()
+            self.learning_curve[index] = result
             print(result)
+            self.__dump_learning_curve__()
             if result["success_rate"] > self.best_result["success_rate"]:
                 self.dialogue_manager.state_tracker.agent.save_model(model_performance=result, episodes_index = index, checkpoint_path=self.checkpoint_path)
                 self.dialogue_manager.save_dl_model(model_performance=result, episodes_index=index,
@@ -55,8 +58,7 @@ class RunningSteward(object):
                 pass
         self.dialogue_manager.state_tracker.agent.save_model(model_performance=result, episodes_index=index, checkpoint_path=self.checkpoint_path)
         self.dialogue_manager.save_dl_model(model_performance=result, episodes_index=index, checkpoint_path=self.checkpoint_path)
-        self.__dump_performance__(epoch_index=index)
-
+        # self.__dump_performance__(epoch_index=index)
 
     def simulation_epoch(self,epoch_size,index):
         success_count = 0
@@ -101,6 +103,7 @@ class RunningSteward(object):
         self.dialogue_manager.set_user(self.test_user)
         # self.__dump_diaglogue__(self.dialogue_manager.user.user)
         match =np.zeros(dataset_len,dtype=int)
+        count = 0
         for index in dataset.keys():
             self.dialogue_manager.initialize(index)
             over = False
@@ -108,11 +111,11 @@ class RunningSteward(object):
                 reward,over,dialogue_status = self.dialogue_manager.next(
                     save_record=False,greedy_strategy=False)
                 if dialogue_status == configuration.DIALOGUE_STATUS_INFORM_RIGHT_SYMPTOM:
-                    match[int(index)] = 1
+                    match[int(count)] = 1
                 total_reward+=reward
-                total_turns[int(index)] +=1
+                total_turns[int(count)] +=1
 
-            slot_record[index] = self.dialogue_manager.current_slots 
+            slot_record[count] = self.dialogue_manager.current_slots 
             if dialogue_status == configuration.DIALOGUE_STATUS_SUCCESS:
                 success_count +=1
                 total_top3+=1
@@ -124,7 +127,7 @@ class RunningSteward(object):
                 total_top5+=1     
             if dialogue_status == configuration.DIALOGUE_STATUS_REACH_MAX_TURN:
                 reach_max_turn+=1
-        
+            count +=1 
 
         success_rate = float("%.3f" % (float(success_count) / dataset_len))
         average_reward = float("%.3f" % (float(total_reward) / dataset_len))
@@ -134,7 +137,9 @@ class RunningSteward(object):
         average_match = float("%.3f" % (float(np.mean(match))))
         
         if(self.parameter.get("train_mode") == True):
-            self.dialogue_manager.train_deep_learning_classifier(epochs=20)
+            loss,acc = self.dialogue_manager.train_deep_learning_classifier(epochs=20)
+        else:
+            loss,acc = 0,0
         res = {
             "success_rate":success_rate,
             "top3":average_top3,
@@ -142,13 +147,24 @@ class RunningSteward(object):
             "average_reward": average_reward,
             "average_turn": average_turn,
             "average_match": average_match,
+            "mlp_loss":loss,
+            "mlp_acc":acc
         }
-
+        print(res)
+        # if(res["success_rate"]>=self.best_result["success_rate"]):
         self.__dump_diaglogue__(slot_record)
         return res
     def __dump_performance__(self, epoch_index):
         filename = "best"+str(epoch_index)+".json"
         json_str = json.dumps(self.best_result)
+        path = os.path.join(self.checkpoint_path,filename)
+        with open(path,'w') as json_file:
+            json_file.write(json_str)
+    
+    def __dump_learning_curve__(self):
+
+        filename = "learning_curve.json"
+        json_str = json.dumps(self.learning_curve)
         path = os.path.join(self.checkpoint_path,filename)
         with open(path,'w') as json_file:
             json_file.write(json_str)

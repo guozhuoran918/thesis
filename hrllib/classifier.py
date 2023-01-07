@@ -170,7 +170,7 @@ class dl_classifier(object):
         if os.path.isdir(checkpoint_path) == False:
             os.makedirs(checkpoint_path)
         agent_id = "hrl"
-        disease_number = 33
+        disease_number = self.parameter.get("disease_number")
         success_rate = model_performance["success_rate"]
         average_reward = model_performance["average_reward"]
         average_turn = model_performance["average_turn"]
@@ -179,8 +179,8 @@ class dl_classifier(object):
         top5 = model_performance["top5"]
         model_file_name = os.path.join(checkpoint_path, "model_d" + str(disease_number) + str(agent_id) + "_s" + str(
             success_rate) + "_r" + str(average_reward) + "_t" + str(average_turn) \
-                                       + "_mr" + str(average_match_rate) + "_mr2-" + str(
-            top3) +str(top5) +"_e-" + str(episodes_index) + ".pkl")
+                                       + "_mr" + str(average_match_rate) + "_top3-" + str(
+            top3) +"_top5-"+str(top5) +"_e-" + str(episodes_index) + ".pkl")
 
         torch.save(self.model.state_dict(), model_file_name)
 
